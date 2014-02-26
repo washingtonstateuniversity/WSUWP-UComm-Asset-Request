@@ -7,3 +7,4 @@ wp-content/themes/spine
 
 wp-content/plugins/*
 !wp-content/plugins/index.php
+!wp-content/plugins/wsu-ucomm-assets-registration

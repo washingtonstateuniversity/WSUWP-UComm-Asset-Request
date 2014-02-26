@@ -4,3 +4,6 @@
 /wordpress
 wp-config.php
 wp-content/themes/spine
+
+wp-content/plugins/*
+!wp-content/plugins/index.php

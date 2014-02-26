@@ -1,0 +1,13 @@
+/*
+ Theme Name:     WSU University Communications
+ Theme URI:      http://web.wsu.edu
+ Description:    A child theme for Washington State University's Spine framework
+ Author:         WSU University Communications
+ Author URI:     http://ucomm.wsu.edu
+ Template:       spine
+ Version:        0.0.1
+*/
+
+@import url("../spine/style.css");
+@import url("global.css");
+@import url("webfonts/ss-pika.css");

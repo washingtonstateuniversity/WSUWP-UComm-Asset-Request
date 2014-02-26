@@ -2,3 +2,5 @@
 *.sublime*
 
 /wordpress
+wp-config.php
+wp-content/themes/spine

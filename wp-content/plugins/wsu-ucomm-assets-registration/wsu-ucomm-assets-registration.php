@@ -140,7 +140,7 @@ class WSU_UComm_Assets_Registration {
 				if ( is_user_logged_in() ) {
 					echo 'User is logged in, but not a member of the site.';
 				} else {
-					echo 'User is not logged in.';
+					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
 			}
 			?>

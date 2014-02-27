@@ -155,6 +155,8 @@ class WSU_UComm_Assets_Registration {
 				}
 			} else {
 				if ( is_user_logged_in() ) {
+					// To ease the workflow, anybody authenticated user that visits this site should be made a subscriber.
+					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
 					echo 'User is logged in, but not a member of the site.';
 				} else {
 					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';

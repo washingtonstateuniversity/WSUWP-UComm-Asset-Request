@@ -12,6 +12,11 @@ License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2
 class WSU_UComm_Assets_Registration {
 
 	/**
+	 * @var string Script version used to break cache when needed.
+	 */
+	var $script_version = '0.1.1';
+
+	/**
 	 * @var string Post type slug for asset requests.
 	 */
 	var $post_type_slug = 'ucomm_asset_request';
@@ -180,6 +185,7 @@ class WSU_UComm_Assets_Registration {
 	 * Display the HTML used to handle the asset request form.
 	 */
 	private function asset_form_output() {
+		wp_enqueue_script( 'ucomm_asset_request', plugins_url( '/js/asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
 		?>
 		<form id="asset-request-form" class="asset-request">
 			<label for="email_address">Email Address:</label><br>

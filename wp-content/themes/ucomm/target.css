@@ -1,0 +1,43 @@
+/*
+ Description:    WSU University Communications post page targeting file
+ Author:         WSU University Communications
+ Author URI:     http://ucomm.wsu.edu
+ Version:        0.0.1
+*/
+
+/* /wsu-brand/ */
+
+/* Located in custom field */
+
+.brandSide {
+	position:relative;
+	left:10%;
+	margin-top:125px;
+	height: 650px;
+	background-image: url('http://brand.wsu.edu/wp-content/themes/brand/images/pages/home/confetti.jpg');
+	background-repeat: no-repeat;
+	background-position: -1400% 0;
+	transition-property:all 5s bounceInRight;
+	-moz-transition-property:all 5s bounceInRight; /* Firefox 4 */
+	-webkit-transition-property:all 5s bounceInRight; /* Safari and Chrome */
+	-o-transition-property:all 5s bounceInRight; /* Opera */
+	cursor: pointer;
+}
+.brandSide:hover {
+	left:0%;
+	}
+.brandSide .brandfill {
+	display:block;
+	width:100%;
+	height:100%;
+	color:white;
+	text-align: left;
+	vertical-align: middle;
+
+}
+.brandSide .loadBlank {
+
+}
+.brandSide[title~='Washington State University brand Website'] {
+
+}

@@ -14,7 +14,7 @@ Description: Structuring of header, page titles, and tag lines to accomodate the
 .acBanner {
 width:100%;
 height: 30px;
-background-color: #90989E;
+background-color: #B5BABE;
 }
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
 main > header {
@@ -80,7 +80,7 @@ article h5 {
 article h6 {
 }
 article p {
-	color: #90989E;
+	color: #8D959A;
 	line-height: 1.875em;
 	margin-bottom:2em;
 }
@@ -134,7 +134,7 @@ header .yellow {
 }
 /* Styling of the paragraphs that follow the main header to introduce the page and page summary */
 article .uCintro {
-	color: #90989E;
+	color: #8D959A;
 	font-size: 1.2em;
 	text-align: justify;
 	line-height: 2em;
@@ -146,12 +146,13 @@ article .uCintro {
 }
 /* Styling of ordered lists and un-ordered lists */
 article ul, ol {
-	color: #90989E;
+	color: #8D959A;
 	font-size: .885em;
 	line-height: 1.5em;
+	margin-bottom:2em;
 }
 article p~ul {
-	margin-top:-1.875em;
+	margin-top:-1.775em;
 	margin-left:4em;
 	width:80%;
 }
@@ -229,7 +230,7 @@ blockquote  cite:before {
 aside {
 	background-color: #EFF0F1;
 	font-size:.875em;
-	color:#90989E;
+	color:#5E6A71;
 	padding:1em;
 	margin:1.275em;
 	text-align: center;
@@ -240,12 +241,12 @@ aside {
 article address {
 	font-size:.875em;
 	line-height: 1.5em;
-	color:#90989E;
+	color:#8D959A;
 	padding-left:1em;
 	margin-bottom: 1em;
 }
 .pageFoot {
-width: inherit;
+width: 100%;
 	padding-top:5%;
 	padding-bottom:2%;
 	border-style:solid;
@@ -256,7 +257,7 @@ font-size: .875em
 hr {
 	height: 2px;
 	border:0;
-	background-color:#90989E;
+	background-color:#8D959A;
 	line-height: 20px;
 	margin-top:4em;
 	margin-bottom:4em;
@@ -265,12 +266,12 @@ hr:before {
 	content: '';
 	display: block;
 	height:1px;
-	background-color:#90989E;
+	background-color:#8D959A;
 }
 hr:after {
 	font-family: "SSPika";
     content: '\E202';
-    color:#90989E;
+    color:#8D959A;
     display:block;
     text-align:center;
     background-color:#f9f9f9;
@@ -297,3 +298,33 @@ Description: Create structure elements for the template such as supplimentary co
 	border-color:black;
 	border-width:1px 1px 8px 0px;
 		}
+.size-lt-large #fixedSide {
+	position:; absolute;
+}
+#fixedSide {
+	position:fixed;
+	width:100%;
+	margin-top:75px;
+	}
+#fixedSide .green {
+	background-color: #F4F2EB;
+	border-style:solid;
+	border-color:#E3DFCD;
+	border-width:8px 0px 4px 0px;
+}
+#fixedSide .orange {
+	background-color: #F8F1EB;
+}
+#fixedSide .yellow {
+	background-color: #F9F4E7;
+}
+#fixedSide article h6 {
+	margin: 1em;
+}
+#fixedSide article ul {
+	margin: 1em;
+
+}
+#fixedSide article ul li:before {
+	content:'';
+}

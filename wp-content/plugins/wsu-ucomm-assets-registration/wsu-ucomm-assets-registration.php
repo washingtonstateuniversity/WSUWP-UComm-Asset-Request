@@ -16,15 +16,26 @@ class WSU_UComm_Assets_Registration {
 	 */
 	public function __construct() {
 		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' ) );
+		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ) );
 	}
 
 	/**
 	 * Enable the automatic creation of a new user if authentication is handled
 	 * via WSU Network ID and no user exists.
+	 *
 	 * @return bool
 	 */
 	public function wsuwp_sso_create_new_user() {
 		return true;
+	}
+
+	/**
+	 * Set an automatically created user's role as subscriber.
+	 *
+	 * @return string New role for the new user.
+	 */
+	public function wsuwp_sso_new_user_role() {
+		return 'subscriber';
 	}
 }
 new WSU_UComm_Assets_Registration();

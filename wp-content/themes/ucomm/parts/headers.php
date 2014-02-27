@@ -2,27 +2,35 @@
 
 	global $post;
 	
-	$site_name = get_bloginfo('name');
-	$site_tagline = get_bloginfo('description');
+	$site_name      = get_bloginfo('name');
+	$site_tagline   = get_bloginfo('description');
 	$first_category = get_the_category();
-	$section_title = get_the_category();
-	
-	$words = explode(' ', $site_name);
-	$words[1] = '<span class="addGray">'.$words[1].'</span>';
-	$pretty_name = implode(' ', $words);
-
- 
-	echo '<header>';
-	echo '<hgroup>';
-	echo '	<div class="site"><a href="'.home_url().'" title="'.$site_name.'" rel="home">'.$pretty_name.'</a></div>';
-	echo '	<div class="tagline"><a href="'.home_url().'" title="'.$site_tagline.'" rel="home">'.$site_tagline.'</a></div>';
-	if (is_subpage()) { echo '	<div class="section">'.section_title().'</div>'; }
-	if (is_category() || is_single() || is_archive() ) { echo '	<div class="category">'.$first_category[0]->cat_name.'</div>'; }
-	if (is_page()) { echo '	<div class="page">'.get_the_title().'</div>'; }
-	if (is_single()) { echo '	<div class="post">'.get_the_title().'</div>'; }
-	echo '</hgroup>';
-	echo '</header>';
-	
-	
-	
+	$section_title  = get_the_category();
 ?>
+
+<header>
+<hgroup>
+	<!-- Removed ?php echo esc_html( $site_name ); ?> and placed University <span class="addGray">Communications</span> to achieve split word colors -->
+	<div class="site"><a href="<?php home_url(); ?>" title="<?php echo esc_attr( $site_name ); ?>" rel="home">University <span class="addGray">Communications</span></a></div>
+	<div class="tagline"><a href="<?php home_url(); ?>" title="<?php echo esc_attr( $site_tagline ); ?>" rel="home"><?php echo esc_html( $site_tagline ); ?></a></div>
+	<?php
+
+	if ( spine_is_subpage() ) {
+		echo '	<div class="section">' . spine_section_title() . '</div>';
+	}
+
+	if ( ( is_archive() || is_category() || is_single() ) && ! empty( $first_category ) && isset( $first_category[0]->cat_name ) ) {
+		echo '	<div class="category">'.$first_category[0]->cat_name.'</div>';
+	}
+
+	if ( is_page() ) {
+		echo '	<div class="page">' . get_the_title() . '</div>';
+	}
+
+	if ( is_single() ) {
+		echo '	<div class="post">' . get_the_title() . '</div>';
+	}
+
+	?>
+</hgroup>
+</header>

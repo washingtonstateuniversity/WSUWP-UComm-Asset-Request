@@ -30,13 +30,13 @@ class WSU_UComm_Assets_Registration {
 	 * Setup the hooks.
 	 */
 	public function __construct() {
-		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' )        );
-		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   )        );
+		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' ), 10, 1 );
+		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ), 10, 1 );
 		add_filter( 'map_meta_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
 
-		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'         ) );
-		add_action( 'init',                         array( $this, 'register_post_type'        ) );
-		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request'      ) );
+		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'    ), 10 );
+		add_action( 'init',                         array( $this, 'register_post_type'   ), 10 );
+		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10 );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}

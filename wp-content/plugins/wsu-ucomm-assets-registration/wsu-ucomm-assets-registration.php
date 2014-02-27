@@ -134,7 +134,18 @@ class WSU_UComm_Assets_Registration {
 				if ( current_user_can( 'request_asset' ) ) {
 					echo 'User is authenticated and can retrieve asset.';
 				} else {
-					echo 'User is authenticated but must request access.';
+					$user_requests = get_posts( array(
+						'post_type'      => $this->post_type_slug,
+						'author'         => get_current_user_id(),
+						'post_status'    => 'pending',
+						'posts_per_page' => 1,
+					));
+
+					if ( 1 <= count( $user_requests ) ) {
+						echo 'We have received your request for access. You should receive verification and instructions shortly.';
+					} else {
+						echo 'User is authenticated but must request access.';
+					}
 				}
 			} else {
 				if ( is_user_logged_in() ) {

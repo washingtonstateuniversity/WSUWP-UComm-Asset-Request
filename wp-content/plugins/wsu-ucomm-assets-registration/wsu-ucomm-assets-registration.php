@@ -34,8 +34,9 @@ class WSU_UComm_Assets_Registration {
 		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   )        );
 		add_filter( 'map_meta_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
 
-		add_action( 'wsuwp_sso_user_created',    array( $this, 'remove_user_roles'         ) );
-		add_action( 'init',                      array( $this, 'register_post_type'        ) );
+		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'         ) );
+		add_action( 'init',                         array( $this, 'register_post_type'        ) );
+		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request'      ) );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -186,8 +187,10 @@ class WSU_UComm_Assets_Registration {
 	 */
 	private function asset_form_output() {
 		wp_enqueue_script( 'ucomm_asset_request', plugins_url( '/js/asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
+		wp_localize_script( 'ucomm_asset_request', 'ucomm_asset_data', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		?>
 		<form id="asset-request-form" class="asset-request">
+			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
 			<label for="email_address">Email Address:</label><br>
 			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
 			<label for="deparatment">College/Department:</label><br>
@@ -198,6 +201,45 @@ class WSU_UComm_Assets_Registration {
 			<div class="clear"></div>
 		</form>
 		<?php
+	}
+
+	/**
+	 * Handle the submission of an asset request form through AJAX.
+	 */
+	public function submit_asset_request() {
+		wp_verify_nonce( 'asset-request' );
+
+		$post = array(
+			'post_status' => 'pending',
+			'post_type' => $this->post_type_slug,
+			'post_author' => get_current_user_id(),
+		);
+
+		if ( isset( $_POST[ 'email_address'] ) ) {
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $_POST['email_address'] );
+		} else {
+			$user = get_userdata( get_current_user_id() );
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
+		}
+
+		if ( isset( $_POST['notes'] ) ) {
+			$post['post_content'] = wp_kses_post( $_POST['notes'] );
+		}
+
+		$post_id = wp_insert_post( $post );
+
+		if ( is_wp_error( $post_id ) ) {
+			echo json_encode( array( 'error' => 'There was an error creating the request.' ) );
+			die();
+		}
+
+		if ( isset( $_POST['department'] ) ) {
+			$department = sanitize_text_field( $_POST['department'] );
+			update_post_meta( $post_id, '_ucomm_request_department', $department );
+		}
+
+		echo json_encode( array( 'success' => 'Request received.' ) );
+		die();
 	}
 }
 new WSU_UComm_Assets_Registration();

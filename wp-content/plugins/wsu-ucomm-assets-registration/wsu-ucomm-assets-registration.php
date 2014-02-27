@@ -138,7 +138,7 @@ class WSU_UComm_Assets_Registration {
 		// Build the output to return for use by the shortcode.
 		ob_start();
 		?>
-		<div id="asset-request-form">
+		<div id="asset-request">
 			<?php
 
 			if ( is_user_member_of_blog() ) {

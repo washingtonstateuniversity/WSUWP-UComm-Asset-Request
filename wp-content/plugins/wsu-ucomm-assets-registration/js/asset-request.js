@@ -25,10 +25,13 @@
 
 		// Make the ajax call
 		$.post( window.ucomm_asset_data.ajax_url, data, function( response ) {
-			if ( 'success' === response ) {
+			response = $.parseJSON( response );
 
+			if ( response.success ) {
+				$( '#asset-request-form' ).remove();
+				$( '#asset-request' ).append( '<p>Your asset request has been received. Please allow 24-48 hours for a response.</p>' );
 			} else {
-				console.log('hi');
+				$( '#asset-request' ).prepend( '<p>Something in the request failed. Please try again.</p>' );
 			}
 		});
 	}

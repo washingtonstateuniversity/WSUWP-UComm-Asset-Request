@@ -17,13 +17,22 @@ class WSU_UComm_Assets_Registration {
 	var $post_type_slug = 'ucomm_asset_request';
 
 	/**
+	 * @var string User meta key used to assign asset access.
+	 */
+	var $user_meta_key = '_ucomm_asset_access';
+
+	/**
 	 * Setup the hooks.
 	 */
 	public function __construct() {
-		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' ) );
-		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ) );
+		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' )        );
+		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   )        );
+		add_filter( 'map_meta_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
+
 		add_action( 'wsuwp_sso_user_created',    array( $this, 'remove_user_roles'         ) );
 		add_action( 'init',                      array( $this, 'register_post_type'        ) );
+
+		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
 
 	/**
@@ -90,6 +99,49 @@ class WSU_UComm_Assets_Registration {
 		);
 
 		register_post_type( $this->post_type_slug, $args );
+	}
+
+	/**
+	 * Map capabilities for users that are requesting access to assets.
+	 *
+	 * @param array  $caps    Array of capabilities.
+	 * @param string $cap     Capability being checked.
+	 * @param int    $user_id ID of the user for which capabilities are being checked.
+	 * @param array  $args    Array of arguments.
+	 *
+	 * @return array Modified list of capabilities for a user.
+	 */
+	public function map_asset_request_cap( $caps, $cap, $user_id, $args ) {
+		if ( 'request_asset' === $cap ) {
+			$request_asset_cap = get_user_meta( $user_id, '_ucomm_asset_access', true );
+
+			if ( 'fonts' !== $request_asset_cap ) {
+				$caps[] = 'do_not_allow';
+			}
+		}
+
+		return $caps;
+	}
+
+	public function ucomm_asset_request_display() {
+		// Build the output to return for use by the shortcode.
+		ob_start();
+		?>
+		<div id="asset-request-form">
+			<?php
+
+			if ( current_user_can( 'request_asset' ) ) {
+				echo 'allowed'; // display asset request form.
+			} else {
+				echo 'not allowed'; // display register link.
+			}
+			?>
+		</div>
+		<?php
+		$output = ob_get_contents();
+		ob_end_clean();
+
+		return $output;
 	}
 }
 new WSU_UComm_Assets_Registration();

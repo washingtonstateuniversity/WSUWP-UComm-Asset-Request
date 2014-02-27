@@ -123,6 +123,11 @@ class WSU_UComm_Assets_Registration {
 		return $caps;
 	}
 
+	/**
+	 * Handle the display of the ucomm_asset_request shortcode.
+	 *
+	 * @return string HTML output
+	 */
 	public function ucomm_asset_request_display() {
 		// Build the output to return for use by the shortcode.
 		ob_start();
@@ -150,14 +155,14 @@ class WSU_UComm_Assets_Registration {
 					if ( 1 <= count( $user_requests ) ) {
 						echo 'We have received your request for access. You should receive verification and instructions shortly.';
 					} else {
-						echo 'User is authenticated but must request access.';
+						$this->asset_form_output();
 					}
 				}
 			} else {
 				if ( is_user_logged_in() ) {
 					// To ease the workflow, anybody authenticated user that visits this site should be made a subscriber.
 					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
-					echo 'User is logged in, but not a member of the site.';
+					$this->asset_form_output();
 				} else {
 					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
@@ -169,6 +174,13 @@ class WSU_UComm_Assets_Registration {
 		ob_end_clean();
 
 		return $output;
+	}
+
+	/**
+	 * Display the HTML used to handle the asset request form.
+	 */
+	private function asset_form_output() {
+
 	}
 }
 new WSU_UComm_Assets_Registration();

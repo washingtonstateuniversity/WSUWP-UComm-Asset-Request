@@ -130,10 +130,18 @@ class WSU_UComm_Assets_Registration {
 		<div id="asset-request-form">
 			<?php
 
-			if ( current_user_can( 'request_asset' ) ) {
-				echo 'allowed'; // display asset request form.
+			if ( is_user_member_of_blog() ) {
+				if ( current_user_can( 'request_asset' ) ) {
+					echo 'User is authenticated and can retrieve asset.';
+				} else {
+					echo 'User is authenticated but must request access.';
+				}
 			} else {
-				echo 'not allowed'; // display register link.
+				if ( is_user_logged_in() ) {
+					echo 'User is logged in, but not a member of the site.';
+				} else {
+					echo 'User is not logged in.';
+				}
 			}
 			?>
 		</div>

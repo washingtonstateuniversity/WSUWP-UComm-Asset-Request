@@ -132,7 +132,13 @@ class WSU_UComm_Assets_Registration {
 
 			if ( is_user_member_of_blog() ) {
 				if ( current_user_can( 'request_asset' ) ) {
-					echo 'User is authenticated and can retrieve asset.';
+					// Retrieve assets attached to this page and display them in a list for download.
+					$available_assets = get_attached_media( 'application/zip', get_queried_object_id() );
+					echo '<h3>Available Assets</h3><ul>';
+					foreach( $available_assets as $asset ) {
+						echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+					}
+					echo '</ul>';
 				} else {
 					$user_requests = get_posts( array(
 						'post_type'      => $this->post_type_slug,

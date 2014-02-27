@@ -180,7 +180,18 @@ class WSU_UComm_Assets_Registration {
 	 * Display the HTML used to handle the asset request form.
 	 */
 	private function asset_form_output() {
-
+		?>
+		<form id="asset-request-form" class="asset-request">
+			<label for="email_address">Email Address:</label><br>
+			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
+			<label for="deparatment">College/Department:</label><br>
+			<input type="text" name="department" id="department" value="" style="width:100%;" />
+			<label for="notes">Request Notes:</label><br>
+			<textarea name="notes" id="request-notes" rows="10" style="width:100%;"></textarea>
+			<input type="submit" id="submit-asset-request" value="Request Assets" style="float:right">
+			<div class="clear"></div>
+		</form>
+		<?php
 	}
 }
 new WSU_UComm_Assets_Registration();

@@ -17,6 +17,7 @@ class WSU_UComm_Assets_Registration {
 	public function __construct() {
 		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' ) );
 		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ) );
+		add_action( 'wsuwp_sso_user_created',    array( $this, 'remove_user_roles'         ) );
 	}
 
 	/**
@@ -36,6 +37,16 @@ class WSU_UComm_Assets_Registration {
 	 */
 	public function wsuwp_sso_new_user_role() {
 		return 'subscriber';
+	}
+
+	/**
+	 * Remove all roles from a new user when they are automatically created.
+	 *
+	 * @param int $user_id A user's ID.
+	 */
+	public function remove_user_roles( $user_id ) {
+		$user = get_userdata( $user_id );
+		$user->set_role( '' );
 	}
 }
 new WSU_UComm_Assets_Registration();

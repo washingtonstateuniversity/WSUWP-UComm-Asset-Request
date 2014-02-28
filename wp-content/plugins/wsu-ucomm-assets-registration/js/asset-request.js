@@ -12,6 +12,7 @@
 		var email_address = $( '#email-address' ).val(),
 			department    = $( '#department' ).val(),
 			notes         = $( '#request-notes' ).val(),
+			asset_type    = $( '#asset-type' ).val(),
 			nonce         = $( '#asset-request-nonce' ).val();
 
 		// Build the data for our ajax call
@@ -20,6 +21,7 @@
 			email_address: email_address,
 			department:    department,
 			notes:         notes,
+			asset_type:    asset_type,
 			_ajax_nonce:   nonce
 		};
 

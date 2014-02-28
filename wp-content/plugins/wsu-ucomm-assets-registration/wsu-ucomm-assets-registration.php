@@ -132,8 +132,10 @@ class WSU_UComm_Assets_Registration {
 	 */
 	public function map_asset_request_cap( $allcaps, $cap, $args, $user ) {
 		$request_asset_cap = get_user_meta( $user->ID, $this->user_meta_key, true );
-		if ( 'fonts' === $request_asset_cap ) {
-			$allcaps['request_asset'] = true;
+
+		// Loop through the assets this user has access to and set the capabilities.
+		foreach( (array) $request_asset_cap as $asset_cap ) {
+			$allcaps[ 'request_asset_' . $asset_cap ] = true;
 		}
 
 		return $allcaps;
@@ -142,9 +144,21 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Handle the display of the ucomm_asset_request shortcode.
 	 *
+	 * @param array @args Arguments used with the shortcode.
+	 *
 	 * @return string HTML output
 	 */
-	public function ucomm_asset_request_display() {
+	public function ucomm_asset_request_display( $args ) {
+		// If a default type is not specified, we check for fonts access.
+
+		if ( empty( $args['type'] ) ) {
+			$asset_type = 'fonts';
+		} else {
+			$asset_type = sanitize_key( $args['type'] );
+		}
+
+		$capability = 'request_asset_' . $asset_type;
+
 		// Build the output to return for use by the shortcode.
 		ob_start();
 		?>
@@ -152,7 +166,7 @@ class WSU_UComm_Assets_Registration {
 			<?php
 
 			if ( is_user_member_of_blog() ) {
-				if ( current_user_can( 'request_asset' ) ) {
+				if ( current_user_can( $capability ) ) {
 					// Retrieve assets attached to this page and display them in a list for download.
 					$available_assets = get_attached_media( 'application/zip', get_queried_object_id() );
 					echo '<h3>Available Assets</h3><ul>';
@@ -161,24 +175,31 @@ class WSU_UComm_Assets_Registration {
 					}
 					echo '</ul>';
 				} else {
-					$user_requests = get_posts( array(
+					$user_requests = new WP_Query(
+						array(
 						'post_type'      => $this->post_type_slug,
 						'author'         => get_current_user_id(),
 						'post_status'    => array( 'publish', 'pending' ),
 						'posts_per_page' => 1,
+						'meta_query'     => array(
+							array(
+								'key'       => '_ucomm_asset_type',
+								'value'     => $asset_type,
+							),
+						),
 					));
 
-					if ( 1 <= count( $user_requests ) ) {
+					if ( $user_requests->have_posts() ) {
 						echo 'We have received your request for access. You should receive verification and instructions shortly.';
 					} else {
-						$this->asset_form_output();
+						$this->asset_form_output( $asset_type );
 					}
 				}
 			} else {
 				if ( is_user_logged_in() ) {
 					// To ease the workflow, anybody authenticated user that visits this site should be made a subscriber.
 					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
-					$this->asset_form_output();
+					$this->asset_form_output( $asset_type );
 				} else {
 					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
@@ -194,12 +215,15 @@ class WSU_UComm_Assets_Registration {
 
 	/**
 	 * Display the HTML used to handle the asset request form.
+	 *
+	 * @param string $asset_type Type of the asset being requested.
 	 */
-	private function asset_form_output() {
+	private function asset_form_output( $asset_type ) {
 		wp_enqueue_script( 'ucomm_asset_request', plugins_url( '/js/asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
 		wp_localize_script( 'ucomm_asset_request', 'ucomm_asset_data', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		?>
 		<form id="asset-request-form" class="asset-request">
+			<input type="hidden" id="asset-type" value="<?php echo esc_attr( $asset_type ); ?>" />
 			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
 			<label for="email_address">Email Address:</label><br>
 			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
@@ -215,6 +239,12 @@ class WSU_UComm_Assets_Registration {
 
 	/**
 	 * Handle the submission of an asset request form through AJAX.
+	 *
+	 * Asset type and email address are added to the post title for quick identification
+	 * in the admin. Notes submitted by the requesting user are added as post content.
+	 *
+	 * Additional fields should find their way to post meta so that they can be displayed
+	 * as part of the request in the admin.
 	 */
 	public function submit_asset_request() {
 		wp_verify_nonce( 'asset-request' );
@@ -225,8 +255,14 @@ class WSU_UComm_Assets_Registration {
 			'post_author' => get_current_user_id(),
 		);
 
+		// An asset type is required to grant access to an asset type.
+		if ( empty( $_POST['asset_type'] ) ) {
+			echo json_encode( array( 'error' => 'No asset type was supplied.' ) );
+			die();
+		}
+
 		if ( isset( $_POST[ 'email_address'] ) ) {
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $_POST['email_address'] );
+			$post['post_title'] = sanitize_text_field( ucfirst( $_POST['asset_type'] ) . ' asset request from ' . $_POST['email_address'] );
 		} else {
 			$user = get_userdata( get_current_user_id() );
 			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
@@ -247,6 +283,9 @@ class WSU_UComm_Assets_Registration {
 			$department = sanitize_text_field( $_POST['department'] );
 			update_post_meta( $post_id, '_ucomm_request_department', $department );
 		}
+
+		$asset_type = sanitize_key( $_POST['asset_type'] );
+		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
 		echo json_encode( array( 'success' => 'Request received.' ) );
 		die();
@@ -270,16 +309,39 @@ class WSU_UComm_Assets_Registration {
 			return;
 		}
 
+		$user_id = absint( $post->post_author );
+
+		$asset_type = get_post_meta( $post->ID, '_ucomm_asset_type', true );
+		if ( empty( $asset_type ) ) {
+			$asset_type = 'fonts';
+		}
+
 		// Add access to assets.
 		if ( 'pending' === $old_status && 'publish' === $new_status ) {
-			$user_id = absint( $post->post_author );
-			update_user_meta( $user_id, $this->user_meta_key, 'fonts' );
+			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
+			if ( empty( $current_access ) ) {
+				$update_access = array( $asset_type );
+			} else {
+				$update_access = (array) $current_access;
+				$update_access[] = $asset_type;
+			}
+			update_user_meta( $user_id, $this->user_meta_key, $update_access );
 		}
 
 		// Remove access to assets.
 		if ( 'publish' === $old_status && 'publish' !== $new_status ) {
-			$user_id = absint( $post->post_author );
-			delete_user_meta( $user_id, $this->user_meta_key );
+			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
+			$new_access = (array) $current_access;
+
+			if ( array_key_exists( $asset_type, $new_access ) ) {
+				unset( $new_access[ $asset_type ] );
+			}
+
+			if ( empty( $new_access ) ) {
+				delete_user_meta( $user_id, $this->user_meta_key );
+			} else {
+				update_user_meta( $user_id, $this->user_meta_key, $new_access );
+			}
 		}
 	}
 }

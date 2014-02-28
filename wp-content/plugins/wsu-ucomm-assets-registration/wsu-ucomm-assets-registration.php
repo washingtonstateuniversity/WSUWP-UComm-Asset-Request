@@ -36,10 +36,22 @@ class WSU_UComm_Assets_Registration {
 
 		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'    ), 10, 1 );
 		add_action( 'init',                         array( $this, 'register_post_type'   ), 10, 1 );
+		add_action( 'init',                         array( $this, 'temp_redirect'        ),  5, 1 );
 		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
+	}
+
+	/**
+	 * Add a temporary redirect to force all /assets/ traffic to /assets/font-request/ as that will
+	 * be the only asset available at first.
+	 */
+	public function temp_redirect() {
+		if ( '/assets/' === $_SERVER['REQUEST_URI'] ) {
+			wp_safe_redirect( site_url( '/font-request/' ) );
+			die();
+		}
 	}
 
 	/**

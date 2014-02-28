@@ -34,9 +34,10 @@ class WSU_UComm_Assets_Registration {
 		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ), 10, 1 );
 		add_filter( 'map_meta_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
 
-		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'    ), 10 );
-		add_action( 'init',                         array( $this, 'register_post_type'   ), 10 );
-		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10 );
+		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'    ), 10, 1 );
+		add_action( 'init',                         array( $this, 'register_post_type'   ), 10, 1 );
+		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
+		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -240,6 +241,37 @@ class WSU_UComm_Assets_Registration {
 
 		echo json_encode( array( 'success' => 'Request received.' ) );
 		die();
+	}
+
+	/**
+	 * Grant a user access to asset downloads when their asset request is published. Remove
+	 * user access to asset downloads when their asset request is unpublished.
+	 *
+	 * @param string  $new_status New post status.
+	 * @param string  $old_status Old post status.
+	 * @param WP_Post $post       Current post object.
+	 */
+	public function grant_asset_access( $new_status, $old_status, $post ) {
+		if ( $this->post_type_slug !== $post->post_type ) {
+			return;
+		}
+
+		// Don't accidentally revoke your own access.
+		if ( get_current_user_id() == $post->post_author ) {
+			return;
+		}
+
+		// Add access to assets.
+		if ( 'pending' === $old_status && 'publish' === $new_status ) {
+			$user_id = absint( $post->post_author );
+			update_user_meta( $user_id, $this->user_meta_key, 'fonts' );
+		}
+
+		// Remove access to assets.
+		if ( 'publish' === $old_status && 'publish' !== $new_status ) {
+			$user_id = absint( $post->post_author );
+			delete_user_meta( $user_id, $this->user_meta_key );
+		}
 	}
 }
 new WSU_UComm_Assets_Registration();

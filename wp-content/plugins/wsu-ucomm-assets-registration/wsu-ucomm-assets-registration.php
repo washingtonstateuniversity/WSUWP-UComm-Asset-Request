@@ -155,7 +155,7 @@ class WSU_UComm_Assets_Registration {
 					$user_requests = get_posts( array(
 						'post_type'      => $this->post_type_slug,
 						'author'         => get_current_user_id(),
-						'post_status'    => 'pending',
+						'post_status'    => array( 'publish', 'pending' ),
 						'posts_per_page' => 1,
 					));
 

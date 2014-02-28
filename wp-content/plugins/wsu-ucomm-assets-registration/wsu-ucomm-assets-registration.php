@@ -256,7 +256,7 @@ class WSU_UComm_Assets_Registration {
 		}
 
 		if ( isset( $_POST[ 'email_address'] ) ) {
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $_POST['email_address'] );
+			$post['post_title'] = sanitize_text_field( ucfirst( $_POST['asset_type'] ) . ' asset request from ' . $_POST['email_address'] );
 		} else {
 			$user = get_userdata( get_current_user_id() );
 			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );

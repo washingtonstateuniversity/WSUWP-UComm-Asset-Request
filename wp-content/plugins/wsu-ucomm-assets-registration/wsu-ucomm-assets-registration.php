@@ -32,7 +32,7 @@ class WSU_UComm_Assets_Registration {
 	public function __construct() {
 		add_filter( 'wsuwp_sso_create_new_user', array( $this, 'wsuwp_sso_create_new_user' ), 10, 1 );
 		add_filter( 'wsuwp_sso_new_user_role',   array( $this, 'wsuwp_sso_new_user_role'   ), 10, 1 );
-		add_filter( 'map_meta_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
+		add_filter( 'user_has_cap',              array( $this, 'map_asset_request_cap'     ), 10, 4 );
 
 		add_action( 'wsuwp_sso_user_created',       array( $this, 'remove_user_roles'    ), 10, 1 );
 		add_action( 'init',                         array( $this, 'register_post_type'   ), 10, 1 );
@@ -111,23 +111,20 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Map capabilities for users that are requesting access to assets.
 	 *
-	 * @param array  $caps    Array of capabilities.
-	 * @param string $cap     Capability being checked.
-	 * @param int    $user_id ID of the user for which capabilities are being checked.
-	 * @param array  $args    Array of arguments.
+	 * @param array   $allcaps An array of all the role's capabilities.
+	 * @param array   $caps    Actual capabilities for meta capability.
+	 * @param array   $args    Optional parameters passed to has_cap(), typically object ID.
+	 * @param WP_User $user    The user object.
 	 *
 	 * @return array Modified list of capabilities for a user.
 	 */
-	public function map_asset_request_cap( $caps, $cap, $user_id, $args ) {
-		if ( 'request_asset' === $cap ) {
-			$request_asset_cap = get_user_meta( $user_id, '_ucomm_asset_access', true );
-
-			if ( 'fonts' !== $request_asset_cap ) {
-				$caps[] = 'do_not_allow';
-			}
+	public function map_asset_request_cap( $allcaps, $cap, $args, $user ) {
+		$request_asset_cap = get_user_meta( $user->ID, $this->user_meta_key, true );
+		if ( 'fonts' === $request_asset_cap ) {
+			$allcaps['request_asset'] = true;
 		}
 
-		return $caps;
+		return $allcaps;
 	}
 
 	/**

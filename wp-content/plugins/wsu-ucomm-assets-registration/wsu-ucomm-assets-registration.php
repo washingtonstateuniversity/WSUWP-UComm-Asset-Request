@@ -102,7 +102,7 @@ class WSU_UComm_Assets_Registration {
 			'capability_type'    => 'post',
 			'hierarchical'       => false,
 			'menu_position'      => 5,
-			'supports'           => array( 'title', 'editor' ),
+			'supports'           => array( 'title', 'editor', 'author' ),
 		);
 
 		register_post_type( $this->post_type_slug, $args );

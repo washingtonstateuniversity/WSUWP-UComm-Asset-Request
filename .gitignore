@@ -8,3 +8,4 @@ wp-content/uploads
 wp-content/plugins/*
 !wp-content/plugins/index.php
 !wp-content/plugins/wsu-ucomm-assets-registration
+!wp-content/plugins/custom-css

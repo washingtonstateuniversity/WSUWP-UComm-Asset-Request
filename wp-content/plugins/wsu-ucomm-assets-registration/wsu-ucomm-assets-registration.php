@@ -135,7 +135,7 @@ class WSU_UComm_Assets_Registration {
 
 		// Loop through the assets this user has access to and set the capabilities.
 		foreach( (array) $request_asset_cap as $asset_cap ) {
-			$allcaps[ $asset_cap ] = true;
+			$allcaps[ 'request_asset_' . $asset_cap ] = true;
 		}
 
 		return $allcaps;

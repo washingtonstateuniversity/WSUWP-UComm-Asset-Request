@@ -103,8 +103,7 @@ article h6 + p {
 header .inlineHeader {
 	color:#464E54 ;
 	font-size: 1.500em;
-	line-height: 1.775em;v
-	display:inline-block;
+	line-height: 1.775em;
 	padding: 1.2em;
 	margin-top: 0;
 	vertical-align: middle;
@@ -299,7 +298,9 @@ Description: Create structure elements for the template such as supplimentary co
 	border-width:1px 1px 8px 0px;
 		}
 .size-lt-large #fixedSide {
-	position:; absolute;
+	position: relative;
+	margin-top:140px;
+
 }
 #fixedSide {
 	position:fixed;

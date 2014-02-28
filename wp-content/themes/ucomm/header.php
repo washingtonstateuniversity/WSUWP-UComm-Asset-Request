@@ -39,8 +39,6 @@
 	<!-- TARGET *LIVE* --><script src="http://repo.wsu.edu/spine/1/spine.min.js"></script><!-- -->
 	<!-- TEMP *DEV* <script src="http://nbj.me/spine/1/0.5/scripts/spine.js"></script> -->
 	<!-- Your supplementary scripts here -->
-	<script src="webfonts/ss-pika.js"></script>
-
 	<!-- COMPATIBILITY -->
 	<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js">IE7_PNG_SUFFIX=".png";</script><![endif]--> 
 	

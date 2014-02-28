@@ -150,7 +150,8 @@ class WSU_UComm_Assets_Registration {
 	 */
 	public function ucomm_asset_request_display( $args ) {
 		// If a default type is not specified, we check for fonts access.
-		if ( ! empty( $args['type'] ) ) {
+
+		if ( empty( $args['type'] ) ) {
 			$asset_type = 'fonts';
 		} else {
 			$asset_type = sanitize_key( $args['type'] );
@@ -174,14 +175,21 @@ class WSU_UComm_Assets_Registration {
 					}
 					echo '</ul>';
 				} else {
-					$user_requests = get_posts( array(
+					$user_requests = new WP_Query(
+						array(
 						'post_type'      => $this->post_type_slug,
 						'author'         => get_current_user_id(),
 						'post_status'    => array( 'publish', 'pending' ),
 						'posts_per_page' => 1,
+						'meta_query'     => array(
+							array(
+								'key'       => '_ucomm_asset_type',
+								'value'     => $asset_type,
+							),
+						),
 					));
 
-					if ( 1 <= count( $user_requests ) ) {
+					if ( $user_requests->have_posts() ) {
 						echo 'We have received your request for access. You should receive verification and instructions shortly.';
 					} else {
 						$this->asset_form_output( $asset_type );

@@ -239,6 +239,12 @@ class WSU_UComm_Assets_Registration {
 
 	/**
 	 * Handle the submission of an asset request form through AJAX.
+	 *
+	 * Asset type and email address are added to the post title for quick identification
+	 * in the admin. Notes submitted by the requesting user are added as post content.
+	 *
+	 * Additional fields should find their way to post meta so that they can be displayed
+	 * as part of the request in the admin.
 	 */
 	public function submit_asset_request() {
 		wp_verify_nonce( 'asset-request' );

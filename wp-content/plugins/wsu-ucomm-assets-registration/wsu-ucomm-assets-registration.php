@@ -338,47 +338,22 @@ class WSU_UComm_Assets_Registration {
 		}
 		else
 		{
-			$notes = sanitize_text_field( $_POST['notes'] );
-		}
-
-
-/*
-		if ( isset( $_POST[ 'email_address'] ) ) {
-			$post['post_title'] = sanitize_text_field( ucfirst( $_POST['asset_type'] ) . ' asset request from ' . $_POST['email_address'] );
-		} else {
-			$user = get_userdata( get_current_user_id() );
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
-		}
-
-
-		if ( isset( $_POST['notes'] ) ) {
 			$post['post_content'] = wp_kses_post( $_POST['notes'] );
 		}
-*/
-
-
 
 		$post_id = wp_insert_post( $post );
-
-
-
-
 
 		if ( is_wp_error( $post_id ) ) {
 			echo json_encode( array( 'error' => 'There was an error creating the request.' ) );
 			die();
 		}
 
-		
 		//field meta data stuff
 		update_post_meta( $post_id, '_ucomm_request_first_name', $first_name );
 		update_post_meta( $post_id, '_ucomm_request_last_name',  $last_name );
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
-
-
-
 
 		$asset_type = sanitize_key( $_POST['asset_type'] );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );

@@ -225,12 +225,28 @@ class WSU_UComm_Assets_Registration {
 		<form id="asset-request-form" class="asset-request">
 			<input type="hidden" id="asset-type" value="<?php echo esc_attr( $asset_type ); ?>" />
 			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
+			
+			<label for="first_name">First Name:</label><br />
+			<input type="text" name="first_name" id="first-name" value="" style="width:100%;" />
+
+			<label for="last_name">Last Name:</label><br />
+			<input type="text" name="last_name" id="last-name" value="" style="width:100%;" />
+
 			<label for="email_address">Email Address:</label><br>
 			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
+
+			<label for="area">Area Number:</label><br>
+			<input type="text" name="area" id="area" value="" style="width:100%;" />			
+
 			<label for="deparatment">College/Department:</label><br>
 			<input type="text" name="department" id="department" value="" style="width:100%;" />
-			<label for="notes">Request Notes:</label><br>
+
+			<label for="job_description">Job Description:</label><br>
+			<input type="text" name="job_description" id="job-description" value="" style="width:100%;" />			
+
+			<label for="notes">Justification for font family:</label><br>
 			<textarea name="notes" id="request-notes" rows="10" style="width:100%;"></textarea>
+
 			<input type="submit" id="submit-asset-request" value="Request Assets" style="float:right">
 			<div class="clear"></div>
 		</form>
@@ -261,6 +277,72 @@ class WSU_UComm_Assets_Registration {
 			die();
 		}
 
+		if (empty($_POST['first_name'] )){
+			echo json_encode( array( 'error' => 'Please enter first name.' ) );
+			die();
+		}
+		else
+		{
+			$first_name = sanitize_text_field( $_POST['first_name'] );
+		}
+
+		if (empty($_POST['last_name'] )){
+			echo json_encode( array( 'error' => 'Please enter last name.' ) );
+			die();
+		}
+		else
+		{
+			$last_name = sanitize_text_field( $_POST['last_name'] );
+		}
+
+		if ( empty( $_POST[ 'email_address'] ) ) 
+		{
+			echo json_encode( array( 'error' => 'Please enter email address.' ) );
+			die();
+		} else {
+			$user = get_userdata( get_current_user_id() );
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
+		}
+
+		if (empty($_POST['area'] )){
+			echo json_encode( array( 'error' => 'Please enter area number.' ) );
+			die();
+		}
+		else
+		{
+			$area = sanitize_text_field( $_POST['area'] );
+		}
+
+
+		if (empty($_POST['department'] )){
+			echo json_encode( array( 'error' => 'Please enter department name.' ) );
+			die();
+		}
+		else
+		{
+			$department = sanitize_text_field( $_POST['department'] );
+		}
+
+		if (empty($_POST['job_description'] )){
+			echo json_encode( array( 'error' => 'Please enter job description.' ) );
+			die();
+		}
+		else
+		{
+			$job_description = sanitize_text_field( $_POST['job_description'] );
+		}
+
+		if (empty($_POST['notes'] )){
+			echo json_encode( array( 'error' => 'Please enter notes.' ) );
+			die();
+		}
+		else
+		{
+			$notes = sanitize_text_field( $_POST['notes'] );
+		}
+
+
+/*
 		if ( isset( $_POST[ 'email_address'] ) ) {
 			$post['post_title'] = sanitize_text_field( ucfirst( $_POST['asset_type'] ) . ' asset request from ' . $_POST['email_address'] );
 		} else {
@@ -268,21 +350,35 @@ class WSU_UComm_Assets_Registration {
 			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
 		}
 
+
 		if ( isset( $_POST['notes'] ) ) {
 			$post['post_content'] = wp_kses_post( $_POST['notes'] );
 		}
+*/
+
+
 
 		$post_id = wp_insert_post( $post );
+
+
+
+
 
 		if ( is_wp_error( $post_id ) ) {
 			echo json_encode( array( 'error' => 'There was an error creating the request.' ) );
 			die();
 		}
 
-		if ( isset( $_POST['department'] ) ) {
-			$department = sanitize_text_field( $_POST['department'] );
-			update_post_meta( $post_id, '_ucomm_request_department', $department );
-		}
+		
+		//field meta data stuff
+		update_post_meta( $post_id, '_ucomm_request_first_name', $first_name );
+		update_post_meta( $post_id, '_ucomm_request_last_name',  $last_name );
+		update_post_meta( $post_id, '_ucomm_request_area', $area );
+		update_post_meta( $post_id, '_ucomm_request_department', $department );
+		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
+
+
+
 
 		$asset_type = sanitize_key( $_POST['asset_type'] );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );

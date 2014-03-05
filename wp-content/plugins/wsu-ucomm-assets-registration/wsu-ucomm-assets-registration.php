@@ -319,7 +319,6 @@ class WSU_UComm_Assets_Registration {
 
 		// We should have at least one font quantity specified for the request if it is valid.
 		$font_check = false; // Aids in verification that a quantity has been requested.
-		$fonts_requested = array(); // Track the quantities of the fonts requested.
 		foreach ( $this->fonts as $font_slug => $font_data ) {
 			if ( ! empty( $_POST[ $font_slug ] ) ) {
 				$this->fonts[ $font_slug ][ 'qty' ] = absint( $_POST[ $font_slug ] );

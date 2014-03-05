@@ -426,8 +426,6 @@ class WSU_UComm_Assets_Registration {
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
 		$this->fonts = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
-		$asset_type  = get_post_meta( $post->ID, '_ucomm_asset_type',         true );
-
 		?>
 		<ul>
 			<li>First Name: <?php echo esc_html( $first_name ); ?></li>
@@ -448,6 +446,7 @@ class WSU_UComm_Assets_Registration {
 		<?php echo $post->post_content; ?>
 		<?php
 	}
+
 	/**
 	 * Grant a user access to asset downloads when their asset request is published. Remove
 	 * user access to asset downloads when their asset request is unpublished.

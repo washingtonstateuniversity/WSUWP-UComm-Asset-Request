@@ -271,7 +271,7 @@ class WSU_UComm_Assets_Registration {
 			</ol>
 
 			<label for="notes">Justification for font family:</label><br>
-			<textarea name="notes" id="request-notes" rows="10" style="width:100%;"></textarea>
+			<textarea name="notes" id="request-notes" rows="5" style="width:100%;"></textarea>
 
 			<input type="submit" id="submit-asset-request" value="Request Assets" style="float:right">
 			<div class="clear"></div>

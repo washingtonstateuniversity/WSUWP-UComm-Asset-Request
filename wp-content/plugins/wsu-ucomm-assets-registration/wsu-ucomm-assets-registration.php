@@ -27,6 +27,17 @@ class WSU_UComm_Assets_Registration {
 	var $user_meta_key = '_ucomm_asset_access';
 
 	/**
+	 * @var array The array of font slugs, quantities, and names.
+	 */
+	var $fonts = array(
+		'office_support_qty'      => array( 'qty' => 0, 'name' => 'Office Support Package' ),
+		'stone_sans_nocharge_qty' => array( 'qty' => 0, 'name' => 'Stone Sans II (no charge)' ),
+		'stone_sans_charge_qty'   => array( 'qty' => 0, 'name' => 'Stone Sans II ($30)' ),
+		'full_stone_nocharge_qty' => array( 'qty' => 0, 'name' => 'Full Stone Font Family (no charge)' ),
+		'full_stone_charge_qty'   => array( 'qty' => 0, 'name' => 'Full Stone Font Family ($60)' ),
+	);
+
+	/**
 	 * Setup the hooks.
 	 */
 	public function __construct() {
@@ -307,23 +318,14 @@ class WSU_UComm_Assets_Registration {
 		}
 
 		// We should have at least one font quantity specified for the request if it is valid.
-		$font_qty_checks = array(
-			'office_support_qty',
-			'stone_sans_nocharge_qty',
-			'stone_sans_charge_qty',
-			'full_stone_nocharge_qty',
-			'full_stone_charge_qty',
-		);
-
 		$font_check = false; // Aids in verification that a quantity has been requested.
 		$fonts_requested = array(); // Track the quantities of the fonts requested.
-
-		foreach ( $font_qty_checks as $font_qty ) {
-			if ( ! empty( $_POST[ $font_qty ] ) ) {
-				$fonts_requested[] = array( $font_qty => absint( $_POST[ $font_qty ] ) );
+		foreach ( $this->fonts as $font_slug => $font_data ) {
+			if ( ! empty( $_POST[ $font_slug ] ) ) {
+				$this->fonts[ $font_slug ][ 'qty' ] = absint( $_POST[ $font_slug ] );
 				$font_check = true;
 			} else {
-				$fonts_requested[] = array( $font_qty => 0 );
+				$this->fonts[ $font_slug ][ 'qty' ] = 0;
 			}
 		}
 
@@ -394,7 +396,7 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
-		update_post_meta( $post_id, '_ucomm_font_qty_request', $fonts_requested );
+		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->fonts );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
 		echo json_encode( array( 'success' => 'Request received.' ) );
@@ -418,13 +420,13 @@ class WSU_UComm_Assets_Registration {
 	 * @param WP_Post $post The current post object.
 	 */
 	public function asset_request_details( $post ) {
-		$first_name = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
-		$last_name  = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
-		$area       = get_post_meta( $post->ID, '_ucomm_request_area',       true );
-		$department = get_post_meta( $post->ID, '_ucomm_request_department', true );
-		$job_desc   = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
-		$fonts_qty  = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
-		$asset_type = get_post_meta( $post->ID, '_ucomm_asset_type',         true );
+		$first_name  = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
+		$last_name   = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
+		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
+		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
+		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
+		$this->fonts = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
+		$asset_type  = get_post_meta( $post->ID, '_ucomm_asset_type',         true );
 
 		?>
 		<ul>
@@ -435,9 +437,10 @@ class WSU_UComm_Assets_Registration {
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
 		</ul>
 
-		<ul><strong>Font Quantities:</strong>
-			<?php foreach( $fonts_qty as $font ) : ?>
-			<li><?php echo esc_html( key( $font ) ); ?>: <?php echo $font[ key( $font ) ]; ?></li>
+		<strong>Font Quantities:</strong>
+		<ul>
+			<?php foreach( $this->fonts as $font ) : ?>
+			<li><?php echo esc_html( $font['name'] ); ?>: <?php echo absint( $font['qty'] ); ?></li>
 			<?php endforeach; ?>
 		</ul>
 

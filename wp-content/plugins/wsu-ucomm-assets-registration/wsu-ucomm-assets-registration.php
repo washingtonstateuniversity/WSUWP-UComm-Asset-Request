@@ -437,13 +437,12 @@ class WSU_UComm_Assets_Registration {
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
 		</ul>
 
-		<strong>Font Quantities:</strong>
-		<ul>
-			<?php foreach( $this->fonts as $font ) : ?>
-			<li><?php echo esc_html( $font['name'] ); ?>: <?php echo absint( $font['qty'] ); ?></li>
-			<?php endforeach; ?>
-		</ul>
-
+		<table>
+			<thead><tr><th align="left">Font</th><th align="right">Quantity</th></tr></thead>
+		<?php foreach( $this->fonts as $font ) : ?>
+			<tr><td><?php echo esc_html( $font['name'] ); ?></td><td align="right"><?php echo absint( $font['qty'] ); ?></td></tr>
+		<?php endforeach; ?>
+		</table>
 		<?php
 	}
 	/**

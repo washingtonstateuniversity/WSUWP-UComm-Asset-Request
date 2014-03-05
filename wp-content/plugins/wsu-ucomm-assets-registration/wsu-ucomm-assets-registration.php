@@ -312,10 +312,15 @@ class WSU_UComm_Assets_Registration {
 			'full_stone_charge_qty',
 		);
 
-		$font_check = false;
+		$font_check = false; // Aids in verification that a quantity has been requested.
+		$fonts_requested = array(); // Track the quantities of the fonts requested.
+
 		foreach ( $font_qty_checks as $font_qty ) {
 			if ( ! empty( $_POST[ $font_qty ] ) ) {
+				$fonts_requested[] = array( $font_qty => absint( $_POST[ $font_qty ] ) );
 				$font_check = true;
+			} else {
+				$fonts_requested[] = array( $font_qty => 0 );
 			}
 		}
 
@@ -397,6 +402,7 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
+		update_post_meta( $post_id, '_ucomm_font_qty_request', $fonts_requested );
 
 		$asset_type = sanitize_key( $_POST['asset_type'] );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );

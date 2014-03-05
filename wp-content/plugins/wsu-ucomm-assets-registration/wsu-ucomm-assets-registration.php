@@ -244,6 +244,32 @@ class WSU_UComm_Assets_Registration {
 			<label for="job_description">Job Description:</label><br>
 			<input type="text" name="job_description" id="job-description" value="" style="width:100%;" />			
 
+			<ol>
+				<li>
+					<p><strong>Office Support Package.</strong> Includes the basic Stone Sans and Stone Serif font families, which are necessary for creating office communications/memorandum for both internal and external audiences in compliance with University brand standards.</p>
+					<input type="text" name="office_support_qty" id="office-support-qty" size="2" value="0" />
+					<label for="office_support_qty">Office Support Package (no charge)</label>
+				</li>
+				<li>
+					<p><strong>Stone Sans II Font Family.</strong> Includes regular Stone Sans plus Stone Sans Condensed. Users who already have regular Stone Sans and Stone Serif installed on their machines may download this package to add Stone Sans Condensed to their font library. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
+					<input type="text" name="stone_sans_nocharge_qty" id="stone-sans-nocharge-qty" size="2" value="0" />
+					<label for="stone_sans_nocharge_qty">Stone Sans II (no charge to University design staff)*</label>
+					<br />
+					<input type="text" name="stone_sans_charge_qty" id="stone-sans-charge-qty" size="2" value="0" />
+					<label for="stone_sans_charge_qty">Stone Sans II ($30 for non-design staff)</label>
+					<p>*If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or if you are requesting the package on behalf of such an individual or individuals, please provide a brief justification in support of your request in the field below.</p>
+				</li>
+				<li>
+					<p><strong>Full Stone Font Family.</strong> Includes Stone Sans II (which includes Stone Sans Condensed) and Stone Serif families. This package is for new users who do not currently have the regular Stone Sans and Stone Serif fonts installed on their machines. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
+					<input type="text" name="full_stone_nocharge_qty" id="full-stone-nocharge-qty" size="2" value="0" />
+					<label for="full_stone_nocharge_qty">Full Stone Font Family (no charge to University design staff)**</label>
+					<<br />
+					<input type="text" name="full_stone_charge_qty" id="full-stone-charge-qty" size="2" value="0" />
+					<label for="full_stone_charge_qty">Full Stone Font Family ($60 for non-design staff)**</label>
+					<p>**If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or are requesting the package on behalf of such an individual or individuals, please provide brief justification in support of your request in the field below.</p>
+				</li>
+			</ol>
+
 			<label for="notes">Justification for font family:</label><br>
 			<textarea name="notes" id="request-notes" rows="10" style="width:100%;"></textarea>
 

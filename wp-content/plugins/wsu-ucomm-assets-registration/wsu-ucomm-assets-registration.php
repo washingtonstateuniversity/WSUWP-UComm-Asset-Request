@@ -436,13 +436,16 @@ class WSU_UComm_Assets_Registration {
 			<li>Department: <?php echo esc_html( $department ); ?></li>
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
 		</ul>
-
+		<h4>Requested Fonts:</h4>
 		<table>
 			<thead><tr><th align="left">Font</th><th align="right">Quantity</th></tr></thead>
 		<?php foreach( $this->fonts as $font ) : ?>
 			<tr><td><?php echo esc_html( $font['name'] ); ?></td><td align="right"><?php echo absint( $font['qty'] ); ?></td></tr>
 		<?php endforeach; ?>
 		</table>
+
+		<h4>Notes for use justification:</h4>
+		<?php echo $post->post_content; ?>
 		<?php
 	}
 	/**

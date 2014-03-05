@@ -352,7 +352,8 @@ class WSU_UComm_Assets_Registration {
 			die();
 		} else {
 			$user = get_userdata( get_current_user_id() );
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
+			$email = sanitize_email( $_POST['email_address'] );
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $email );
 		}
 
 		if ( empty( $_POST['area'] ) ) {
@@ -392,6 +393,7 @@ class WSU_UComm_Assets_Registration {
 		//field meta data stuff
 		update_post_meta( $post_id, '_ucomm_request_first_name', $first_name );
 		update_post_meta( $post_id, '_ucomm_request_last_name',  $last_name );
+		update_post_meta( $post_id, '_ucomm_request_email', $email );
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
@@ -421,6 +423,7 @@ class WSU_UComm_Assets_Registration {
 	public function asset_request_details( $post ) {
 		$first_name  = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
 		$last_name   = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
+		$email       = get_post_meta( $post->ID, '_ucomm_request_email',      true );
 		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
@@ -429,6 +432,7 @@ class WSU_UComm_Assets_Registration {
 		<ul>
 			<li>First Name: <?php echo esc_html( $first_name ); ?></li>
 			<li>Last Name:  <?php echo esc_html( $last_name ); ?></li>
+			<li>Email: <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></li>
 			<li>Area:       <?php echo esc_html( $area ); ?></li>
 			<li>Department: <?php echo esc_html( $department ); ?></li>
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>

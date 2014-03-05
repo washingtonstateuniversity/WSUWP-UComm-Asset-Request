@@ -301,6 +301,8 @@ class WSU_UComm_Assets_Registration {
 		if ( empty( $_POST['asset_type'] ) ) {
 			echo json_encode( array( 'error' => 'No asset type was supplied.' ) );
 			die();
+		} else {
+			$asset_type = sanitize_text_field( $_POST['asset_type'] );
 		}
 
 		// We should have at least one font quantity specified for the request if it is valid.
@@ -392,8 +394,6 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
 		update_post_meta( $post_id, '_ucomm_font_qty_request', $fonts_requested );
-
-		$asset_type = sanitize_key( $_POST['asset_type'] );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
 		echo json_encode( array( 'success' => 'Request received.' ) );

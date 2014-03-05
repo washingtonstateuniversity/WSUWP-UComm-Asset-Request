@@ -275,7 +275,7 @@ class WSU_UComm_Assets_Registration {
 					<p><strong>Full Stone Font Family.</strong> Includes Stone Sans II (which includes Stone Sans Condensed) and Stone Serif families. This package is for new users who do not currently have the regular Stone Sans and Stone Serif fonts installed on their machines. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
 					<input type="text" name="full_stone_nocharge_qty" id="full-stone-nocharge-qty" size="2" value="0" />
 					<label for="full_stone_nocharge_qty">Full Stone Font Family (no charge to University design staff)**</label>
-					<<br />
+					<br />
 					<input type="text" name="full_stone_charge_qty" id="full-stone-charge-qty" size="2" value="0" />
 					<label for="full_stone_charge_qty">Full Stone Font Family ($60 for non-design staff)**</label>
 					<p>**If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or are requesting the package on behalf of such an individual or individuals, please provide brief justification in support of your request in the field below.</p>

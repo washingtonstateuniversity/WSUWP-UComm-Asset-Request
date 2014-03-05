@@ -329,26 +329,21 @@ class WSU_UComm_Assets_Registration {
 			die();
 		}
 
-		if (empty($_POST['first_name'] )){
+		if ( empty( $_POST['first_name'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter first name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$first_name = sanitize_text_field( $_POST['first_name'] );
 		}
 
-		if (empty($_POST['last_name'] )){
+		if ( empty( $_POST['last_name'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter last name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$last_name = sanitize_text_field( $_POST['last_name'] );
 		}
 
-		if ( empty( $_POST[ 'email_address'] ) ) 
-		{
+		if ( empty( $_POST[ 'email_address'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter email address.' ) );
 			die();
 		} else {
@@ -356,30 +351,24 @@ class WSU_UComm_Assets_Registration {
 			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
 		}
 
-		if (empty($_POST['area'] )){
+		if ( empty( $_POST['area'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter area number.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$area = sanitize_text_field( $_POST['area'] );
 		}
 
-		if (empty($_POST['department'] )){
+		if ( empty( $_POST['department'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter department name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$department = sanitize_text_field( $_POST['department'] );
 		}
 
-		if (empty($_POST['job_description'] )){
+		if ( empty( $_POST['job_description'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter job description.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$job_description = sanitize_text_field( $_POST['job_description'] );
 		}
 

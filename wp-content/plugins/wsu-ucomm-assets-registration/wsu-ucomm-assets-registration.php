@@ -400,6 +400,15 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->fonts );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
+		// Basic notification email text.
+		$message =  "Thank you for completing the font request form.\r\n\r\n";
+		$message .= "University Communications has been notified of your request and you should be hearing something shortly.\r\n\r\n";
+		$message .= "Once a request has been approved, you will receive another email with a link to download the font files.\r\n\r\n";
+		$message .= "Thank you,\r\nUniversity Communications\r\n";
+
+		// Notify the requestor with an email that a request has been received.
+		wp_mail( $email, 'Font Download Request Received', $message );
+
 		echo json_encode( array( 'success' => 'Request received.' ) );
 		die();
 	}

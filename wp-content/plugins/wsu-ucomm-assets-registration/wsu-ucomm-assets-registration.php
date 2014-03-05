@@ -303,6 +303,27 @@ class WSU_UComm_Assets_Registration {
 			die();
 		}
 
+		// We should have at least one font quantity specified for the request if it is valid.
+		$font_qty_checks = array(
+			'office_support_qty',
+			'stone_sans_nocharge_qty',
+			'stone_sans_charge_qty',
+			'full_stone_nocharge_qty',
+			'full_stone_charge_qty',
+		);
+
+		$font_check = false;
+		foreach ( $font_qty_checks as $font_qty ) {
+			if ( ! empty( $_POST[ $font_qty ] ) ) {
+				$font_check = true;
+			}
+		}
+
+		if ( false === $font_check ) {
+			echo json_encode( array( 'error' => 'Please enter a quantity for at least one font.' ) );
+			die();
+		}
+
 		if (empty($_POST['first_name'] )){
 			echo json_encode( array( 'error' => 'Please enter first name.' ) );
 			die();

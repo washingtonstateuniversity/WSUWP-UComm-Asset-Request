@@ -39,6 +39,7 @@ class WSU_UComm_Assets_Registration {
 		add_action( 'init',                         array( $this, 'temp_redirect'        ),  5, 1 );
 		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
+		add_action( 'add_meta_boxes',               array( $this, 'add_meta_boxes'       ), 10, 2 );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -400,6 +401,48 @@ class WSU_UComm_Assets_Registration {
 		die();
 	}
 
+	/**
+	 * Add meta boxes where required.
+	 *
+	 * @param string $post_type Post type slug.
+	 */
+	public function add_meta_boxes( $post_type ) {
+		if ( 'ucomm_asset_request' === $post_type ) {
+			add_meta_box( 'ucomm-asset-request-details', 'Asset Request Details:', array( $this, 'asset_request_details' ), null, 'normal', 'high' );
+		}
+	}
+
+	/**
+	 * Display the details for the loaded asset request in a meta box.
+	 *
+	 * @param WP_Post $post The current post object.
+	 */
+	public function asset_request_details( $post ) {
+		$first_name = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
+		$last_name  = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
+		$area       = get_post_meta( $post->ID, '_ucomm_request_area',       true );
+		$department = get_post_meta( $post->ID, '_ucomm_request_department', true );
+		$job_desc   = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
+		$fonts_qty  = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
+		$asset_type = get_post_meta( $post->ID, '_ucomm_asset_type',         true );
+
+		?>
+		<ul>
+			<li>First Name: <?php echo esc_html( $first_name ); ?></li>
+			<li>Last Name:  <?php echo esc_html( $last_name ); ?></li>
+			<li>Area:       <?php echo esc_html( $area ); ?></li>
+			<li>Department: <?php echo esc_html( $department ); ?></li>
+			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
+		</ul>
+
+		<ul><strong>Font Quantities:</strong>
+			<?php foreach( $fonts_qty as $font ) : ?>
+			<li><?php echo esc_html( key( $font ) ); ?>: <?php echo $font[ key( $font ) ]; ?></li>
+			<?php endforeach; ?>
+		</ul>
+
+		<?php
+	}
 	/**
 	 * Grant a user access to asset downloads when their asset request is published. Remove
 	 * user access to asset downloads when their asset request is unpublished.

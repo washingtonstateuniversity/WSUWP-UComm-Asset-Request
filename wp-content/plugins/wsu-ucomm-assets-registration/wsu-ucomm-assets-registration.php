@@ -339,7 +339,6 @@ class WSU_UComm_Assets_Registration {
 			$area = sanitize_text_field( $_POST['area'] );
 		}
 
-
 		if (empty($_POST['department'] )){
 			echo json_encode( array( 'error' => 'Please enter department name.' ) );
 			die();
@@ -358,12 +357,9 @@ class WSU_UComm_Assets_Registration {
 			$job_description = sanitize_text_field( $_POST['job_description'] );
 		}
 
-		if (empty($_POST['notes'] )){
-			echo json_encode( array( 'error' => 'Please enter notes.' ) );
-			die();
-		}
-		else
-		{
+		if ( empty( $_POST['notes'] ) ) {
+			$post['post_content'] = 'No justification notes included in request.';
+		} else {
 			$post['post_content'] = wp_kses_post( $_POST['notes'] );
 		}
 

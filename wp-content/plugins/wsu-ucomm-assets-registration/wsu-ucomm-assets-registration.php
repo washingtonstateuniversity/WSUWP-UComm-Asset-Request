@@ -407,7 +407,9 @@ class WSU_UComm_Assets_Registration {
 		$message .= "Thank you,\r\nUniversity Communications\r\n";
 
 		// Notify the requestor with an email that a request has been received.
+		$this->prep_mail_filters();
 		wp_mail( $email, 'Font Download Request Received', $message );
+		$this->unprep_mail_filters();
 
 		echo json_encode( array( 'success' => 'Request received.' ) );
 		die();
@@ -511,6 +513,40 @@ class WSU_UComm_Assets_Registration {
 				update_user_meta( $user_id, $this->user_meta_key, $new_access );
 			}
 		}
+	}
+
+	/**
+	 * Set filters used to send mail from this plugin.
+	 */
+	private function prep_mail_filters() {
+		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+	}
+
+	/**
+	 * Unset filters used to send mail from this plugin.
+	 */
+	private function unprep_mail_filters() {
+		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+	}
+
+	/**
+	 * Modify the default email address for email sent by WordPress.
+	 *
+	 * @return string The email address to use with the email.
+	 */
+	public function set_mail_from() {
+		return 'wordpress@wsuwp-indie-prod-01.web.wsu.edu';
+	}
+
+	/**
+	 * Modify the default email from name for email sent by WordPress.
+	 *
+	 * @return string The from name used in the email.
+	 */
+	public function set_mail_from_name() {
+		return 'University Communications - Font Request';
 	}
 }
 new WSU_UComm_Assets_Registration();

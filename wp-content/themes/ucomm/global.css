@@ -315,9 +315,15 @@ Description: Create structure elements for the template such as supplimentary co
 }
 #fixedSide .orange {
 	background-color: #F8F1EB;
+	border-style:solid;
+	border-color:#eddccc;
+	border-width:8px 0px 4px 0px;
 }
 #fixedSide .yellow {
 	background-color: #F9F4E7;
+	border-style:solid;
+	border-color:#f1e4c4;
+	border-width:8px 0px 4px 0px;
 }
 #fixedSide article h6 {
 	margin: 1em;

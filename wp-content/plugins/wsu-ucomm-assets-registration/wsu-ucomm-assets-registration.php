@@ -441,16 +441,30 @@ class WSU_UComm_Assets_Registration {
 		if ( empty( $attached_files ) ) {
 			return;
 		}
-		?><p>Assign attached assets to a font request type.</p>
-		<table>
-		<thead><tr><td>Asset File</td><td>Request Type</td><td></td></tr></thead>
-		<?php
-		foreach( $attached_files as $file ) {
-			?>
-			<tr><td><?php echo esc_html( $file->post_title ); ?></td><td>input</td><td>Set</td></tr>
-			<?php
+		$file_assigned = get_post_meta( $post->ID, '_ucomm_asset_assignments', true );
+
+		foreach ( $this->fonts as $font_slug => $font ) {
+			if ( isset( $file_assigned[ $font_slug ] ) ) {
+				$this->fonts[ $font_slug ]['file'] = $file_assigned[ $font_slug ];
+			} else {
+				$this->fonts[ $font_slug ]['file'] = '0';
+			}
 		}
-		?></table><?php
+
+		?><p>Assign a file attached to this request form to each request type.</p>
+		<table>
+		<thead><tr><td>Request Type</td><td>File</td><td></td></tr></thead>
+		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
+		<tr>
+			<td><?php echo esc_html( $font['name'] ); ?></td>
+			<td><select name="font_assigned" id="font-assigned">
+				<option value="0">---</option>
+				<?php foreach( $attached_files as $file ) : ?>
+				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
+				<?php endforeach; ?>
+			</td>
+			<td>set</td></tr>
+		<?php endforeach; ?></table><?php
 	}
 	/**
 	 * Display the details for the loaded asset request in a meta box.

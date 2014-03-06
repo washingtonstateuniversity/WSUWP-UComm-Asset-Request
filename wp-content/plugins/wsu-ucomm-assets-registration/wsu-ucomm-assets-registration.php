@@ -437,7 +437,20 @@ class WSU_UComm_Assets_Registration {
 	 * @param WP_Post $post Current post object.
 	 */
 	public function asset_request_files( $post ) {
-
+		$attached_files = get_attached_media( 'application/zip', $post->ID );
+		if ( empty( $attached_files ) ) {
+			return;
+		}
+		?><p>Assign attached assets to a font request type.</p>
+		<table>
+		<thead><tr><td>Asset File</td><td>Request Type</td><td></td></tr></thead>
+		<?php
+		foreach( $attached_files as $file ) {
+			?>
+			<tr><td><?php echo esc_html( $file->post_title ); ?></td><td>input</td><td>Set</td></tr>
+			<?php
+		}
+		?></table><?php
 	}
 	/**
 	 * Display the details for the loaded asset request in a meta box.

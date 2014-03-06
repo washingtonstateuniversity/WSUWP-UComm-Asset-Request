@@ -418,14 +418,27 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Add meta boxes where required.
 	 *
-	 * @param string $post_type Post type slug.
+	 * @param string  $post_type Post type slug.
+	 * @param WP_Post $post      Current post object.
 	 */
-	public function add_meta_boxes( $post_type ) {
+	public function add_meta_boxes( $post_type, $post ) {
 		if ( 'ucomm_asset_request' === $post_type ) {
 			add_meta_box( 'ucomm-asset-request-details', 'Asset Request Details:', array( $this, 'asset_request_details' ), null, 'normal', 'high' );
 		}
+		if ( 'page' === $post_type && isset( $post->post_content ) && has_shortcode( $post->post_content, 'ucomm_asset_request' ) ) {
+			add_meta_box( 'ucomm-asset-files', 'Asset Files:', array( $this, 'asset_request_files' ), null, 'normal', 'default' );
+		}
 	}
 
+	/**
+	 * Display a meta box to show asset files that have been attached to this request
+	 * form so that we can assign them to font request types.
+	 *
+	 * @param WP_Post $post Current post object.
+	 */
+	public function asset_request_files( $post ) {
+
+	}
 	/**
 	 * Display the details for the loaded asset request in a meta box.
 	 *

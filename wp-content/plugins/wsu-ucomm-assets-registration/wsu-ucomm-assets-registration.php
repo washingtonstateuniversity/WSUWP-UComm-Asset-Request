@@ -115,11 +115,16 @@ class WSU_UComm_Assets_Registration {
 	 * @return array Modified list of capabilities for a user.
 	 */
 	public function map_asset_request_cap( $allcaps, $cap, $args, $user ) {
-		$request_asset_cap = get_user_meta( $user->ID, $this->user_meta_key, true );
+		$user_asset_types = get_user_meta( $user->ID, $this->user_meta_key, true );
 
-		// Loop through the assets this user has access to and set the capabilities.
-		foreach( (array) $request_asset_cap as $asset_cap ) {
-			$allcaps[ 'request_asset_' . $asset_cap ] = true;
+		// This user has access to at least one asset type.
+		if ( $user_asset_types ) {
+			$allcaps['access_asset_type'] = true;
+		}
+
+		// Loop through the user's allowed asset types and set the capabilities.
+		foreach( (array) $user_asset_types as $asset_type ) {
+			$allcaps[ 'request_asset_' . $asset_type ] = true;
 		}
 
 		return $allcaps;
@@ -128,20 +133,9 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Handle the display of the ucomm_asset_request shortcode.
 	 *
-	 * @param array @args Arguments used with the shortcode.
-	 *
 	 * @return string HTML output
 	 */
-	public function ucomm_asset_request_display( $args ) {
-		// If a default type is not specified, we check for fonts access.
-		if ( empty( $args['type'] ) ) {
-			$asset_type = 'fonts';
-		} else {
-			$asset_type = sanitize_key( $args['type'] );
-		}
-
-		$capability = 'request_asset_' . $asset_type;
-
+	public function ucomm_asset_request_display() {
 		// Build the output to return for use by the shortcode.
 		ob_start();
 		?>
@@ -149,7 +143,7 @@ class WSU_UComm_Assets_Registration {
 			<?php
 
 			if ( is_user_member_of_blog() ) {
-				if ( current_user_can( $capability ) ) {
+				if ( current_user_can( 'access_asset_type' ) ) {
 					// Retrieve assets attached to this page and display them in a list for download.
 					$available_assets = get_attached_media( 'application/zip', get_queried_object_id() );
 					echo '<h3>Available Assets</h3><ul>';

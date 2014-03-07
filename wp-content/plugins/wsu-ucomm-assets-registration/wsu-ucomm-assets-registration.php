@@ -464,7 +464,7 @@ class WSU_UComm_Assets_Registration {
 				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
 				<?php endforeach; ?>
 			</td>
-			<td>set</td></tr>
+		</tr>
 		<?php endforeach; ?></table><?php
 	}
 

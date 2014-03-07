@@ -345,9 +345,8 @@ class WSU_UComm_Assets_Registration {
 			echo json_encode( array( 'error' => 'Please enter email address.' ) );
 			die();
 		} else {
-			$user = get_userdata( get_current_user_id() );
 			$email = sanitize_email( $_POST['email_address'] );
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $email );
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $first_name . ' ' . $last_name . ' (' . $email . ')' );
 		}
 
 		if ( empty( $_POST['area'] ) ) {

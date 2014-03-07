@@ -68,35 +68,6 @@ class WSU_UComm_Assets_Registration {
 	}
 
 	/**
-	 * Enable the automatic creation of a new user if authentication is handled
-	 * via WSU Network ID and no user exists.
-	 *
-	 * @return bool
-	 */
-	public function wsuwp_sso_create_new_user() {
-		return true;
-	}
-
-	/**
-	 * Set an automatically created user's role as subscriber.
-	 *
-	 * @return string New role for the new user.
-	 */
-	public function wsuwp_sso_new_user_role() {
-		return 'subscriber';
-	}
-
-	/**
-	 * Remove all roles from a new user when they are automatically created.
-	 *
-	 * @param int $user_id A user's ID.
-	 */
-	public function remove_user_roles( $user_id ) {
-		$user = get_userdata( $user_id );
-		$user->set_role( '' );
-	}
-
-	/**
 	 * Register the post type used to handle asset registration requests.
 	 */
 	public function register_post_type() {
@@ -573,6 +544,35 @@ class WSU_UComm_Assets_Registration {
 		if ( 'publish' !== $new_status ) {
 			delete_user_meta( $user_id, $this->user_meta_key, true );
 		}
+	}
+
+	/**
+	 * Enable the automatic creation of a new user if authentication is handled
+	 * via WSU Network ID and no user exists.
+	 *
+	 * @return bool
+	 */
+	public function wsuwp_sso_create_new_user() {
+		return true;
+	}
+
+	/**
+	 * Set an automatically created user's role as subscriber.
+	 *
+	 * @return string New role for the new user.
+	 */
+	public function wsuwp_sso_new_user_role() {
+		return 'subscriber';
+	}
+
+	/**
+	 * Remove all roles from a new user when they are automatically created.
+	 *
+	 * @param int $user_id A user's ID.
+	 */
+	public function remove_user_roles( $user_id ) {
+		$user = get_userdata( $user_id );
+		$user->set_role( '' );
 	}
 
 	/**

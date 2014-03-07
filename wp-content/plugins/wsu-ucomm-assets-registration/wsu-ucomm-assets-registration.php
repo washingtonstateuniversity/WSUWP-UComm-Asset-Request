@@ -27,9 +27,9 @@ class WSU_UComm_Assets_Registration {
 	var $user_meta_key = '_ucomm_asset_permissions';
 
 	/**
-	 * @var array The array of font slugs, quantities, and names.
+	 * @var array The array of asset type slugs, quantities, and names.
 	 */
-	var $fonts = array(
+	var $asset_types = array(
 		'office_support_qty'      => array( 'qty' => 0, 'name' => 'Office Support Package' ),
 		'stone_sans_nocharge_qty' => array( 'qty' => 0, 'name' => 'Stone Sans II (no charge)' ),
 		'stone_sans_charge_qty'   => array( 'qty' => 0, 'name' => 'Stone Sans II ($30)' ),
@@ -319,12 +319,12 @@ class WSU_UComm_Assets_Registration {
 
 		// We should have at least one font quantity specified for the request if it is valid.
 		$font_check = false; // Aids in verification that a quantity has been requested.
-		foreach ( $this->fonts as $font_slug => $font_data ) {
+		foreach ( $this->asset_types as $font_slug => $font_data ) {
 			if ( ! empty( $_POST[ $font_slug ] ) ) {
-				$this->fonts[ $font_slug ][ 'qty' ] = absint( $_POST[ $font_slug ] );
+				$this->asset_types[ $font_slug ][ 'qty' ] = absint( $_POST[ $font_slug ] );
 				$font_check = true;
 			} else {
-				$this->fonts[ $font_slug ][ 'qty' ] = 0;
+				$this->asset_types[ $font_slug ][ 'qty' ] = 0;
 			}
 		}
 
@@ -443,18 +443,18 @@ class WSU_UComm_Assets_Registration {
 		}
 		$file_assigned = get_post_meta( $post->ID, '_ucomm_asset_assignments', true );
 
-		foreach ( $this->fonts as $font_slug => $font ) {
+		foreach ( $this->asset_types as $font_slug => $font ) {
 			if ( isset( $file_assigned[ $font_slug ] ) ) {
-				$this->fonts[ $font_slug ]['file'] = $file_assigned[ $font_slug ];
+				$this->asset_types[ $font_slug ]['file'] = $file_assigned[ $font_slug ];
 			} else {
-				$this->fonts[ $font_slug ]['file'] = '0';
+				$this->asset_types[ $font_slug ]['file'] = '0';
 			}
 		}
 
 		?><p>Assign a file attached to this request form to each request type.</p>
 		<table>
 		<thead><tr><td>Request Type</td><td>File</td><td></td></tr></thead>
-		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
+		<?php foreach( $this->asset_types as $font_slug => $font ) : ?>
 		<tr>
 			<td><?php echo esc_html( $font['name'] ); ?></td>
 			<td><select name="font_assigned-<?php echo esc_attr( $font_slug ); ?>" id="font-assigned">
@@ -481,7 +481,7 @@ class WSU_UComm_Assets_Registration {
 		}
 
 		$file_assigned = array();
-		foreach( $this->fonts as $font_slug => $font ) {
+		foreach( $this->asset_types as $font_slug => $font ) {
 			if ( ! empty( $_POST[ 'font_assigned-' . $font_slug ] ) ) {
 				$file_assigned[ $font_slug ] = sanitize_key( $_POST[ 'font_assigned-' . $font_slug ] );
 			} else {
@@ -504,7 +504,7 @@ class WSU_UComm_Assets_Registration {
 		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
-		$this->fonts = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
+		$this->asset_types = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
 
 		// Contains the asset types that the user has access to.
 		$user_asset_types = (array) get_user_meta( $post->ID, $this->user_meta_key,  true );
@@ -520,7 +520,7 @@ class WSU_UComm_Assets_Registration {
 		<table class="font-approval">
 			<thead>
 			<tr><th align="left">Asset Type</th><th align="right">Quantity</th><th>Approval Status</th></tr></thead>
-		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
+		<?php foreach( $this->asset_types as $font_slug => $font ) : ?>
 			<?php $selected = in_array( $font_slug, $user_asset_types ) ? 1 : 0; ?>
 			<tr>
 				<td><?php echo esc_html( $font['name'] ); ?></td>
@@ -561,7 +561,7 @@ class WSU_UComm_Assets_Registration {
 		// Set current user access to asset types.
 		if ( 'publish' === $new_status ) {
 			$user_asset_access = array();
-			foreach( $this->fonts as $font_slug => $font ) {
+			foreach( $this->asset_types as $font_slug => $font ) {
 				if ( isset( $_POST[ 'font_approval_' . $font_slug ] ) && 1 == $_POST[ 'font_approval_' . $font_slug ] ) {
 					$user_asset_access[] = $font_slug;
 				}

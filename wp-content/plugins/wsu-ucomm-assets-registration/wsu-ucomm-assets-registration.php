@@ -51,6 +51,7 @@ class WSU_UComm_Assets_Registration {
 		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
 		add_action( 'add_meta_boxes',               array( $this, 'add_meta_boxes'       ), 10, 2 );
+		add_action( 'save_post', array( $this, 'save_asset_file_types' ), 10, 3 );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -457,7 +458,7 @@ class WSU_UComm_Assets_Registration {
 		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
 		<tr>
 			<td><?php echo esc_html( $font['name'] ); ?></td>
-			<td><select name="font_assigned" id="font-assigned">
+			<td><select name="font_assigned-<?php echo esc_attr( $font_slug ); ?>" id="font-assigned">
 				<option value="0">---</option>
 				<?php foreach( $attached_files as $file ) : ?>
 				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
@@ -466,6 +467,32 @@ class WSU_UComm_Assets_Registration {
 			<td>set</td></tr>
 		<?php endforeach; ?></table><?php
 	}
+
+	/**
+	 * Save an array of assigned files to the file permission types when an
+	 * asset request form page is updated.
+	 *
+	 * @param int     $post_id ID of the current post being saved.
+	 * @param WP_Post $post    Post object of the current post being saved.
+	 * @param bool    $update  True if this is an update. False if not.
+	 */
+	public function save_asset_file_types( $post_id, $post, $update ) {
+		if ( false === $update || 'page' !== $post->post_type || ! has_shortcode( $post->post_content, 'ucomm_asset_request' ) ) {
+			return;
+		}
+
+		$file_assigned = array();
+		foreach( $this->fonts as $font_slug => $font ) {
+			if ( ! empty( $_POST[ 'font_assigned-' . $font_slug ] ) ) {
+				$file_assigned[ $font_slug ] = sanitize_key( $_POST[ 'font_assigned-' . $font_slug ] );
+			} else {
+				$file_assigned[ $font_slug ] = 0;
+			}
+		}
+
+		update_post_meta( $post_id, '_ucomm_asset_assignments', $file_assigned );
+	}
+
 	/**
 	 * Display the details for the loaded asset request in a meta box.
 	 *

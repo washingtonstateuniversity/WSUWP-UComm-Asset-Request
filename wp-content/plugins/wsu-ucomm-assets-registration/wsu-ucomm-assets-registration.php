@@ -574,20 +574,9 @@ class WSU_UComm_Assets_Registration {
 			update_user_meta( $user_id, $this->user_meta_key, $user_asset_access );
 		}
 
-		// Remove access to assets.
-		if ( 'publish' === $old_status && 'publish' !== $new_status ) {
-			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
-			$new_access = (array) $current_access;
-
-			if ( array_key_exists( $asset_type, $new_access ) ) {
-				unset( $new_access[ $asset_type ] );
-			}
-
-			if ( empty( $new_access ) ) {
-				delete_user_meta( $user_id, $this->user_meta_key );
-			} else {
-				update_user_meta( $user_id, $this->user_meta_key, $new_access );
-			}
+		// Unset current user access to asset types.
+		if ( 'publish' !== $new_status ) {
+			delete_user_meta( $user_id, $this->user_meta_key, true );
 		}
 	}
 

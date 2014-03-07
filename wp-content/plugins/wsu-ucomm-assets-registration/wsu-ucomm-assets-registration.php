@@ -523,7 +523,7 @@ class WSU_UComm_Assets_Registration {
 		<?php foreach( $this->asset_types as $font_slug => $font ) : ?>
 			<?php $selected = in_array( $font_slug, $user_asset_types ) ? 1 : 0; ?>
 			<tr>
-				<td><?php echo esc_html( $font['name'] ); ?></td>
+				<td><label for="font_approval_<?php echo esc_attr( $font_slug ); ?>"><?php echo esc_html( $font['name'] ); ?></label></td>
 				<td align="right"><?php echo absint( $font['qty'] ); ?></td>
 				<td><select name="font_approval_<?php echo esc_attr( $font_slug ); ?>">
 						<option value="1" <?php selected( $selected, 1 ); ?>>Approved</option>

@@ -563,16 +563,15 @@ class WSU_UComm_Assets_Registration {
 			$asset_type = 'fonts';
 		}
 
-		// Add access to assets.
-		if ( 'pending' === $old_status && 'publish' === $new_status ) {
-			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
-			if ( empty( $current_access ) ) {
-				$update_access = array( $asset_type );
-			} else {
-				$update_access = (array) $current_access;
-				$update_access[] = $asset_type;
+		// Set current user access to asset types.
+		if ( 'publish' === $new_status ) {
+			$user_asset_access = array();
+			foreach( $this->fonts as $font_slug => $font ) {
+				if ( isset( $_POST[ 'font_approval_' . $font_slug ] ) && 1 == $_POST[ 'font_approval_' . $font_slug ] ) {
+					$user_asset_access[] = $font_slug;
+				}
 			}
-			update_user_meta( $user_id, $this->user_meta_key, $update_access );
+			update_user_meta( $user_id, $this->user_meta_key, $user_asset_access );
 		}
 
 		// Remove access to assets.

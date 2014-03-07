@@ -27,6 +27,11 @@ class WSU_UComm_Assets_Registration {
 	var $user_meta_key = '_ucomm_asset_permissions';
 
 	/**
+	 * @var string Meta key used to store requested asset types for a user's asset request.
+	 */
+	var $requested_asset_types_meta_key = '_ucomm_font_qty_request';
+
+	/**
 	 * @var string Meta key for storing assets' asset type assignments.
 	 */
 	var $asset_assignments_meta_key = '_ucomm_asset_assignments';
@@ -386,7 +391,7 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
-		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->asset_types );
+		update_post_meta( $post_id, $this->requested_asset_types_meta_key, $this->asset_types );
 
 		// Basic notification email text.
 		$message =  "Thank you for completing the font request form.\r\n\r\n";
@@ -492,7 +497,9 @@ class WSU_UComm_Assets_Registration {
 		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
-		$this->asset_types = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
+
+		// Contains the asset types requested in this asset request.
+		$this->asset_types = get_post_meta( $post->ID, $this->requested_asset_types_meta_key, true );
 
 		// Contains the asset types that the user has access to.
 		$user_asset_types = (array) get_user_meta( $post->post_author, $this->user_meta_key,  true );

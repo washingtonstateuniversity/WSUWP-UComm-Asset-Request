@@ -507,7 +507,7 @@ class WSU_UComm_Assets_Registration {
 		$this->asset_types = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
 
 		// Contains the asset types that the user has access to.
-		$user_asset_types = (array) get_user_meta( $post->ID, $this->user_meta_key,  true );
+		$user_asset_types = (array) get_user_meta( $post->post_author, $this->user_meta_key,  true );
 		?>
 		<ul>
 			<li>Name: <?php echo esc_html( $first_name ); ?> <?php echo esc_html( $last_name ); ?></li>

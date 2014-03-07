@@ -397,7 +397,7 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
-		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->fonts );
+		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->asset_types );
 		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
 		// Basic notification email text.

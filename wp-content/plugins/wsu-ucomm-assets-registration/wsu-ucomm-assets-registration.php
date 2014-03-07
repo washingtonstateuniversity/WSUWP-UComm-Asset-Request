@@ -505,6 +505,9 @@ class WSU_UComm_Assets_Registration {
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
 		$this->fonts = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
+
+		// Contains the asset types that the user has access to.
+		$user_asset_types = (array) get_user_meta( $post->ID, '_ucomm_asset_permissions',  true );
 		?>
 		<ul>
 			<li>First Name: <?php echo esc_html( $first_name ); ?></li>
@@ -517,12 +520,16 @@ class WSU_UComm_Assets_Registration {
 		<h4>Requested Fonts:</h4>
 		<table class="font-approval">
 			<thead>
-			<tr><th align="left">Font</th><th align="right">Quantity</th></tr></thead>
+			<tr><th align="left">Asset Type</th><th align="right">Quantity</th><th>Approval Status</th></tr></thead>
 		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
+			<?php $selected = in_array( $font_slug, $user_asset_types ) ? 1 : 0; ?>
 			<tr>
 				<td><?php echo esc_html( $font['name'] ); ?></td>
 				<td align="right"><?php echo absint( $font['qty'] ); ?></td>
-				<td><span id="font-approval-<?php echo esc_attr( $font_slug ); ?>" class="font-approval-item">Approval Status</span></td>
+				<td><select name="font_approval_<?php echo esc_attr( $font_slug ); ?>">
+						<option value="1" <?php selected( $selected, 1 ); ?>>Approved</option>
+						<option value="0" <?php selected( $selected, 0 ); ?>>Not Approved</option>
+				</select></td>
 			</tr>
 		<?php endforeach; ?>
 		</table>

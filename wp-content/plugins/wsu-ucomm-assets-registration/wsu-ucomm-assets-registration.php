@@ -558,11 +558,6 @@ class WSU_UComm_Assets_Registration {
 
 		$user_id = absint( $post->post_author );
 
-		$asset_type = get_post_meta( $post->ID, '_ucomm_asset_type', true );
-		if ( empty( $asset_type ) ) {
-			$asset_type = 'fonts';
-		}
-
 		// Set current user access to asset types.
 		if ( 'publish' === $new_status ) {
 			$user_asset_access = array();

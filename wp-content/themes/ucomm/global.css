@@ -155,6 +155,11 @@ article p~ul {
 	margin-left:4em;
 	width:80%;
 }
+article p~ol {
+	margin-top:-2em;
+	margin-left:4em;
+	width:80%;
+}
 article ul li {
     list-style-type: none;
     position:relative;

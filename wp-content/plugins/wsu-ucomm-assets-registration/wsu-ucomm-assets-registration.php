@@ -27,6 +27,13 @@ class WSU_UComm_Assets_Registration {
 	var $user_meta_key = '_ucomm_asset_permissions';
 
 	/**
+	 * Maintain a list of assets that have been assigned asset types.
+	 *
+	 * @var array Asset type associations.
+	 */
+	var $assigned_asset_types = array();
+
+	/**
 	 * @var array The array of asset type slugs, quantities, and names.
 	 */
 	var $asset_types = array(
@@ -124,10 +131,31 @@ class WSU_UComm_Assets_Registration {
 
 		// Loop through the user's allowed asset types and set the capabilities.
 		foreach( (array) $user_asset_types as $asset_type ) {
-			$allcaps[ 'request_asset_' . $asset_type ] = true;
+			$allcaps[ 'access_' . $asset_type ] = true;
 		}
 
 		return $allcaps;
+	}
+
+	/**
+	 * Determine if an asset type has been assigned to a given asset type.
+	 *
+	 * @param string $asset_name Name of an asset file.
+	 *
+	 * @return bool|string False if not assigned. String of the asset type if assigned.
+	 */
+	private function get_assigned_asset_type( $asset_name ) {
+		if ( empty( $this->assigned_asset_types ) ) {
+			$this->assigned_asset_types = get_post_meta( get_queried_object_id(), '_ucomm_asset_assignments', true );
+		}
+
+		foreach( $this->assigned_asset_types as $asset_type => $name ) {
+			if ( $asset_name === $name ) {
+				return $asset_type;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -146,9 +174,16 @@ class WSU_UComm_Assets_Registration {
 				if ( current_user_can( 'access_asset_type' ) ) {
 					// Retrieve assets attached to this page and display them in a list for download.
 					$available_assets = get_attached_media( 'application/zip', get_queried_object_id() );
+
 					echo '<h3>Available Assets</h3><ul>';
 					foreach( $available_assets as $asset ) {
-						echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+						// Has this asset been assigned an asset type?
+						$asset_type = $this->get_assigned_asset_type( $asset->post_title );
+						if ( $asset_type ) {
+							if ( current_user_can( 'access_' . $asset_type ) ) {
+								echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+							}
+						}
 					}
 					echo '</ul>';
 				} else {

@@ -495,7 +495,7 @@ class WSU_UComm_Assets_Registration {
 		$email       = get_post_meta( $post->ID, '_ucomm_request_email',      true );
 		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
-		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_desc',   true );
+		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_description', true );
 
 		// Contains the asset types requested in this asset request.
 		$this->asset_types = get_post_meta( $post->ID, $this->requested_asset_types_meta_key, true );

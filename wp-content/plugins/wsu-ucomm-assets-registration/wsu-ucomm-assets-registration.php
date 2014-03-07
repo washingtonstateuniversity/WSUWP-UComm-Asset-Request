@@ -566,6 +566,23 @@ class WSU_UComm_Assets_Registration {
 				}
 			}
 			update_user_meta( $user_id, $this->user_meta_key, $user_asset_access );
+			if ( ! empty( $user_asset_access ) ) {
+				$this->prep_mail_filters();
+				$email = get_post_meta( $post->ID, '_ucomm_request_email', true );
+				$email_sent = get_post_meta( $post->ID, '_ucomm_notification_sent', true );
+
+				if ( is_email( $email ) && ! $email_sent ) {
+					// Basic approval notification text.
+					$message =  "Your request for font access has been approved.\r\n\r\n";
+					$message .= "Please visit " . esc_url( home_url( 'font-download-request' ) ) . " to download the font files.\r\n\r\n";
+					$message .= "Thank you,\r\nUniversity Communications\r\n";
+					wp_mail( $email, 'Font Download Request Approved', $message );
+
+					// Log the email send so that this doesn't repeat.
+					update_post_meta( $post->ID, '_ucomm_notification_sent', time() );
+				}
+				$this->unprep_mail_filters();
+			}
 		}
 
 		// Unset current user access to asset types.

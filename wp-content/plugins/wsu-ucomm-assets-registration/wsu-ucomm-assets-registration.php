@@ -24,7 +24,7 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * @var string User meta key used to assign asset access.
 	 */
-	var $user_meta_key = '_ucomm_asset_access';
+	var $user_meta_key = '_ucomm_asset_permissions';
 
 	/**
 	 * @var array The array of font slugs, quantities, and names.
@@ -507,7 +507,7 @@ class WSU_UComm_Assets_Registration {
 		$this->fonts = get_post_meta( $post->ID, '_ucomm_font_qty_request',   true );
 
 		// Contains the asset types that the user has access to.
-		$user_asset_types = (array) get_user_meta( $post->ID, '_ucomm_asset_permissions',  true );
+		$user_asset_types = (array) get_user_meta( $post->ID, $this->user_meta_key,  true );
 		?>
 		<ul>
 			<li>Name: <?php echo esc_html( $first_name ); ?> <?php echo esc_html( $last_name ); ?></li>

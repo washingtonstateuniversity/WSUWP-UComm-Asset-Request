@@ -570,7 +570,7 @@ class WSU_UComm_Assets_Registration {
 
 		// Unset current user access to asset types.
 		if ( 'publish' !== $new_status ) {
-			delete_user_meta( $user_id, $this->user_meta_key, true );
+			delete_user_meta( $user_id, $this->user_meta_key );
 		}
 	}
 

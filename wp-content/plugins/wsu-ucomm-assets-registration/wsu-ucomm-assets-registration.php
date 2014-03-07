@@ -27,6 +27,11 @@ class WSU_UComm_Assets_Registration {
 	var $user_meta_key = '_ucomm_asset_permissions';
 
 	/**
+	 * @var string Meta key for storing assets' asset type assignments.
+	 */
+	var $asset_assignments_meta_key = '_ucomm_asset_assignments';
+
+	/**
 	 * Maintain a list of assets that have been assigned asset types.
 	 *
 	 * @var array Asset type associations.
@@ -146,7 +151,7 @@ class WSU_UComm_Assets_Registration {
 	 */
 	private function get_assigned_asset_type( $asset_name ) {
 		if ( empty( $this->assigned_asset_types ) ) {
-			$this->assigned_asset_types = get_post_meta( get_queried_object_id(), '_ucomm_asset_assignments', true );
+			$this->assigned_asset_types = get_post_meta( get_queried_object_id(), $this->asset_assignments_meta_key, true );
 		}
 
 		foreach( $this->assigned_asset_types as $asset_type => $name ) {
@@ -424,7 +429,7 @@ class WSU_UComm_Assets_Registration {
 		if ( empty( $attached_files ) ) {
 			return;
 		}
-		$file_assigned = get_post_meta( $post->ID, '_ucomm_asset_assignments', true );
+		$file_assigned = get_post_meta( $post->ID, $this->asset_assignments_meta_key, true );
 
 		foreach ( $this->asset_types as $font_slug => $font ) {
 			if ( isset( $file_assigned[ $font_slug ] ) ) {
@@ -472,7 +477,7 @@ class WSU_UComm_Assets_Registration {
 			}
 		}
 
-		update_post_meta( $post_id, '_ucomm_asset_assignments', $file_assigned );
+		update_post_meta( $post_id, $this->asset_assignments_meta_key, $file_assigned );
 	}
 
 	/**

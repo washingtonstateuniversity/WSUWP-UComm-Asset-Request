@@ -163,7 +163,6 @@ class WSU_UComm_Assets_Registration {
 	 */
 	public function ucomm_asset_request_display( $args ) {
 		// If a default type is not specified, we check for fonts access.
-
 		if ( empty( $args['type'] ) ) {
 			$asset_type = 'fonts';
 		} else {

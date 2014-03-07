@@ -69,6 +69,7 @@ class WSU_UComm_Assets_Registration {
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
 		add_action( 'add_meta_boxes',               array( $this, 'add_meta_boxes'       ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_asset_file_types' ), 10, 3 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -81,6 +82,15 @@ class WSU_UComm_Assets_Registration {
 		if ( '/assets/' === $_SERVER['REQUEST_URI'] ) {
 			wp_safe_redirect( site_url( '/font-request/' ) );
 			die();
+		}
+	}
+
+	/**
+	 * Enqueue a script for use in the admin view of the asset request.
+	 */
+	public function admin_enqueue_scripts() {
+		if ( 'ucomm_asset_request' === get_current_screen()->id ) {
+			wp_enqueue_script( 'admin-assets-request', plugins_url( '/js/admin-asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
 		}
 	}
 

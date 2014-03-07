@@ -110,6 +110,9 @@ header .inlineHeader {
 	text-align: center;
 	width:100px;
 	}
+.size-lt-large header .inlineHeader {
+	font-size: 1em;
+}
 header .full {
 	width:90% !important;
 	margin-bottom:1em;

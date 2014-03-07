@@ -501,6 +501,10 @@ class WSU_UComm_Assets_Registration {
 		// Contains the asset types requested in this asset request.
 		$this->asset_types = get_post_meta( $post->ID, $this->requested_asset_types_meta_key, true );
 
+		if ( empty( $this->asset_types ) ) {
+			$this->asset_types = array();
+		}
+
 		// Contains the asset types that the user has access to.
 		$user_asset_types = (array) get_user_meta( $post->post_author, $this->user_meta_key,  true );
 		?>

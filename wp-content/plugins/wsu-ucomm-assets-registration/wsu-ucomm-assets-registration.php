@@ -5,7 +5,7 @@ Plugin URI: http://ucomm.wsu.edu/assets/
 Description: Allows users to register for assets.
 Author: washingtonstateuniversity, jeremyfelt
 Author URI: http://web.wsu.edu/
-Version: 0.1
+Version: 0.1.2
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -14,7 +14,7 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * @var string Script version used to break cache when needed.
 	 */
-	var $script_version = '0.1.1';
+	var $script_version = '0.1.2';
 
 	/**
 	 * @var string Post type slug for asset requests.
@@ -193,25 +193,19 @@ class WSU_UComm_Assets_Registration {
 						'author'         => get_current_user_id(),
 						'post_status'    => array( 'publish', 'pending' ),
 						'posts_per_page' => 1,
-						'meta_query'     => array(
-							array(
-								'key'       => '_ucomm_asset_type',
-								'value'     => $asset_type,
-							),
-						),
 					));
 
 					if ( $user_requests->have_posts() ) {
 						echo 'We have received your request for access. You should receive verification and instructions shortly.';
 					} else {
-						$this->asset_form_output( $asset_type );
+						$this->asset_form_output();
 					}
 				}
 			} else {
 				if ( is_user_logged_in() ) {
 					// To ease the workflow, anybody authenticated user that visits this site should be made a subscriber.
 					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
-					$this->asset_form_output( $asset_type );
+					$this->asset_form_output();
 				} else {
 					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
@@ -228,14 +222,12 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Display the HTML used to handle the asset request form.
 	 *
-	 * @param string $asset_type Type of the asset being requested.
 	 */
-	private function asset_form_output( $asset_type ) {
+	private function asset_form_output() {
 		wp_enqueue_script( 'ucomm_asset_request', plugins_url( '/js/asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
 		wp_localize_script( 'ucomm_asset_request', 'ucomm_asset_data', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		?>
 		<form id="asset-request-form" class="asset-request">
-			<input type="hidden" id="asset-type" value="<?php echo esc_attr( $asset_type ); ?>" />
 			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
 			
 			<label for="first_name">First Name:</label><br />
@@ -308,14 +300,6 @@ class WSU_UComm_Assets_Registration {
 			'post_type' => $this->post_type_slug,
 			'post_author' => get_current_user_id(),
 		);
-
-		// An asset type is required to grant access to an asset type.
-		if ( empty( $_POST['asset_type'] ) ) {
-			echo json_encode( array( 'error' => 'No asset type was supplied.' ) );
-			die();
-		} else {
-			$asset_type = sanitize_text_field( $_POST['asset_type'] );
-		}
 
 		// We should have at least one font quantity specified for the request if it is valid.
 		$font_check = false; // Aids in verification that a quantity has been requested.
@@ -398,7 +382,6 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
 		update_post_meta( $post_id, '_ucomm_font_qty_request', $this->asset_types );
-		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
 
 		// Basic notification email text.
 		$message =  "Thank you for completing the font request form.\r\n\r\n";

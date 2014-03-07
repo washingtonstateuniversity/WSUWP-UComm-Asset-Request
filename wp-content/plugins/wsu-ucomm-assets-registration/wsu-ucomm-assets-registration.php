@@ -137,7 +137,7 @@ class WSU_UComm_Assets_Registration {
 	 * Map capabilities for users that are requesting access to assets.
 	 *
 	 * @param array   $allcaps An array of all the role's capabilities.
-	 * @param array   $caps    Actual capabilities for meta capability.
+	 * @param array   $cap     Actual capabilities for meta capability.
 	 * @param array   $args    Optional parameters passed to has_cap(), typically object ID.
 	 * @param WP_User $user    The user object.
 	 *

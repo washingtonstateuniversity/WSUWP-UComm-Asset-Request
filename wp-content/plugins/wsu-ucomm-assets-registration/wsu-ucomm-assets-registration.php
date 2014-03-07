@@ -510,8 +510,7 @@ class WSU_UComm_Assets_Registration {
 		$user_asset_types = (array) get_user_meta( $post->ID, '_ucomm_asset_permissions',  true );
 		?>
 		<ul>
-			<li>First Name: <?php echo esc_html( $first_name ); ?></li>
-			<li>Last Name:  <?php echo esc_html( $last_name ); ?></li>
+			<li>Name: <?php echo esc_html( $first_name ); ?> <?php echo esc_html( $last_name ); ?></li>
 			<li>Email: <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></li>
 			<li>Area:       <?php echo esc_html( $area ); ?></li>
 			<li>Department: <?php echo esc_html( $department ); ?></li>

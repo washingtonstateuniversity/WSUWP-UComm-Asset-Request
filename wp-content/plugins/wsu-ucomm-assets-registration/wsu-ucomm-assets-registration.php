@@ -515,10 +515,15 @@ class WSU_UComm_Assets_Registration {
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
 		</ul>
 		<h4>Requested Fonts:</h4>
-		<table>
-			<thead><tr><th align="left">Font</th><th align="right">Quantity</th></tr></thead>
-		<?php foreach( $this->fonts as $font ) : ?>
-			<tr><td><?php echo esc_html( $font['name'] ); ?></td><td align="right"><?php echo absint( $font['qty'] ); ?></td></tr>
+		<table class="font-approval">
+			<thead>
+			<tr><th align="left">Font</th><th align="right">Quantity</th></tr></thead>
+		<?php foreach( $this->fonts as $font_slug => $font ) : ?>
+			<tr>
+				<td><?php echo esc_html( $font['name'] ); ?></td>
+				<td align="right"><?php echo absint( $font['qty'] ); ?></td>
+				<td><span id="font-approval-<?php echo esc_attr( $font_slug ); ?>" class="font-approval-item">Approval Status</span></td>
+			</tr>
 		<?php endforeach; ?>
 		</table>
 

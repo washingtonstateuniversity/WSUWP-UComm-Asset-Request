@@ -29,7 +29,7 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * @var string Meta key used to store requested asset types for a user's asset request.
 	 */
-	var $requested_asset_types_meta_key = '_ucomm_font_qty_request';
+	var $requested_asset_types_meta_key = '_ucomm_asset_type_request';
 
 	/**
 	 * @var string Meta key for storing assets' asset type assignments.

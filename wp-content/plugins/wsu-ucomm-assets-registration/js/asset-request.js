@@ -9,28 +9,38 @@
 	function handle_click( e ) {
 		e.preventDefault();
 
-		var first_name 	    = $( '#first-name' ).val(),
-			last_name       = $( '#last-name' ).val(),
-			email_address   = $( '#email-address' ).val(),
-			area            = $( '#area' ).val(),
-			department      = $( '#department' ).val(),
-			job_description = $( '#job-description' ).val(),
-			notes           = $( '#request-notes' ).val(),
-			asset_type      = $( '#asset-type' ).val(),
-			nonce           = $( '#asset-request-nonce' ).val();
+		var first_name 	            = $( '#first-name' ).val(),
+			last_name               = $( '#last-name' ).val(),
+			email_address           = $( '#email-address' ).val(),
+			area                    = $( '#area' ).val(),
+			department              = $( '#department' ).val(),
+			job_description         = $( '#job-description' ).val(),
+			office_support_qty      = $( '#office-support-qty' ).val(),
+			stone_sans_nocharge_qty = $( '#stone-sans-nocharge-qty' ).val(),
+			stone_sans_charge_qty   = $( '#stone-sans-charge-qty' ).val(),
+			full_stone_nocharge_qty = $( '#full-stone-nocharge-qty' ).val(),
+			full_stone_charge_qty   = $( '#full-stone-charge-qty' ).val(),
+			notes                   = $( '#request-notes' ).val(),
+			post_id                 = $( '#request-form-post-id' ).val(),
+			nonce                   = $( '#asset-request-nonce' ).val();
 
 		// Build the data for our ajax call
 		var data = {
-			action:        'submit_asset_request',
-			first_name:      first_name,
-			last_name:       last_name,
-			email_address:   email_address,
-			area:            area,
-			department:      department,
-			job_description: job_description,
-			notes:           notes,
-			asset_type:      asset_type,
-			_ajax_nonce:     nonce
+			action:                  'submit_asset_request',
+			first_name:              first_name,
+			last_name:               last_name,
+			email_address:           email_address,
+			area:                    area,
+			department:              department,
+			job_description:         job_description,
+			office_support_qty:      office_support_qty,
+			stone_sans_nocharge_qty: stone_sans_nocharge_qty,
+			stone_sans_charge_qty:   stone_sans_charge_qty,
+			full_stone_nocharge_qty: full_stone_nocharge_qty,
+			full_stone_charge_qty:   full_stone_charge_qty,
+			notes:                   notes,
+			post_id:                 post_id,
+			_ajax_nonce:             nonce
 		};
 
 		// Make the ajax call

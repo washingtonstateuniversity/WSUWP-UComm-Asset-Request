@@ -5,7 +5,7 @@ Plugin URI: http://ucomm.wsu.edu/assets/
 Description: Allows users to register for assets.
 Author: washingtonstateuniversity, jeremyfelt
 Author URI: http://web.wsu.edu/
-Version: 0.1
+Version: 0.1.3
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -14,7 +14,7 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * @var string Script version used to break cache when needed.
 	 */
-	var $script_version = '0.1.1';
+	var $script_version = '0.1.3';
 
 	/**
 	 * @var string Post type slug for asset requests.
@@ -24,7 +24,35 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * @var string User meta key used to assign asset access.
 	 */
-	var $user_meta_key = '_ucomm_asset_access';
+	var $user_meta_key = '_ucomm_asset_permissions';
+
+	/**
+	 * @var string Meta key used to store requested asset types for a user's asset request.
+	 */
+	var $requested_asset_types_meta_key = '_ucomm_asset_type_request';
+
+	/**
+	 * @var string Meta key for storing assets' asset type assignments.
+	 */
+	var $asset_assignments_meta_key = '_ucomm_asset_assignments';
+
+	/**
+	 * Maintain a list of assets that have been assigned asset types.
+	 *
+	 * @var array Asset type associations.
+	 */
+	var $assigned_asset_types = array();
+
+	/**
+	 * @var array The array of asset type slugs, quantities, and names.
+	 */
+	var $asset_types = array(
+		'office_support_qty'      => array( 'qty' => 0, 'name' => 'Office Support Package' ),
+		'stone_sans_nocharge_qty' => array( 'qty' => 0, 'name' => 'Stone Sans II (no charge)' ),
+		'stone_sans_charge_qty'   => array( 'qty' => 0, 'name' => 'Stone Sans II ($30)' ),
+		'full_stone_nocharge_qty' => array( 'qty' => 0, 'name' => 'Full Stone Font Family (no charge)' ),
+		'full_stone_charge_qty'   => array( 'qty' => 0, 'name' => 'Full Stone Font Family ($60)' ),
+	);
 
 	/**
 	 * Setup the hooks.
@@ -39,6 +67,9 @@ class WSU_UComm_Assets_Registration {
 		add_action( 'init',                         array( $this, 'temp_redirect'        ),  5, 1 );
 		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
+		add_action( 'add_meta_boxes',               array( $this, 'add_meta_boxes'       ), 10, 2 );
+		add_action( 'save_post', array( $this, 'save_asset_file_types' ), 10, 3 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 		add_shortcode( 'ucomm_asset_request',    array( $this, 'ucomm_asset_request_display' ) );
 	}
@@ -55,32 +86,12 @@ class WSU_UComm_Assets_Registration {
 	}
 
 	/**
-	 * Enable the automatic creation of a new user if authentication is handled
-	 * via WSU Network ID and no user exists.
-	 *
-	 * @return bool
+	 * Enqueue a script for use in the admin view of the asset request.
 	 */
-	public function wsuwp_sso_create_new_user() {
-		return true;
-	}
-
-	/**
-	 * Set an automatically created user's role as subscriber.
-	 *
-	 * @return string New role for the new user.
-	 */
-	public function wsuwp_sso_new_user_role() {
-		return 'subscriber';
-	}
-
-	/**
-	 * Remove all roles from a new user when they are automatically created.
-	 *
-	 * @param int $user_id A user's ID.
-	 */
-	public function remove_user_roles( $user_id ) {
-		$user = get_userdata( $user_id );
-		$user->set_role( '' );
+	public function admin_enqueue_scripts() {
+		if ( 'ucomm_asset_request' === get_current_screen()->id ) {
+			wp_enqueue_script( 'admin-assets-request', plugins_url( '/js/admin-asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
+		}
 	}
 
 	/**
@@ -114,7 +125,7 @@ class WSU_UComm_Assets_Registration {
 			'capability_type'    => 'post',
 			'hierarchical'       => false,
 			'menu_position'      => 5,
-			'supports'           => array( 'title', 'editor', 'author' ),
+			'supports'           => array(''),
 		);
 
 		register_post_type( $this->post_type_slug, $args );
@@ -124,41 +135,55 @@ class WSU_UComm_Assets_Registration {
 	 * Map capabilities for users that are requesting access to assets.
 	 *
 	 * @param array   $allcaps An array of all the role's capabilities.
-	 * @param array   $caps    Actual capabilities for meta capability.
+	 * @param array   $cap     Actual capabilities for meta capability.
 	 * @param array   $args    Optional parameters passed to has_cap(), typically object ID.
 	 * @param WP_User $user    The user object.
 	 *
 	 * @return array Modified list of capabilities for a user.
 	 */
 	public function map_asset_request_cap( $allcaps, $cap, $args, $user ) {
-		$request_asset_cap = get_user_meta( $user->ID, $this->user_meta_key, true );
+		$user_asset_types = get_user_meta( $user->ID, $this->user_meta_key, true );
 
-		// Loop through the assets this user has access to and set the capabilities.
-		foreach( (array) $request_asset_cap as $asset_cap ) {
-			$allcaps[ 'request_asset_' . $asset_cap ] = true;
+		// This user has access to at least one asset type.
+		if ( $user_asset_types ) {
+			$allcaps['access_asset_type'] = true;
+		}
+
+		// Loop through the user's allowed asset types and set the capabilities.
+		foreach( (array) $user_asset_types as $asset_type ) {
+			$allcaps[ 'access_' . $asset_type ] = true;
 		}
 
 		return $allcaps;
 	}
 
 	/**
-	 * Handle the display of the ucomm_asset_request shortcode.
+	 * Determine if an asset type has been assigned to a given asset type.
 	 *
-	 * @param array @args Arguments used with the shortcode.
+	 * @param string $asset_name Name of an asset file.
+	 *
+	 * @return bool|string False if not assigned. String of the asset type if assigned.
+	 */
+	private function get_assigned_asset_type( $asset_name ) {
+		if ( empty( $this->assigned_asset_types ) ) {
+			$this->assigned_asset_types = get_post_meta( get_queried_object_id(), $this->asset_assignments_meta_key, true );
+		}
+
+		foreach( $this->assigned_asset_types as $asset_type => $name ) {
+			if ( $asset_name === $name ) {
+				return $asset_type;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Handle the display of the ucomm_asset_request shortcode.
 	 *
 	 * @return string HTML output
 	 */
-	public function ucomm_asset_request_display( $args ) {
-		// If a default type is not specified, we check for fonts access.
-
-		if ( empty( $args['type'] ) ) {
-			$asset_type = 'fonts';
-		} else {
-			$asset_type = sanitize_key( $args['type'] );
-		}
-
-		$capability = 'request_asset_' . $asset_type;
-
+	public function ucomm_asset_request_display() {
 		// Build the output to return for use by the shortcode.
 		ob_start();
 		?>
@@ -166,12 +191,19 @@ class WSU_UComm_Assets_Registration {
 			<?php
 
 			if ( is_user_member_of_blog() ) {
-				if ( current_user_can( $capability ) ) {
+				if ( current_user_can( 'access_asset_type' ) ) {
 					// Retrieve assets attached to this page and display them in a list for download.
 					$available_assets = get_attached_media( 'application/zip', get_queried_object_id() );
+
 					echo '<h3>Available Assets</h3><ul>';
 					foreach( $available_assets as $asset ) {
-						echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+						// Has this asset been assigned an asset type?
+						$asset_type = $this->get_assigned_asset_type( $asset->post_title );
+						if ( $asset_type ) {
+							if ( current_user_can( 'access_' . $asset_type ) ) {
+								echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+							}
+						}
 					}
 					echo '</ul>';
 				} else {
@@ -181,25 +213,19 @@ class WSU_UComm_Assets_Registration {
 						'author'         => get_current_user_id(),
 						'post_status'    => array( 'publish', 'pending' ),
 						'posts_per_page' => 1,
-						'meta_query'     => array(
-							array(
-								'key'       => '_ucomm_asset_type',
-								'value'     => $asset_type,
-							),
-						),
 					));
 
 					if ( $user_requests->have_posts() ) {
 						echo 'We have received your request for access. You should receive verification and instructions shortly.';
 					} else {
-						$this->asset_form_output( $asset_type );
+						$this->asset_form_output();
 					}
 				}
 			} else {
 				if ( is_user_logged_in() ) {
 					// To ease the workflow, anybody authenticated user that visits this site should be made a subscriber.
 					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
-					$this->asset_form_output( $asset_type );
+					$this->asset_form_output();
 				} else {
 					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
@@ -216,15 +242,14 @@ class WSU_UComm_Assets_Registration {
 	/**
 	 * Display the HTML used to handle the asset request form.
 	 *
-	 * @param string $asset_type Type of the asset being requested.
 	 */
-	private function asset_form_output( $asset_type ) {
+	private function asset_form_output() {
 		wp_enqueue_script( 'ucomm_asset_request', plugins_url( '/js/asset-request.js', __FILE__ ), array( 'jquery' ), $this->script_version, true );
 		wp_localize_script( 'ucomm_asset_request', 'ucomm_asset_data', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		?>
 		<form id="asset-request-form" class="asset-request">
-			<input type="hidden" id="asset-type" value="<?php echo esc_attr( $asset_type ); ?>" />
 			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
+			<input type="hidden" id="request-form-post-id" value="<?php echo esc_attr( get_queried_object_id() ); ?>" />
 			
 			<label for="first_name">First Name:</label><br />
 			<input type="text" name="first_name" id="first-name" value="" style="width:100%;" />
@@ -244,8 +269,34 @@ class WSU_UComm_Assets_Registration {
 			<label for="job_description">Job Description:</label><br>
 			<input type="text" name="job_description" id="job-description" value="" style="width:100%;" />			
 
+			<ol>
+				<li>
+					<p><strong>Office Support Package.</strong> Includes the basic Stone Sans and Stone Serif font families, which are necessary for creating office communications/memorandum for both internal and external audiences in compliance with University brand standards.</p>
+					<input type="text" name="office_support_qty" id="office-support-qty" size="2" value="0" />
+					<label for="office_support_qty">Office Support Package (no charge)</label>
+				</li>
+				<li>
+					<p><strong>Stone Sans II Font Family.</strong> Includes regular Stone Sans plus Stone Sans Condensed. Users who already have regular Stone Sans and Stone Serif installed on their machines may download this package to add Stone Sans Condensed to their font library. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
+					<input type="text" name="stone_sans_nocharge_qty" id="stone-sans-nocharge-qty" size="2" value="0" />
+					<label for="stone_sans_nocharge_qty">Stone Sans II (no charge to University design staff)*</label>
+					<br />
+					<input type="text" name="stone_sans_charge_qty" id="stone-sans-charge-qty" size="2" value="0" />
+					<label for="stone_sans_charge_qty">Stone Sans II ($30 for non-design staff)</label>
+					<p>*If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or if you are requesting the package on behalf of such an individual or individuals, please provide a brief justification in support of your request in the field below.</p>
+				</li>
+				<li>
+					<p><strong>Full Stone Font Family.</strong> Includes Stone Sans II (which includes Stone Sans Condensed) and Stone Serif families. This package is for new users who do not currently have the regular Stone Sans and Stone Serif fonts installed on their machines. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
+					<input type="text" name="full_stone_nocharge_qty" id="full-stone-nocharge-qty" size="2" value="0" />
+					<label for="full_stone_nocharge_qty">Full Stone Font Family (no charge to University design staff)**</label>
+					<br />
+					<input type="text" name="full_stone_charge_qty" id="full-stone-charge-qty" size="2" value="0" />
+					<label for="full_stone_charge_qty">Full Stone Font Family ($60 for non-design staff)**</label>
+					<p>**If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or are requesting the package on behalf of such an individual or individuals, please provide brief justification in support of your request in the field below.</p>
+				</li>
+			</ol>
+
 			<label for="notes">Justification for font family:</label><br>
-			<textarea name="notes" id="request-notes" rows="10" style="width:100%;"></textarea>
+			<textarea name="notes" id="request-notes" rows="5" style="width:100%;"></textarea>
 
 			<input type="submit" id="submit-asset-request" value="Request Assets" style="float:right">
 			<div class="clear"></div>
@@ -271,73 +322,68 @@ class WSU_UComm_Assets_Registration {
 			'post_author' => get_current_user_id(),
 		);
 
-		// An asset type is required to grant access to an asset type.
-		if ( empty( $_POST['asset_type'] ) ) {
-			echo json_encode( array( 'error' => 'No asset type was supplied.' ) );
+		// We should have at least one font quantity specified for the request if it is valid.
+		$font_check = false; // Aids in verification that a quantity has been requested.
+		foreach ( $this->asset_types as $font_slug => $font_data ) {
+			if ( ! empty( $_POST[ $font_slug ] ) ) {
+				$this->asset_types[ $font_slug ][ 'qty' ] = absint( $_POST[ $font_slug ] );
+				$font_check = true;
+			} else {
+				$this->asset_types[ $font_slug ][ 'qty' ] = 0;
+			}
+		}
+
+		if ( false === $font_check ) {
+			echo json_encode( array( 'error' => 'Please enter a quantity for at least one font.' ) );
 			die();
 		}
 
-		if (empty($_POST['first_name'] )){
+		if ( empty( $_POST['first_name'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter first name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$first_name = sanitize_text_field( $_POST['first_name'] );
 		}
 
-		if (empty($_POST['last_name'] )){
+		if ( empty( $_POST['last_name'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter last name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$last_name = sanitize_text_field( $_POST['last_name'] );
 		}
 
-		if ( empty( $_POST[ 'email_address'] ) ) 
-		{
+		if ( empty( $_POST[ 'email_address'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter email address.' ) );
 			die();
 		} else {
-			$user = get_userdata( get_current_user_id() );
-			$post['post_title'] = sanitize_text_field( 'Request from ' . $user->user_login . ' ' . $_POST['email_address'] );
+			$email = sanitize_email( $_POST['email_address'] );
+			$post['post_title'] = sanitize_text_field( 'Request from ' . $first_name . ' ' . $last_name . ' (' . $email . ')' );
 		}
 
-		if (empty($_POST['area'] )){
+		if ( empty( $_POST['area'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter area number.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$area = sanitize_text_field( $_POST['area'] );
 		}
 
-
-		if (empty($_POST['department'] )){
+		if ( empty( $_POST['department'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter department name.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$department = sanitize_text_field( $_POST['department'] );
 		}
 
-		if (empty($_POST['job_description'] )){
+		if ( empty( $_POST['job_description'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter job description.' ) );
 			die();
-		}
-		else
-		{
+		} else {
 			$job_description = sanitize_text_field( $_POST['job_description'] );
 		}
 
-		if (empty($_POST['notes'] )){
-			echo json_encode( array( 'error' => 'Please enter notes.' ) );
-			die();
-		}
-		else
-		{
+		if ( empty( $_POST['notes'] ) ) {
+			$post['post_content'] = 'No justification notes included in request.';
+		} else {
 			$post['post_content'] = wp_kses_post( $_POST['notes'] );
 		}
 
@@ -351,15 +397,157 @@ class WSU_UComm_Assets_Registration {
 		//field meta data stuff
 		update_post_meta( $post_id, '_ucomm_request_first_name', $first_name );
 		update_post_meta( $post_id, '_ucomm_request_last_name',  $last_name );
+		update_post_meta( $post_id, '_ucomm_request_email', $email );
 		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
+		update_post_meta( $post_id, $this->requested_asset_types_meta_key, $this->asset_types );
 
-		$asset_type = sanitize_key( $_POST['asset_type'] );
-		update_post_meta( $post_id, '_ucomm_asset_type', $asset_type );
+		$form_post_id = empty( $_POST['post_id'] ) ? 0 : absint( $_POST['post_id'] );
+		update_post_meta( $post_id, '_ucomm_request_form_id', $form_post_id );
+
+		// Basic notification email text.
+		$message =  "Thank you for completing the font request form.\r\n\r\n";
+		$message .= "University Communications has been notified of your request and you should be hearing something shortly.\r\n\r\n";
+		$message .= "Once a request has been approved, you will receive another email with a link to download the font files.\r\n\r\n";
+		$message .= "Thank you,\r\nUniversity Communications\r\n";
+
+		// Notify the requestor with an email that a request has been received.
+		$this->prep_mail_filters();
+		wp_mail( $email, 'Font Download Request Received', $message );
+		$this->unprep_mail_filters();
 
 		echo json_encode( array( 'success' => 'Request received.' ) );
 		die();
+	}
+
+	/**
+	 * Add meta boxes where required.
+	 *
+	 * @param string  $post_type Post type slug.
+	 * @param WP_Post $post      Current post object.
+	 */
+	public function add_meta_boxes( $post_type, $post ) {
+		if ( 'ucomm_asset_request' === $post_type ) {
+			add_meta_box( 'ucomm-asset-request-details', 'Asset Request Details:', array( $this, 'asset_request_details' ), null, 'normal', 'high' );
+		}
+		if ( 'page' === $post_type && isset( $post->post_content ) && has_shortcode( $post->post_content, 'ucomm_asset_request' ) ) {
+			add_meta_box( 'ucomm-asset-files', 'Asset Files:', array( $this, 'asset_request_files' ), null, 'normal', 'default' );
+		}
+	}
+
+	/**
+	 * Display a meta box to show asset files that have been attached to this request
+	 * form so that we can assign them to font request types.
+	 *
+	 * @param WP_Post $post Current post object.
+	 */
+	public function asset_request_files( $post ) {
+		$attached_files = get_attached_media( 'application/zip', $post->ID );
+		if ( empty( $attached_files ) ) {
+			return;
+		}
+		$file_assigned = get_post_meta( $post->ID, $this->asset_assignments_meta_key, true );
+
+		foreach ( $this->asset_types as $font_slug => $font ) {
+			if ( isset( $file_assigned[ $font_slug ] ) ) {
+				$this->asset_types[ $font_slug ]['file'] = $file_assigned[ $font_slug ];
+			} else {
+				$this->asset_types[ $font_slug ]['file'] = '0';
+			}
+		}
+
+		?><p>Assign a file attached to this request form to each request type.</p>
+		<table>
+		<thead><tr><td>Request Type</td><td>File</td><td></td></tr></thead>
+		<?php foreach( $this->asset_types as $font_slug => $font ) : ?>
+		<tr>
+			<td><?php echo esc_html( $font['name'] ); ?></td>
+			<td><select name="font_assigned-<?php echo esc_attr( $font_slug ); ?>" id="font-assigned">
+				<option value="0">---</option>
+				<?php foreach( $attached_files as $file ) : ?>
+				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<?php endforeach; ?></table><?php
+	}
+
+	/**
+	 * Save an array of assigned files to the file permission types when an
+	 * asset request form page is updated.
+	 *
+	 * @param int     $post_id ID of the current post being saved.
+	 * @param WP_Post $post    Post object of the current post being saved.
+	 * @param bool    $update  True if this is an update. False if not.
+	 */
+	public function save_asset_file_types( $post_id, $post, $update ) {
+		if ( false === $update || 'page' !== $post->post_type || ! has_shortcode( $post->post_content, 'ucomm_asset_request' ) ) {
+			return;
+		}
+
+		$file_assigned = array();
+		foreach( $this->asset_types as $font_slug => $font ) {
+			if ( ! empty( $_POST[ 'font_assigned-' . $font_slug ] ) ) {
+				$file_assigned[ $font_slug ] = sanitize_key( $_POST[ 'font_assigned-' . $font_slug ] );
+			} else {
+				$file_assigned[ $font_slug ] = 0;
+			}
+		}
+
+		update_post_meta( $post_id, $this->asset_assignments_meta_key, $file_assigned );
+	}
+
+	/**
+	 * Display the details for the loaded asset request in a meta box.
+	 *
+	 * @param WP_Post $post The current post object.
+	 */
+	public function asset_request_details( $post ) {
+		$first_name  = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
+		$last_name   = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
+		$email       = get_post_meta( $post->ID, '_ucomm_request_email',      true );
+		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
+		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
+		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_description', true );
+
+		// Contains the asset types requested in this asset request.
+		$this->asset_types = get_post_meta( $post->ID, $this->requested_asset_types_meta_key, true );
+
+		if ( empty( $this->asset_types ) ) {
+			$this->asset_types = array();
+		}
+
+		// Contains the asset types that the user has access to.
+		$user_asset_types = (array) get_user_meta( $post->post_author, $this->user_meta_key,  true );
+		?>
+		<ul>
+			<li>Name: <?php echo esc_html( $first_name ); ?> <?php echo esc_html( $last_name ); ?></li>
+			<li>Email: <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></li>
+			<li>Area:       <?php echo esc_html( $area ); ?></li>
+			<li>Department: <?php echo esc_html( $department ); ?></li>
+			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
+		</ul>
+		<h4>Requested Fonts:</h4>
+		<table class="font-approval">
+			<thead>
+			<tr><th align="left">Asset Type</th><th align="right">Quantity</th><th>Approval Status</th></tr></thead>
+		<?php foreach( $this->asset_types as $font_slug => $font ) : ?>
+			<?php $selected = in_array( $font_slug, $user_asset_types ) ? 1 : 0; ?>
+			<tr>
+				<td><label for="font_approval_<?php echo esc_attr( $font_slug ); ?>"><?php echo esc_html( $font['name'] ); ?></label></td>
+				<td align="right"><?php echo absint( $font['qty'] ); ?></td>
+				<td><select name="font_approval_<?php echo esc_attr( $font_slug ); ?>">
+						<option value="1" <?php selected( $selected, 1 ); ?>>Approved</option>
+						<option value="0" <?php selected( $selected, 0 ); ?>>Not Approved</option>
+				</select></td>
+			</tr>
+		<?php endforeach; ?>
+		</table>
+
+		<h4>Notes for use justification:</h4>
+		<?php echo $post->post_content; ?>
+		<?php
 	}
 
 	/**
@@ -382,38 +570,109 @@ class WSU_UComm_Assets_Registration {
 
 		$user_id = absint( $post->post_author );
 
-		$asset_type = get_post_meta( $post->ID, '_ucomm_asset_type', true );
-		if ( empty( $asset_type ) ) {
-			$asset_type = 'fonts';
+		// Set current user access to asset types.
+		if ( 'publish' === $new_status ) {
+			$user_asset_access = array();
+			foreach( $this->asset_types as $font_slug => $font ) {
+				if ( isset( $_POST[ 'font_approval_' . $font_slug ] ) && 1 == $_POST[ 'font_approval_' . $font_slug ] ) {
+					$user_asset_access[] = $font_slug;
+				}
+			}
+			update_user_meta( $user_id, $this->user_meta_key, $user_asset_access );
+			if ( ! empty( $user_asset_access ) ) {
+				$this->prep_mail_filters();
+				$email = get_post_meta( $post->ID, '_ucomm_request_email', true );
+				$email_sent = get_post_meta( $post->ID, '_ucomm_notification_sent', true );
+
+				if ( is_email( $email ) && ! $email_sent ) {
+					// Attempt to find the original page on which the request occurred.
+					$form_post_id = get_post_meta( $post->ID, '_ucomm_request_form_id', true );
+					if ( empty( $form_post_id ) ) {
+						$page_url = home_url();
+					} else {
+						$page_url = get_permalink( absint( $form_post_id ) );
+					}
+
+					// Basic approval notification text.
+					$message =  "Your request for font access has been approved.\r\n\r\n";
+					$message .= "Please visit " . esc_url( $page_url ) . " to download the font files.\r\n\r\n";
+					$message .= "Thank you,\r\nUniversity Communications\r\n";
+					wp_mail( $email, 'Font Download Request Approved', $message );
+
+					// Log the email send so that this doesn't repeat.
+					update_post_meta( $post->ID, '_ucomm_notification_sent', time() );
+				}
+				$this->unprep_mail_filters();
+			}
 		}
 
-		// Add access to assets.
-		if ( 'pending' === $old_status && 'publish' === $new_status ) {
-			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
-			if ( empty( $current_access ) ) {
-				$update_access = array( $asset_type );
-			} else {
-				$update_access = (array) $current_access;
-				$update_access[] = $asset_type;
-			}
-			update_user_meta( $user_id, $this->user_meta_key, $update_access );
+		// Unset current user access to asset types.
+		if ( 'publish' !== $new_status ) {
+			delete_user_meta( $user_id, $this->user_meta_key );
 		}
+	}
 
-		// Remove access to assets.
-		if ( 'publish' === $old_status && 'publish' !== $new_status ) {
-			$current_access = get_user_meta( $user_id, $this->user_meta_key, true );
-			$new_access = (array) $current_access;
+	/**
+	 * Enable the automatic creation of a new user if authentication is handled
+	 * via WSU Network ID and no user exists.
+	 *
+	 * @return bool
+	 */
+	public function wsuwp_sso_create_new_user() {
+		return true;
+	}
 
-			if ( array_key_exists( $asset_type, $new_access ) ) {
-				unset( $new_access[ $asset_type ] );
-			}
+	/**
+	 * Set an automatically created user's role as subscriber.
+	 *
+	 * @return string New role for the new user.
+	 */
+	public function wsuwp_sso_new_user_role() {
+		return 'subscriber';
+	}
 
-			if ( empty( $new_access ) ) {
-				delete_user_meta( $user_id, $this->user_meta_key );
-			} else {
-				update_user_meta( $user_id, $this->user_meta_key, $new_access );
-			}
-		}
+	/**
+	 * Remove all roles from a new user when they are automatically created.
+	 *
+	 * @param int $user_id A user's ID.
+	 */
+	public function remove_user_roles( $user_id ) {
+		$user = get_userdata( $user_id );
+		$user->set_role( '' );
+	}
+
+	/**
+	 * Set filters used to send mail from this plugin.
+	 */
+	private function prep_mail_filters() {
+		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+	}
+
+	/**
+	 * Unset filters used to send mail from this plugin.
+	 */
+	private function unprep_mail_filters() {
+		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+	}
+
+	/**
+	 * Modify the default email address for email sent by WordPress.
+	 *
+	 * @return string The email address to use with the email.
+	 */
+	public function set_mail_from() {
+		return 'wordpress@wsuwp-indie-prod-01.web.wsu.edu';
+	}
+
+	/**
+	 * Modify the default email from name for email sent by WordPress.
+	 *
+	 * @return string The from name used in the email.
+	 */
+	public function set_mail_from_name() {
+		return 'University Communications - Font Request';
 	}
 }
 new WSU_UComm_Assets_Registration();

@@ -21,6 +21,7 @@
 			full_stone_nocharge_qty = $( '#full-stone-nocharge-qty' ).val(),
 			full_stone_charge_qty   = $( '#full-stone-charge-qty' ).val(),
 			notes                   = $( '#request-notes' ).val(),
+			post_id                 = $( '#request-form-post-id' ).val(),
 			nonce                   = $( '#asset-request-nonce' ).val();
 
 		// Build the data for our ajax call
@@ -38,6 +39,7 @@
 			full_stone_nocharge_qty: full_stone_nocharge_qty,
 			full_stone_charge_qty:   full_stone_charge_qty,
 			notes:                   notes,
+			post_id:                 post_id,
 			_ajax_nonce:             nonce
 		};
 

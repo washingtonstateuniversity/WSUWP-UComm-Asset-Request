@@ -249,6 +249,7 @@ class WSU_UComm_Assets_Registration {
 		?>
 		<form id="asset-request-form" class="asset-request">
 			<input type="hidden" id="asset-request-nonce" value="<?php echo esc_attr( wp_create_nonce( 'asset-request' ) ); ?>" />
+			<input type="hidden" id="request-form-post-id" value="<?php echo esc_attr( get_queried_object_id() ); ?>" />
 			
 			<label for="first_name">First Name:</label><br />
 			<input type="text" name="first_name" id="first-name" value="" style="width:100%;" />
@@ -401,6 +402,9 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
 		update_post_meta( $post_id, $this->requested_asset_types_meta_key, $this->asset_types );
+
+		$form_post_id = empty( $_POST['post_id'] ) ? 0 : absint( $_POST['post_id'] );
+		update_post_meta( $post_id, '_ucomm_request_form_id', $form_post_id );
 
 		// Basic notification email text.
 		$message =  "Thank you for completing the font request form.\r\n\r\n";
@@ -581,9 +585,17 @@ class WSU_UComm_Assets_Registration {
 				$email_sent = get_post_meta( $post->ID, '_ucomm_notification_sent', true );
 
 				if ( is_email( $email ) && ! $email_sent ) {
+					// Attempt to find the original page on which the request occurred.
+					$form_post_id = get_post_meta( $post->ID, '_ucomm_request_form_id', true );
+					if ( empty( $form_post_id ) ) {
+						$page_url = home_url();
+					} else {
+						$page_url = get_permalink( absint( $form_post_id ) );
+					}
+
 					// Basic approval notification text.
 					$message =  "Your request for font access has been approved.\r\n\r\n";
-					$message .= "Please visit " . esc_url( home_url( 'font-download-request' ) ) . " to download the font files.\r\n\r\n";
+					$message .= "Please visit " . esc_url( $page_url ) . " to download the font files.\r\n\r\n";
 					$message .= "Thank you,\r\nUniversity Communications\r\n";
 					wp_mail( $email, 'Font Download Request Approved', $message );
 

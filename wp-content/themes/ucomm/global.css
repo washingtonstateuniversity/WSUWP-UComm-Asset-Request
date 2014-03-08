@@ -110,6 +110,9 @@ header .inlineHeader {
 	text-align: center;
 	width:100px;
 	}
+.size-lt-large header .inlineHeader {
+	font-size: 1em;
+}
 header .full {
 	width:90% !important;
 	margin-bottom:1em;
@@ -152,6 +155,11 @@ article ul, ol {
 }
 article p~ul {
 	margin-top:-1.775em;
+	margin-left:4em;
+	width:80%;
+}
+article p~ol {
+	margin-top:-2em;
 	margin-left:4em;
 	width:80%;
 }

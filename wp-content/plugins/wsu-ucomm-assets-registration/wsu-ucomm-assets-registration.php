@@ -415,6 +415,7 @@ class WSU_UComm_Assets_Registration {
 		// Notify the requestor with an email that a request has been received.
 		$this->prep_mail_filters();
 		wp_mail( $email, 'Font Download Request Received', $message );
+		wp_mail( assets.ucomm@wsu.edu, 'Font Download Request Received', $message );
 		$this->unprep_mail_filters();
 
 		echo json_encode( array( 'success' => 'Request received.' ) );

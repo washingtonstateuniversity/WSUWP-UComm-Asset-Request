@@ -12,11 +12,11 @@
  * is being installed. Once installed, uncomment this line to access
  * Tools -> Network Setup in the dashboard.
  */
-/*define( 'WP_ALLOW_MULTISITE', true );
+ define( 'WP_ALLOW_MULTISITE', true );
 
 /**
  * Comment the following MULTISITE line with // during both the initial
  * WordPress installation and the Network Setup. Once the initial
  * Network Setup is complete, uncomment this line and reauthenticate.
  */
-/*define( 'MULTISITE', true );
+define( 'MULTISITE', true );

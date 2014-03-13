@@ -19,8 +19,8 @@ background-color: #B5BABE;
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
 main > header {
 	margin-left:2em;
-	margin-bottom:7em;
-	margin-top:7em;
+	margin-bottom:4em;
+	margin-top:1em;
 }
 /* Hiding the tagline from the hgroup */
 main > header hgroup .tagline {
@@ -40,19 +40,20 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 */
 .site > a:nth-child(1) {
 	font-family: 'open sans', lucida sans, sans serif;
-	font-size:3.225em;
+	font-size:2em;
 	line-height: 100%;
 	color: #981E32;
 }
 .article-header h1 {
+	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
+	font-style: italic;
 	font-size: 2.325em;
-	margin-bottom: 1.375em;
+	margin-bottom: 2em;
 }
 /* Headers are Palatino italic lowercase BLACK */
 article h1, h2, h3, h4, h5, h6 {
-	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
+	font-family: sans-serif;
 	font-weight: lighter;
-	font-style: italic;
 	text-transform: lowercase;
 	color:black;
 }
@@ -79,6 +80,10 @@ article h5 {
 }
 article h6 {
 }
+article header .inline {
+	display:inline-block;
+	font-size:1em;
+}
 article p {
 	color: #8D959A;
 	line-height: 1.875em;
@@ -99,41 +104,6 @@ article h6 + p {
 	line-height: 1.875em;
 	color: #000;
 }
-/* Styling for inline headers */
-header .inlineHeader {
-	color:#464E54 ;
-	font-size: 1.500em;
-	line-height: 1.775em;
-	padding: 1.2em;
-	margin-top: 0;
-	vertical-align: middle;
-	text-align: center;
-	width:100px;
-	}
-.size-lt-large header .inlineHeader {
-	font-size: 1em;
-}
-header .full {
-	width:90% !important;
-	margin-bottom:1em;
-}
-header .left {
-	float:left;
-	margin-right:1em;
-	}
-header .right {
-	float:right;
-	margin-left:1em;
-}
-header .green {
-	background-color: #E3DFCD;
-}
-header .orange {
-	background-color: #EDDCCC;
-}
-header .yellow {
-	background-color: #F1E4C4;
-}
 /* Styling of the paragraphs that follow the main header to introduce the page and page summary */
 article .uCintro {
 	color: #8D959A;
@@ -142,6 +112,7 @@ article .uCintro {
 	line-height: 2em;
 	margin-bottom:8%;
 }
+
 /* Defining Pika margin */
 .ss-icon {
 	margin-left:.5em;

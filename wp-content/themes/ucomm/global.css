@@ -163,6 +163,11 @@ article p~ol {
 	margin-left:4em;
 	width:80%;
 }
+article h3~ol {
+	margin-top:2em;
+	margin-left:4em;
+	width:80%;
+}
 article ul li {
     list-style-type: none;
     position:relative;

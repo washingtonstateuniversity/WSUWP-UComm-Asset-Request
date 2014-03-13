@@ -1,0 +1,12 @@
+# Ignore editor files
+.DS_Store
+.idea
+*.sublime*
+
+# Ignore WSUWP Indie WordPress files
+/wordpress
+/wp-config.php
+/wp-content/uploads
+wp-content/themes/spine
+wp-content/plugins/wsuwp-plugin-custom-css
+wp-content/plugins/wsuwp-sso-authentication

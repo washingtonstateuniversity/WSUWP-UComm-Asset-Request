@@ -201,7 +201,9 @@ class WSU_UComm_Assets_Registration {
 						$asset_type = $this->get_assigned_asset_type( $asset->post_title );
 						if ( $asset_type ) {
 							if ( current_user_can( 'access_' . $asset_type ) ) {
-								echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $asset->post_title ) . '</a></li>';
+								$attached_file = explode( '/', get_attached_file( $asset->ID ) );
+								$file_name = array_pop( $attached_file );
+								echo '<li><a href="' . esc_url( wp_get_attachment_url( $asset->ID ) ) .'">' . esc_html( $file_name ) . '</a></li>';
 							}
 						}
 					}

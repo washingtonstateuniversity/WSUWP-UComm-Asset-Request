@@ -12,7 +12,7 @@
  * is being installed. Once installed, uncomment this line to access
  * Tools -> Network Setup in the dashboard.
  */
- define( 'WP_ALLOW_MULTISITE', true );
+define( 'WP_ALLOW_MULTISITE', true );
 
 /**
  * Comment the following MULTISITE line with // during both the initial

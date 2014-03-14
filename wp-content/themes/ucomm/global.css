@@ -62,12 +62,13 @@ article h1 {
 /* Adjusting the margin on the h2 to pull the h2 further */
 article h2 {
 	margin-top: 1em;
-	margin-bottom: .675em;
+	margin-bottom: .675em !important;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
 article h3 {
 	margin-top: 1em;
 	margin-bottom: .675em;
+	font-weight: lighter;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
 article h4 {
@@ -81,8 +82,13 @@ article h5 {
 article h6 {
 }
 article header .inline {
-	display:inline-block;
+	float:left;
+	margin-top:.4em;
+	margin-right:.4em;
+	margin-bottom:0;
+	padding:0px;
 	font-size:1em;
+	font-weight:600;
 }
 article p {
 	color: #8D959A;

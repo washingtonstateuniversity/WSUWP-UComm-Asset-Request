@@ -234,15 +234,6 @@ article address {
 	padding-left:1em;
 	margin-bottom: 1em;
 }
-.pageFoot {
-width: 100%;
-	padding-top:5%;
-	padding-bottom:2%;
-	border-style:solid;
-	border-color:black;
-	border-width:1px 0px 0px 0px;
-font-size: .875em
-}
 hr {
 	height: 2px;
 	border:0;

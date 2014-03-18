@@ -14,7 +14,7 @@ Description: Structuring of header, page titles, and tag lines to accomodate the
 .acBanner {
 width:100%;
 height: 30px;
-background-color: #B5BABE;
+background-color: #D7DAD8;
 }
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
 main > header {
@@ -44,18 +44,25 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 	line-height: 100%;
 	color: #981E32;
 }
+article {
+	-webkit-font-smoothing: antialiased;
+}
 .article-header h1 {
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	font-style: italic;
-	font-size: 2.325em;
-	margin-bottom: 2em;
+	font-size: 1.675em;
+	margin-bottom: 3em;
+	padding-bottom:2%;
+	border-style:solid;
+	border-color:#383D42;
+	border-width:0px 0px 1px 0px;
 }
 /* Headers are Palatino italic lowercase BLACK */
 article h1, h2, h3, h4, h5, h6 {
 	font-family: sans-serif;
 	font-weight: lighter;
 	text-transform: lowercase;
-	color:black;
+	color:#383D42;
 }
 article h1 {
 }
@@ -91,13 +98,12 @@ article header .inline {
 	font-weight:600;
 }
 article p {
-	color: #8D959A;
-	line-height: 1.875em;
-	margin-bottom:2em;
-}
-article strong {
-	color:#464E54;
-}
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	color: #666666;
+	font-size:1em;
+	line-height: 1.8em;
+	margin-bottom:1.5em;
+		}
 /* Styling of the paragraphs that follow h5 to match the h5 tag */
 article h5 + p {
 	font-size: .875em;
@@ -112,10 +118,10 @@ article h6 + p {
 }
 /* Styling of the paragraphs that follow the main header to introduce the page and page summary */
 article .uCintro {
-	color: #8D959A;
-	font-size: 1.2em;
+	color:#666666;
+	font-size: 1.4em;
 	text-align: justify;
-	line-height: 2em;
+	line-height: 1.8em;
 	margin-bottom:8%;
 }
 
@@ -125,18 +131,18 @@ article .uCintro {
 }
 /* Styling of ordered lists and un-ordered lists */
 article ul, ol {
-	color: #8D959A;
-	font-size: .885em;
+	color: #666666;
+	font-size: .875em;
 	line-height: 1.5em;
 	margin-bottom:2em;
 }
 article p~ul {
-	margin-top:-1.775em;
+	margin-top:-1em;
 	margin-left:4em;
 	width:80%;
 }
 article p~ol {
-	margin-top:-2em;
+	margin-top:-1em;
 	margin-left:4em;
 	width:80%;
 }
@@ -146,10 +152,12 @@ article h3~ol {
 	width:80%;
 }
 article ul li {
+	text-align: -webkit-match-parent;
     list-style-type: none;
     position:relative;
     margin:0;
-    padding:1px;
+    padding:.125em;
+    margin-bottom:.125em;
 	      }
 
 article ul li:before {
@@ -164,6 +172,7 @@ article ul li:before {
 }
 /* Styling of linked elements */
 article a {
+	background-color:#d3e1e3;
 	color: #4F868E;
 }
 article a:hover {
@@ -216,23 +225,40 @@ blockquote  cite:before {
 	content: "—";
 }
 /* Title: Other elements such as aside, element, font, output, figure, and ect. */
-aside {
-	background-color: #EFF0F1;
+article aside {
+	background-color: white;
 	font-size:.875em;
-	color:#5E6A71;
-	padding:1em;
-	margin:1.275em;
-	text-align: center;
+		line-height: 1.4em;
+	color:#5e6a71;
+	padding:1.25em;
+	margin:2em;
 	border-style:solid;
 	border-color:#D7DAD8;
-	border-width:1px 0px 1px 0px;
+	border-width:0px 0px 0px 4px;
 }
+article section {
+	}
 article address {
+	color:#5e6a71;
+	width:40%;
 	font-size:.875em;
-	line-height: 1.5em;
-	color:#8D959A;
-	padding-left:1em;
-	margin-bottom: 1em;
+	line-height: 1.4em;
+	padding-left:2em;
+	margin-bottom: 2em;
+	padding-top:1em;
+	padding-bottom:1em;
+	border-top:solid 1px #efefef;
+}
+article footer {
+	padding-top:2em;
+	padding-bottom:2em;
+	color:#8d959a;
+	font-family: palantio;
+	font-size: .875em;
+}
+article footer a {
+	color: #4F868E;
+	text-decoration: underline;
 }
 hr {
 	height: 2px;
@@ -275,7 +301,7 @@ Description: Create structure elements for the template such as supplimentary co
 	padding-top:4%;
 	padding-bottom:2%;
 	border-style:solid;
-	border-color:black;
+	border-color:#383D42;
 	border-width:1px 1px 8px 0px;
 		}
 .size-lt-large #fixedSide {

@@ -66,3 +66,22 @@
 	padding-left:10px;
 	margin:0;
 }
+/* Adjust the blockquote on the What We Do */
+.page-id-282 blockquote {
+	background: #8f7e35; /* Old browsers */
+background: -moz-linear-gradient(top, #8f7e35 0%, #b67233 33%, #4f868e 67%, #c69214 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8f7e35), color-stop(33%,#b67233), color-stop(67%,#4f868e), color-stop(100%,#c69214)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* IE10+ */
+background: linear-gradient(to bottom, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', endColorstr='#c69214',GradientType=0 ); /* IE6-9 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+	margin-top:-4em;
+	margin-left:3em;
+	margin-bottom:1em;
+}
+.page-id-282 blockquote:before {
+	display:none;
+}

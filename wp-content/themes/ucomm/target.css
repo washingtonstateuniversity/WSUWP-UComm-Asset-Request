@@ -78,9 +78,9 @@ background: linear-gradient(to bottom, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c6921
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', endColorstr='#c69214',GradientType=0 ); /* IE6-9 */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-	margin-top:-4em;
-	margin-left:3em;
-	margin-bottom:1em;
+	margin-top:-2.875em;
+	margin-left:35%;
+	margin-bottom:2em;
 }
 .page-id-282 blockquote:before {
 	display:none;

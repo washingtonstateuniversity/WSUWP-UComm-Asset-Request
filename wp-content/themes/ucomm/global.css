@@ -14,20 +14,35 @@ Description: Structuring of header, page titles, and tag lines to accomodate the
 .acBanner {
 width:100%;
 height: 30px;
-background-color: #D7DAD8;
+background-color: #d7dadb;
 }
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
-main > header {
-	margin-left:2em;
-	margin-bottom:4em;
+article {
+	-webkit-font-smoothing: antialiased;
+}
+main > .ucomm-bookmark  {
+	margin-bottom:0em;
+	display: block;
+	position: relative;
+	top: 0px;
+	left: 60%;
+	width: 2000px;
+	border: 0px;
+	width: 180%;
 	margin-top:1em;
 }
+.size-lt-medium main > header.ucomm-bookmark {
+	left:3.5em;
+	}
+.size-lt-medium main > header.ucomm-bookmark hgroup {
+	left: 3.5em;
+	}
 /* Hiding the tagline from the hgroup */
-main > header hgroup .tagline {
+main > .ucomm-bookmark .tagline {
 	display:none;
 }
 /* Hiding the page name from the hgroup to prevent double page names */
-main > header hgroup .page {
+main > .ucomm-bookmark .page {
 	display:none;
 }
 /* Adds Communications in Gray */
@@ -40,24 +55,27 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 */
 .site > a:nth-child(1) {
 	font-family: 'open sans', lucida sans, sans serif;
-	font-size:2em;
+	font-size:1.4em;
 	line-height: 100%;
 	color: #981E32;
 }
-article {
-	-webkit-font-smoothing: antialiased;
+.article-header {
+	display:block;
+	vertical-align: text-bottom;
+	width:60%;
+	height:40px;
+	margin-top:2.9em;
+	margin-bottom:4em;
+	border-bottom: 1px solid #d7dadb;
+	padding-bottom: 1.5em;
 }
 .article-header h1 {
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	font-style: italic;
-	font-size: 1.675em;
-	margin-bottom: 3em;
-	padding-bottom:2%;
-	border-style:solid;
-	border-color:#383D42;
-	border-width:0px 0px 1px 0px;
-}
+	font-size: 1.875em;
+		}
 /* Headers are Palatino italic lowercase BLACK */
+
 article h1, h2, h3, h4, h5, h6 {
 	font-family: sans-serif;
 	font-weight: lighter;
@@ -128,6 +146,12 @@ article .uCintro {
 /* Defining Pika margin */
 .ss-icon {
 	margin-left:.5em;
+}
+/* Add Pika for every PDF */
+a[href$=".pdf"]:after {
+	font-family: "SSPika";
+	content:'pdf';
+	margin-left:.375em;
 }
 /* Styling of ordered lists and un-ordered lists */
 article ul, ol {
@@ -201,8 +225,8 @@ blockquote:before {
 	vertical-align: -0.3em;
 	display:inline-block;
 	  -moz-transform: scaleX(-1); /* Gecko */
-        -o-transform: scaleX(-1); /* Operah */
-        -webkit-transform: scaleX(-1); /* webkit */
+      -o-transform: scaleX(-1); /* Operah */
+      -webkit-transform: scaleX(-1); /* webkit */
         transform: scaleX(-1); /* standard */
         filter: FlipH; /* IE 6/7/8 */
 }
@@ -233,7 +257,7 @@ article aside {
 	padding:1.25em;
 	margin:2em;
 	border-style:solid;
-	border-color:#D7DAD8;
+	border-color:#d7dadb;
 	border-width:0px 0px 0px 4px;
 }
 article section {
@@ -253,7 +277,7 @@ article footer {
 	padding-top:2em;
 	padding-bottom:2em;
 	color:#8d959a;
-	font-family: palantio;
+	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	font-size: .875em;
 }
 article footer a {
@@ -312,26 +336,14 @@ Description: Create structure elements for the template such as supplimentary co
 #fixedSide {
 	position:fixed;
 	width:100%;
-	margin-top:75px;
+	margin-top:14em;
 	}
-#fixedSide .green {
+/*#fixedSide .green {
 	background-color: #F4F2EB;
 	border-style:solid;
 	border-color:#E3DFCD;
 	border-width:8px 0px 4px 0px;
-}
-#fixedSide .orange {
-	background-color: #F8F1EB;
-	border-style:solid;
-	border-color:#eddccc;
-	border-width:8px 0px 4px 0px;
-}
-#fixedSide .yellow {
-	background-color: #F9F4E7;
-	border-style:solid;
-	border-color:#f1e4c4;
-	border-width:8px 0px 4px 0px;
-}
+}*/
 #fixedSide article h6 {
 	margin: 1em;
 }

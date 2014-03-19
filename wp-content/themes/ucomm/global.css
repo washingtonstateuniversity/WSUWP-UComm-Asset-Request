@@ -66,7 +66,9 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 	height:40px;
 	margin-top:2.9em;
 	margin-bottom:4em;
-	border-bottom: 1px solid #d7dadb;
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:0px 0px 1px 0px;
 	padding-bottom: 1.5em;
 }
 .article-header h1 {
@@ -92,7 +94,6 @@ article h2 {
 /* Adjusting the margin on the h2 to pull the h3 further */
 article h3 {
 	margin-top: 1em;
-	margin-bottom: .675em;
 	font-weight: lighter;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
@@ -151,7 +152,8 @@ article .uCintro {
 a[href$=".pdf"]:after {
 	font-family: "SSPika";
 	content:'pdf';
-	margin-left:.375em;
+	margin-left:.275em;
+	vertical-align: middle;
 }
 /* Styling of ordered lists and un-ordered lists */
 article ul, ol {
@@ -207,6 +209,7 @@ Title: Blockquotes & Citations
 Description: Styling of block quotes & citations 
 */
 blockquote {
+	color: #b67233;
 	font-weight: bold;
 	font-size: 1.2em;
 	line-height: 1.875em;
@@ -252,7 +255,7 @@ blockquote  cite:before {
 article aside {
 	background-color: white;
 	font-size:.875em;
-		line-height: 1.4em;
+	line-height: 1.4em;
 	color:#5e6a71;
 	padding:1.25em;
 	margin:2em;
@@ -260,8 +263,91 @@ article aside {
 	border-color:#d7dadb;
 	border-width:0px 0px 0px 4px;
 }
+/* styles applied only to sections */
 article section {
 	}
+article .spotlight {
+	margin-top:-3.5em;
+	margin-bottom:4em;
+	padding-top:2em;
+	padding-left:4em;
+	font-size:70%;
+}
+article .spotlight header h4 {
+	padding-bottom:.375em;
+	margin-bottom:0;
+	margin-top:.5em;
+}
+article .spotlight p {
+	margin-top:0;
+	margin-top:0;
+	padding-top: 0;
+	padding-bottom:0;
+}
+article .spotlight-info {
+	border-style:solid;
+	border-color:#cbc4a2;
+	border-width:1px 0px 0px 0px;
+}
+/* Use label if you need to label a section */
+article .label {
+	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
+	font-style: italic;
+	text-transform: lowercase;
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+/* Create multiple label styles */
+article .label-info {
+	background-color:#cbc4a2;
+}
+/* Badges - wrap items such as call to actions */
+article .badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 2%;
+	margin-top:1em;
+	margin-bottom:1em;
+	font-weight: 700;
+	color: white;
+	line-height: 1;
+	vertical-align: baseline;
+	white-space: nowrap;
+	text-align: center;
+}
+article .call-to-action a {
+	color:white;
+	font-size:80%;
+	padding:2%;
+	margin-top:2%;
+	margin-bottom:2%;
+	font-weight: 700;
+	background-color: #981e32;
+	}
+article .call-to-action a:before {
+	vertical-align: middle;
+	font-family: "SSPika";
+	content: 'mail';
+	font-size:2em;
+	margin-right:.575em;
+}
+article .call-to-action a:hover {
+	background: #82a9af; /* Old browsers */
+	color: #4F868E;
+	cursor:pointer;
+}
+.size-lt-medium article .badge {
+	font-size: 80%;
+}
+/* Styles applied to footers and rule lines */
 article address {
 	color:#5e6a71;
 	width:40%;
@@ -273,6 +359,7 @@ article address {
 	padding-bottom:1em;
 	border-top:solid 1px #efefef;
 }
+/* Page footer element styles */
 article footer {
 	padding-top:2em;
 	padding-bottom:2em;
@@ -323,7 +410,7 @@ Description: Create structure elements for the template such as supplimentary co
 #featureFrame {
 	width: inherit;
 	padding-top:4%;
-	padding-bottom:2%;
+	padding-bottom:4%;
 	border-style:solid;
 	border-color:#383D42;
 	border-width:1px 1px 8px 0px;
@@ -333,17 +420,19 @@ Description: Create structure elements for the template such as supplimentary co
 	margin-top:140px;
 
 }
+#featureFrame article {
+	font-size: 90%;
+
+}
+#featureFrame article:last-child {
+	margin-bottom:.785em;
+}
+/* Create fixed sidebar */
 #fixedSide {
 	position:fixed;
 	width:100%;
 	margin-top:14em;
 	}
-/*#fixedSide .green {
-	background-color: #F4F2EB;
-	border-style:solid;
-	border-color:#E3DFCD;
-	border-width:8px 0px 4px 0px;
-}*/
 #fixedSide article h6 {
 	margin: 1em;
 }

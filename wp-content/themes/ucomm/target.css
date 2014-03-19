@@ -51,7 +51,7 @@
 }
 .size-lt-large .brandSide:hover {
 	margin-left:0px;
-	}
+}
 .size-lt-medium .brandSide {
 	position:relative;
 	height:200px;
@@ -75,7 +75,7 @@ background: -webkit-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69
 background: -o-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* Opera 11.10+ */
 background: -ms-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* IE10+ */
 background: linear-gradient(to bottom, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', endColorstr='#c69214',GradientType=0 ); /* IE6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', endColorstr='#c69214',GradientType=0 ); /* IE6-9 */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 	margin-top:-2.875em;
@@ -84,4 +84,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', end
 }
 .page-id-282 blockquote:before {
 	display:none;
+}
+/* Photos and Videos */
+.page-id-354 .photography {
+	height:24em;
+	width:100%;
+	background-image: url("/wp-content/themes/ucomm/images/pages/campusview.jpg");
+	background-size: 100% auto;
+	background-position: top;
+	background-repeat: no-repeat;
+	margin-bottom:3em;
+}
+.page-id-354 .video {
+	margin-bottom:3em;
+}
+/* Move the headings closer to the articles */
+.page-id-354 .row .halves article {
+	margin-top:-2em;
 }

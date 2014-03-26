@@ -5,7 +5,9 @@
  Version:        0.0.1
 */
 
-/* /wsu-brand/ */
+/**
+ - Custom Targeting styles for ucomm.wsu.edu/wsu-brand/
+ **/
 
 /* Located in custom field */
 .brandSide {
@@ -68,20 +70,10 @@
 }
 /* Adjust the blockquote on the What We Do */
 .page-id-282 blockquote {
-	background: #8f7e35; /* Old browsers */
-background: -moz-linear-gradient(top, #8f7e35 0%, #b67233 33%, #4f868e 67%, #c69214 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8f7e35), color-stop(33%,#b67233), color-stop(67%,#4f868e), color-stop(100%,#c69214)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* IE10+ */
-background: linear-gradient(to bottom, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c69214 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f7e35', endColorstr='#c69214',GradientType=0 ); /* IE6-9 */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 	margin-top:-2.875em;
 	margin-left:35%;
 	margin-bottom:2em;
-}
+	}
 .page-id-282 blockquote:before {
 	display:none;
 }
@@ -101,4 +93,69 @@ background: linear-gradient(to bottom, #8f7e35 0%,#b67233 33%,#4f868e 67%,#c6921
 /* Move the headings closer to the articles */
 .page-id-354 .row .halves article {
 	margin-top:-2em;
+}
+
+/** 
+HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand 
+**/
+.page-id-474 .article-header {
+	border:none;
+	float:right;
+	height:100%;
+	margin-top:8em;
+}
+.page-id-474 .article-header h1 {
+	line-height: 1.4em;
+	}
+.page-id-474 .homeFeatureHeader {
+	display:block;
+	background-color:#f9f9f9;
+	position:relative;
+	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
+	font-style: italic;
+	text-transform: lowercase;
+	font-size: 1.5em;
+	color:#383D42;
+	margin:2%;
+}
+.page-id-474 #featureFrame #homeFeatureWrap {
+	height:100%;
+	width:90%;
+	margin-top:4%;
+	margin-bottom:4%;
+	margin-left:8%;
+	margin-right:4%;
+	display: block;
+}
+/* Featured buttons on the homepage */
+.page-id-474 #featureFrame #homeFeatureWrap .featureButton {
+	display:inline-block;
+	height:100%;
+	width:15%;
+	float:left;
+	text-align: center;
+	font-size:.775em;
+	background-color:#d3e1e3;
+	color: #4F868E;
+	border-style:solid;
+	border-color:#383D42;
+	border-width:1px 1px 1px 0px;
+}
+/* Featured buttons on the homepage first child to add left border element */
+.page-id-474 #featureFrame #homeFeatureWrap .featureButton:first-child {
+	border-style:solid;
+	border-color:#383D42;
+	border-width:1px 1px 1px 1px;
+}
+/* Targeting smaller screens */
+.page-id-474 .size-lt-medium #featureFrame #homeFeatureWrap .featureButton {
+	width:100%;
+	height:35%;
+	margin-bottom:2%;
+	clear: both;
+	float:none;
+	display:block;
+}
+.page-id-474 .size-lt-medium #featureFrame {
+	border:none;
 }

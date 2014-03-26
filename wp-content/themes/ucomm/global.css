@@ -17,9 +17,10 @@ height: 30px;
 background-color: #d7dadb;
 }
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
-article {
+main {
 	-webkit-font-smoothing: antialiased;
-}
+	-moz-osx-font-smoothing: grayscale;
+ }
 main > .ucomm-bookmark  {
 	margin-bottom:0em;
 	display: block;
@@ -414,6 +415,7 @@ Description: Create structure elements for the template such as supplimentary co
 	border-style:solid;
 	border-color:#383D42;
 	border-width:1px 1px 8px 0px;
+	z-index: 1;
 		}
 .size-lt-large #fixedSide {
 	position: relative;
@@ -433,13 +435,41 @@ Description: Create structure elements for the template such as supplimentary co
 	width:100%;
 	margin-top:14em;
 	}
-#fixedSide article h6 {
+#fixedSide article h6, ul {
 	margin: 1em;
-}
-#fixedSide article ul {
-	margin: 1em;
-
 }
 #fixedSide article ul li:before {
 	content:'';
+}
+/*
+Title: Blog Posts styles
+Description: Create stylistic elements for blog post pages
+*/
+
+/* Hiding the category name from the hgroup */ 
+main > .ucomm-bookmark .category, .comments {
+	display:none !important;
+}
+/* Changes the header style on posts only */
+.single-post .article-header {
+	width:100%;
+	font-size: 2em;
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+	border-style: none;
+}
+/* Published and by source info */
+.single-post .article-header .source {
+	font-size:45%;
+}
+/* Add to section to create a feautred header image */
+.single-post .article-body .libHeader {
+	margin-top:8em;
+	margin-bottom:8em;
+	text-align: center;
+} 
+/* Removes background image placed by featured image */
+.single-post main {
+	background-image:none;
 }

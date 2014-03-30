@@ -9,6 +9,6 @@
 */
 
 @import url("../spine/style.css");
-@import url("global.css");
-@import url("webfonts/ss-pika.css");
-@import url("target.css");
+@import url("assets/css/global.css");
+@import url("assets/webfonts/ss-pika.css");
+@import url("assets/css/target.css");

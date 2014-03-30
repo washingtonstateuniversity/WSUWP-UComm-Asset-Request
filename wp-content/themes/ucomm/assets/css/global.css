@@ -17,11 +17,11 @@ height: 30px;
 background-color: #d7dadb;
 }
 /* Adjusting the header area so that University Communications is below the logo on the Spine, flush left, removes tagline, and removes page title */
-main {
+* {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
  }
-main > .ucomm-bookmark  {
+main .ucomm-bookmark  {
 	margin-bottom:0em;
 	display: block;
 	position: relative;
@@ -39,15 +39,15 @@ main > .ucomm-bookmark  {
 	left: 3.5em;
 	}
 /* Hiding the tagline from the hgroup */
-main > .ucomm-bookmark .tagline {
+main .ucomm-bookmark .tagline {
 	display:none;
 }
 /* Hiding the page name from the hgroup to prevent double page names */
-main > .ucomm-bookmark .page {
+main .ucomm-bookmark .page {
 	display:none;
 }
 /* Adds Communications in Gray */
-.site .addGray {
+main .site .addGray {
 	color: #5E6A71;
 }
 /*
@@ -59,6 +59,7 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 	font-size:1.4em;
 	line-height: 100%;
 	color: #981E32;
+	background-color:transparent;
 }
 .article-header {
 	display:block;
@@ -79,36 +80,36 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 		}
 /* Headers are Palatino italic lowercase BLACK */
 
-article h1, h2, h3, h4, h5, h6 {
+main h1, h2, h3, h4, h5, h6 {
 	font-family: sans-serif;
 	font-weight: lighter;
 	text-transform: lowercase;
 	color:#383D42;
 }
-article h1 {
+main h1 {
 }
 /* Adjusting the margin on the h2 to pull the h2 further */
-article h2 {
+main h2 {
 	margin-top: 1em;
 	margin-bottom: .675em !important;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
-article h3 {
+main h3 {
 	margin-top: 1em;
 	font-weight: lighter;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
-article h4 {
+main h4 {
 	margin-top: 1em;
 	margin-bottom: .675em;
 }
 /* h5 is a supplimentary header using WSU accent blue http://brand.wsu.edu/visual/colors/ */
-article h5 {
+main h5 {
 	color: #4f868E;
 }
-article h6 {
+main h6 {
 }
-article header .inline {
+main header .inline {
 	float:left;
 	margin-top:.4em;
 	margin-right:.4em;
@@ -117,7 +118,7 @@ article header .inline {
 	font-size:1em;
 	font-weight:600;
 }
-article p {
+main p {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 	color: #666666;
 	font-size:1em;
@@ -125,19 +126,19 @@ article p {
 	margin-bottom:1.5em;
 		}
 /* Styling of the paragraphs that follow h5 to match the h5 tag */
-article h5 + p {
+main h5 + p {
 	font-size: .875em;
 	line-height: 1.875em;
 	color: #4f868E;
 }
 /* Styling of the paragraphs that follow h6 to match the h5 tag */
-article h6 + p {
+main h6 + p {
 	font-size: .875em;
 	line-height: 1.875em;
 	color: #000;
 }
 /* Styling of the paragraphs that follow the main header to introduce the page and page summary */
-article .uCintro {
+main .uCintro {
 	color:#666666;
 	font-size: 1.4em;
 	text-align: justify;
@@ -157,28 +158,28 @@ a[href$=".pdf"]:after {
 	vertical-align: middle;
 }
 /* Styling of ordered lists and un-ordered lists */
-article ul, ol {
+main ul, ol {
 	color: #666666;
 	font-size: .875em;
 	line-height: 1.5em;
 	margin-bottom:2em;
 }
-article p~ul {
+main p~ul {
 	margin-top:-1em;
 	margin-left:4em;
 	width:80%;
 }
-article p~ol {
+main p~ol {
 	margin-top:-1em;
 	margin-left:4em;
 	width:80%;
 }
-article h3~ol {
+main h3~ol {
 	margin-top:2em;
 	margin-left:4em;
 	width:80%;
 }
-article ul li {
+main ul li {
 	text-align: -webkit-match-parent;
     list-style-type: none;
     position:relative;
@@ -187,7 +188,7 @@ article ul li {
     margin-bottom:.125em;
 	      }
 
-article ul li:before {
+main ul li:before {
 	font-size: .825em;
 	width:1em;
 	height: 1em;
@@ -198,18 +199,18 @@ article ul li:before {
 	left:-20px;
 }
 /* Styling of linked elements */
-article a {
+main a {
 	background-color:#d3e1e3;
 	color: #4F868E;
 }
-article a:hover {
+main a:hover {
 	color: #193838;
 	}
 /*
 Title: Blockquotes & Citations
 Description: Styling of block quotes & citations 
 */
-blockquote {
+main blockquote {
 	color: #b67233;
 	font-weight: bold;
 	font-size: 1.2em;
@@ -220,7 +221,7 @@ blockquote {
 	padding: 0.5em;
 	/*quotes: "\201C""\201D""\2018""\2019";*/
 }
-blockquote:before {
+main blockquote:before {
 	color: #b67233;
 	font-family: "SSPika";
 	content: '\201C';
@@ -234,26 +235,24 @@ blockquote:before {
         transform: scaleX(-1); /* standard */
         filter: FlipH; /* IE 6/7/8 */
 }
-blockquote p {
+main blockquote p {
 	color: #b67233;
 	display: inline;
 }
-blockquote cite {
+main blockquote cite {
 	width:100%;
 	display: block;
 	color: #5E6A71;
 	font-size: .875em;
+	line-height:1.2em;
 	margin-top: 4%;
 	margin-left:20%;
 }
-blockquote cite:hover {
-	color: #4F868E;
-}
-blockquote  cite:before {
+main blockquote  cite:before {
 	content: "—";
 }
 /* Title: Other elements such as aside, element, font, output, figure, and ect. */
-article aside {
+main aside {
 	background-color: white;
 	font-size:.875em;
 	line-height: 1.4em;
@@ -265,33 +264,33 @@ article aside {
 	border-width:0px 0px 0px 4px;
 }
 /* styles applied only to sections */
-article section {
+main section {
 	}
-article .spotlight {
+main .spotlight {
 	margin-top:-3.5em;
 	margin-bottom:4em;
 	padding-top:2em;
 	padding-left:4em;
 	font-size:70%;
 }
-article .spotlight header h4 {
+main .spotlight header h4 {
 	padding-bottom:.375em;
 	margin-bottom:0;
 	margin-top:.5em;
 }
-article .spotlight p {
+main .spotlight p {
 	margin-top:0;
 	margin-top:0;
 	padding-top: 0;
 	padding-bottom:0;
 }
-article .spotlight-info {
+main .spotlight-info {
 	border-style:solid;
 	border-color:#cbc4a2;
 	border-width:1px 0px 0px 0px;
 }
 /* Use label if you need to label a section */
-article .label {
+main .label {
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	font-style: italic;
 	text-transform: lowercase;
@@ -307,11 +306,11 @@ article .label {
 	border-radius: .25em;
 }
 /* Create multiple label styles */
-article .label-info {
+main .label-info {
 	background-color:#cbc4a2;
 }
 /* Badges - wrap items such as call to actions */
-article .badge {
+main .badge {
 	display: inline-block;
 	min-width: 10px;
 	padding: 2%;
@@ -324,7 +323,7 @@ article .badge {
 	white-space: nowrap;
 	text-align: center;
 }
-article .call-to-action a {
+main .call-to-action a {
 	color:white;
 	font-size:80%;
 	padding:2%;
@@ -333,23 +332,23 @@ article .call-to-action a {
 	font-weight: 700;
 	background-color: #981e32;
 	}
-article .call-to-action a:before {
+main .call-to-action a:before {
 	vertical-align: middle;
 	font-family: "SSPika";
 	content: 'mail';
 	font-size:2em;
 	margin-right:.575em;
 }
-article .call-to-action a:hover {
+main .call-to-action a:hover {
 	background: #82a9af; /* Old browsers */
 	color: #4F868E;
 	cursor:pointer;
 }
-.size-lt-medium article .badge {
+main .size-lt-medium .badge {
 	font-size: 80%;
 }
 /* Styles applied to footers and rule lines */
-article address {
+main > address {
 	color:#5e6a71;
 	width:40%;
 	font-size:.875em;
@@ -361,18 +360,18 @@ article address {
 	border-top:solid 1px #efefef;
 }
 /* Page footer element styles */
-article footer {
+main footer {
 	padding-top:2em;
 	padding-bottom:2em;
 	color:#8d959a;
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	font-size: .875em;
 }
-article footer a {
+main footer a {
 	color: #4F868E;
 	text-decoration: underline;
 }
-hr {
+main hr {
 	height: 2px;
 	border:0;
 	background-color:#8D959A;
@@ -380,13 +379,13 @@ hr {
 	margin-top:4em;
 	margin-bottom:4em;
 }
-hr:before {
+main hr:before {
 	content: '';
 	display: block;
 	height:1px;
 	background-color:#8D959A;
 }
-hr:after {
+main hr:after {
 	font-family: "SSPika";
     content: '\E202';
     color:#8D959A;
@@ -408,37 +407,37 @@ Title: Template structures
 Description: Create structure elements for the template such as supplimentary content divs, call to action, and ect.
 */
 /* Create the Featured content frame */
-#featureFrame {
+main #featureFrame {
+	font-size: 90%;
 	width: inherit;
 	padding-top:4%;
 	padding-bottom:4%;
 	border-style:solid;
 	border-color:#383D42;
 	border-width:1px 1px 8px 0px;
-	z-index: 1;
 		}
-.size-lt-large #fixedSide {
+main #featureFrame section {
+		margin-left:0;
+		margin-right:2%;
+	}
+main .size-lt-large main > #fixedSide {
 	position: relative;
 	margin-top:140px;
 
 }
-#featureFrame article {
-	font-size: 90%;
-
-}
-#featureFrame article:last-child {
+main #featureFrame section:last-child {
 	margin-bottom:.785em;
 }
 /* Create fixed sidebar */
-#fixedSide {
+main #fixedSide {
 	position:fixed;
 	width:100%;
 	margin-top:14em;
 	}
-#fixedSide article h6, ul {
+main #fixedSide h6, ul {
 	margin: 1em;
 }
-#fixedSide article ul li:before {
+main #fixedSide ul li:before {
 	content:'';
 }
 /*

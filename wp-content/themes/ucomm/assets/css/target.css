@@ -74,6 +74,9 @@
 	margin-left:35%;
 	margin-bottom:2em;
 	}
+.page-id-282 blockquote h2 {
+	color:#981e32;
+}
 .page-id-282 blockquote:before {
 	display:none;
 }
@@ -81,7 +84,7 @@
 .page-id-354 .photography {
 	height:24em;
 	width:100%;
-	background-image: url("/wp-content/themes/ucomm/images/pages/campusview.jpg");
+	background-image: url("/wp-content/themes/ucomm/assets/images/pages/campusview.jpg");
 	background-size: 100% auto;
 	background-position: top;
 	background-repeat: no-repeat;
@@ -105,57 +108,38 @@ HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand
 	margin-top:8em;
 }
 .page-id-474 .article-header h1 {
-	line-height: 1.4em;
+	font-size:2em;
+	line-height: 1.6em;
 	}
 .page-id-474 .homeFeatureHeader {
-	display:block;
-	background-color:#f9f9f9;
-	position:relative;
-	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
-	font-style: italic;
 	text-transform: lowercase;
-	font-size: 1.5em;
+	font-size: 1.4em;
 	color:#383D42;
 	margin:2%;
 }
-.page-id-474 #featureFrame #homeFeatureWrap {
-	height:100%;
-	width:90%;
+.page-id-474 .unbound {
+	background-color: #f1e4c4;
+	padding:2%;
+	z-index: 100;
+}
+.page-id-474 .rebound {
+	margin-left:25%;
+}
+/* Production + Distribution */
+.page-id-474 .homeFeatureSubMenu {
+	float:right;
 	margin-top:4%;
-	margin-bottom:4%;
-	margin-left:8%;
-	margin-right:4%;
-	display: block;
+	clear:right;
 }
-/* Featured buttons on the homepage */
-.page-id-474 #featureFrame #homeFeatureWrap .featureButton {
+.page-id-474 .homeFeatureSubMenu ul li {
 	display:inline-block;
-	height:100%;
-	width:15%;
-	float:left;
-	text-align: center;
-	font-size:.775em;
-	background-color:#d3e1e3;
-	color: #4F868E;
-	border-style:solid;
-	border-color:#383D42;
-	border-width:1px 1px 1px 0px;
 }
-/* Featured buttons on the homepage first child to add left border element */
-.page-id-474 #featureFrame #homeFeatureWrap .featureButton:first-child {
-	border-style:solid;
-	border-color:#383D42;
-	border-width:1px 1px 1px 1px;
+.page-id-474 .homeFeatureSubMenu ul li:before {
+	content: none;
 }
-/* Targeting smaller screens */
-.page-id-474 .size-lt-medium #featureFrame #homeFeatureWrap .featureButton {
-	width:100%;
-	height:35%;
-	margin-bottom:2%;
-	clear: both;
-	float:none;
-	display:block;
+/* Targeting smaller screens 
+.page-id-474 .size-lt-medium {
 }
 .page-id-474 .size-lt-medium #featureFrame {
-	border:none;
-}
+
+} */

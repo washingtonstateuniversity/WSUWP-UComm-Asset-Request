@@ -86,44 +86,24 @@
 	width:100%;
 	background-image: url("/wp-content/themes/ucomm/assets/images/pages/campusview.jpg");
 	background-size: 100% auto;
-	background-position: top;
+	background-position:0% 25%;
 	background-repeat: no-repeat;
 	margin-bottom:3em;
 }
 .page-id-354 .video {
 	margin-bottom:3em;
 }
-/* Move the headings closer to the articles */
-.page-id-354 .row .halves article {
-	margin-top:-2em;
-}
-
 /** 
 HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand 
 **/
 .page-id-474 .article-header {
-	border:none;
-	float:right;
-	height:100%;
-	margin-top:8em;
+	display: none;
 }
-.page-id-474 .article-header h1 {
-	font-size:2em;
-	line-height: 1.6em;
-	}
 .page-id-474 .homeFeatureHeader {
 	text-transform: lowercase;
 	font-size: 1.4em;
 	color:#383D42;
 	margin:2%;
-}
-.page-id-474 .unbound {
-	background-color: #f1e4c4;
-	padding:2%;
-	z-index: 100;
-}
-.page-id-474 .rebound {
-	margin-left:25%;
 }
 /* Production + Distribution */
 .page-id-474 .homeFeatureSubMenu {

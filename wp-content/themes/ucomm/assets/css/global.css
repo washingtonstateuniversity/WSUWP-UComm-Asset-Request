@@ -153,14 +153,14 @@ main .uCintro {
 /* Add Pika for every PDF */
 a[href$=".pdf"]:after {
 	font-family: "SSPika";
-	content:'pdf';
+	content:' \EC34 ';
 	margin-left:.275em;
 	vertical-align: middle;
 }
 /* Styling of ordered lists and un-ordered lists */
 main ul, ol {
 	color: #666666;
-	font-size: .875em;
+	font-size: .885em;
 	line-height: 1.5em;
 	margin-bottom:2em;
 }
@@ -194,7 +194,7 @@ main ul li:before {
 	height: 1em;
 	vertical-align: middle;
 	font-family: "SSPika";
-	content: 'directright';
+	content: '\25B9';
 	position:absolute;
 	left:-20px;
 }
@@ -335,7 +335,7 @@ main .call-to-action a {
 main .call-to-action a:before {
 	vertical-align: middle;
 	font-family: "SSPika";
-	content: 'mail';
+	content: '\2709';
 	font-size:2em;
 	margin-right:.575em;
 }

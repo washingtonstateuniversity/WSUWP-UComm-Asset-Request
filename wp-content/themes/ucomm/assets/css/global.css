@@ -121,7 +121,7 @@ main header .inline {
 main p {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 	color: #666666;
-	font-size:1em;
+	font-size:1.1em;
 	line-height: 1.8em;
 	margin-bottom:1.5em;
 		}
@@ -141,9 +141,8 @@ main h6 + p {
 main .uCintro {
 	color:#666666;
 	font-size: 1.4em;
-	text-align: justify;
 	line-height: 1.8em;
-	margin-bottom:8%;
+	margin-bottom:6%;
 }
 
 /* Defining Pika margin */
@@ -160,8 +159,8 @@ a[href$=".pdf"]:after {
 /* Styling of ordered lists and un-ordered lists */
 main ul, ol {
 	color: #666666;
-	font-size: .885em;
-	line-height: 1.5em;
+	font-size: .9em;
+	line-height: 1.8em;
 	margin-bottom:2em;
 }
 main p~ul {
@@ -214,8 +213,9 @@ main blockquote {
 	color: #b67233;
 	font-weight: bold;
 	font-size: 1.2em;
-	line-height: 1.875em;
-	margin-left:25%;
+	line-height: 1.4em;
+	width:60%;
+	float:right;
 	margin-top:1%;
 	margin-bottom:8%;
 	padding: 0.5em;
@@ -243,10 +243,10 @@ main blockquote cite {
 	width:100%;
 	display: block;
 	color: #5E6A71;
-	font-size: .875em;
-	line-height:1.2em;
+	font-size: .775em;
+	line-height:1.1em;
 	margin-top: 4%;
-	margin-left:20%;
+	
 }
 main blockquote  cite:before {
 	content: "—";
@@ -372,7 +372,7 @@ main footer a {
 	text-decoration: underline;
 }
 main hr {
-	height: 2px;
+	height: 1px;
 	border:0;
 	background-color:#8D959A;
 	line-height: 20px;
@@ -412,21 +412,21 @@ main #featureFrame {
 	width: inherit;
 	padding-top:4%;
 	padding-bottom:4%;
-	border-style:solid;
+	/*border-style:solid;
 	border-color:#383D42;
-	border-width:1px 1px 8px 0px;
+	border-width:1px 1px 8px 0px;*/
 		}
-main #featureFrame section {
-		margin-left:0;
-		margin-right:2%;
+main #featureFrame article {
+	margin:4px;
+	padding:20px;
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:8px 1px 3px 1px;
 	}
-main .size-lt-large main > #fixedSide {
-	position: relative;
-	margin-top:140px;
 
-}
-main #featureFrame section:last-child {
-	margin-bottom:.785em;
+main #featureFrame article h4 {
+	font-size:1.8em;
+	text-align: center;
 }
 /* Create fixed sidebar */
 main #fixedSide {
@@ -439,6 +439,11 @@ main #fixedSide h6, ul {
 }
 main #fixedSide ul li:before {
 	content:'';
+}
+main .size-lt-large main > #fixedSide {
+	position: relative;
+	margin-top:140px;
+
 }
 /*
 Title: Blog Posts styles

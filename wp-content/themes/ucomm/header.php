@@ -24,34 +24,28 @@
 	<!-- FAVICON -->
 	<link rel="shortcut icon" href="http://repo.wsu.edu/spine/1/favicon.ico" />
 	
-	<!-- STYLESHEETS -->
-	<!-- TARGET *LIVE* --><link href="http://repo.wsu.edu/spine/1/spine.min.css" rel="stylesheet" type="text/css" /><!-- -->
-	<!-- TEMP *DEV* <link href="http://nbj.me/spine/1/0.5/styles/styles.css" rel="stylesheet" type="text/css" />  -->
-	<!-- Your custom stylesheets here -->
-	<link href="<?php echo get_stylesheet_directory_uri(); ?>/style.css" rel="stylesheet" type="text/css" />
-	
 	<!-- RESPOND -->
 	<meta name="viewport" content="width=device-width, user-scalable=yes">
-	
-	<!-- SCRIPTS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<!-- TARGET *LIVE* --><script src="http://repo.wsu.edu/spine/1/spine.min.js"></script><!-- -->
-	<!-- TEMP *DEV* <script src="http://nbj.me/spine/1/0.5/scripts/spine.js"></script> -->
-	<!-- Your supplementary scripts here -->
-	<!-- COMPATIBILITY -->
-	<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js">IE7_PNG_SUFFIX=".png";</script><![endif]--> 
-	
+
 	<!-- DOCS -->
 	<link type="text/plain" rel="author" href="http://images.wsu.edu/spine/authors.txt" />
 	<link type="text/html" rel="docs" href="http://identity.wsu.edu" />
 	
-	<!-- ANALYTICS -->
-	<!-- Your analytics code here -->
-	
 	<?php wp_head(); ?>
+
+	<!-- STYLESHEETS -->
+	<!-- Your custom stylesheets here -->
+	<link href="<?php echo get_stylesheet_directory_uri(); ?>/style.css" rel="stylesheet" type="text/css" />
+
+	<!-- COMPATIBILITY -->
+	<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js">IE7_PNG_SUFFIX=".png";</script><![endif]-->
 	<script>$ = jQuery;</script>
 
+	<!-- ANALYTICS -->
+	<!-- Your analytics code here -->
+
+	<!-- SCRIPTS -->
+	<!-- Your supplementary scripts here -->
 </head>
 
 <body <?php body_class(); ?>>
@@ -59,4 +53,4 @@
 <div id="jacket" class="palette">
 <!-- Accent banner to stretch across the page -->
 <div class="acBanner"></div>
-<div id="binder" class="<?php echo $grid_style; echo $large_format; ?>">
+<div id="binder" class="<?php echo esc_attr( $grid_style ); echo esc_attr( $large_format ); ?>">

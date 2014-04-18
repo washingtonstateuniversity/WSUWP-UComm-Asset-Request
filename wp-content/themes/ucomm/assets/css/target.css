@@ -69,20 +69,20 @@
 	margin:0;
 }
 /* Adjust the blockquote on the What We Do */
-.page-id-282 blockquote {
-	margin-top:-2.875em;
-	margin-left:35%;
+.page-id-282 .hwwAtt {
+	display: block;
+	text-align: center;
+	width:100%;
+	font-size: 2em;
+	line-height: 1.2em;
+	color:#981e32;
+	margin-left:auto;
+	margin-right: auto;
 	margin-bottom:2em;
 	}
-.page-id-282 blockquote h2 {
-	color:#981e32;
-}
-.page-id-282 blockquote:before {
-	display:none;
-}
 /* Photos and Videos */
 .page-id-354 .photography {
-	height:24em;
+	height:28em;
 	width:100%;
 	background-image: url("/wp-content/themes/ucomm/assets/images/pages/campusview.jpg");
 	background-size: 100% auto;
@@ -104,23 +104,66 @@
 HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand 
 **/
 .page-id-474 .article-header {
-	display: none;
+	display:block;
+	width:100%;
+	text-align:center;
+	padding-bottom:5em;
+	margin-bottom:1.1em;
+	margin-top:5em;
+	border-bottom: none;
+	text-transform: none;
+}
+.page-id-474 .article-header .article-title {
+	font-size:2.7em;
+	line-height: 1.3em;
+	font-weight: lighter;
+	margin-left:auto;
+	margin-right:auto;
+}
+.page-id-474 .lead {
+	margin-left:auto;
+	margin-right:auto;
+	width:95%;
+	font-size: 1.7em;
+	line-height: 1.46em;
+	text-align: center;
+	font-family: 'open sans', lucida sans, sans serif;
+	color:#666666;
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:0px 0px 1px 0px;
+	padding-bottom: 2em;
 }
 .page-id-474 .homeFeatureHeader {
 	text-transform: lowercase;
-	font-size: 1.4em;
+	text-align: center;
+	font-size: 2.2em;
+	line-height: 1.2em;
 	color:#383D42;
-	margin:2%;
+	margin:8% 0% 4% 0%;
+}
+main #featureFrame .featureBlock {
+	display:inline-block;
+	width:45%;
+	height:300px;
+	background-color: green;
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:1px 1px 1px 1px;
+}
+.page-id-474 #featureFrame {
+	text-align: center;
 }
 /* Production + Distribution */
 .page-id-474 .homeFeatureSubMenu {
-	float:right;
 	margin-top:4%;
-	clear:right;
-}
+	text-align: center;
+	}
 .page-id-474 .homeFeatureSubMenu ul li {
+	font-size: 1.4em;
 	display:inline-block;
-}
+	padding:14px;
+	}
 .page-id-474 .homeFeatureSubMenu ul li:before {
 	content: none;
 }

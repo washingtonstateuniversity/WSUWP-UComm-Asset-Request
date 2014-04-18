@@ -157,26 +157,34 @@ a[href$=".pdf"]:after {
 	vertical-align: middle;
 }
 /* Styling of ordered lists and un-ordered lists */
-main ul, ol {
+main ul{
 	color: #666666;
-	font-size: .9em;
-	line-height: 1.8em;
+	font-size: 95%;
+	line-height: 1.4em;
 	margin-bottom:2em;
 }
+main ol {
+	color: #666666;
+	font-size: 95%;
+	line-height: 1.4em;
+	margin-bottom:2em;
+	margin-top:1.1em;
+}
 main p~ul {
-	margin-top:-1em;
+	margin-top:-1.8em;
 	margin-left:4em;
-	width:80%;
+	width:70%;
 }
 main p~ol {
 	margin-top:-1em;
 	margin-left:4em;
-	width:80%;
+	width:70%;
 }
 main h3~ol {
 	margin-top:2em;
 	margin-left:4em;
-	width:80%;
+	width:70%;
+	background-color: green;
 }
 main ul li {
 	text-align: -webkit-match-parent;
@@ -184,11 +192,10 @@ main ul li {
     position:relative;
     margin:0;
     padding:.125em;
-    margin-bottom:.125em;
 	      }
 
 main ul li:before {
-	font-size: .825em;
+	font-size: .725em;
 	width:1em;
 	height: 1em;
 	vertical-align: middle;
@@ -196,6 +203,11 @@ main ul li:before {
 	content: '\25B9';
 	position:absolute;
 	left:-20px;
+}
+main ol li {
+	text-align: -webkit-match-parent;
+	margin-top:0;
+    padding:.125em;
 }
 /* Styling of linked elements */
 main a {
@@ -210,24 +222,24 @@ Title: Blockquotes & Citations
 Description: Styling of block quotes & citations 
 */
 main blockquote {
-	color: #b67233;
-	font-weight: bold;
-	font-size: 1.2em;
-	line-height: 1.4em;
-	width:60%;
-	float:right;
-	margin-top:1%;
-	margin-bottom:8%;
-	padding: 0.5em;
-	/*quotes: "\201C""\201D""\2018""\2019";*/
+	color: #d38235;
+	width:70%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:4em;
+	margin-bottom:4em;
+	/*quotes: "\201C""\201D""\2018""\2019";
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:1px 0px 1px 0px;
+	padding-top:1.5em;
+	padding-bottom:1.5em;*/
 }
 main blockquote:before {
-	color: #b67233;
 	font-family: "SSPika";
 	content: '\201C';
-	font-size: 1.2em;
 	margin-right: 0.60em;
-	vertical-align: -0.3em;
+	vertical-align: 0em;
 	display:inline-block;
 	  -moz-transform: scaleX(-1); /* Gecko */
       -o-transform: scaleX(-1); /* Operah */
@@ -236,42 +248,49 @@ main blockquote:before {
         filter: FlipH; /* IE 6/7/8 */
 }
 main blockquote p {
-	color: #b67233;
+	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
 	display: inline;
+	font-size: 1.2em;
+	line-height: 1.4em;
 }
 main blockquote cite {
+	font-style: italic;
 	width:100%;
 	display: block;
 	color: #5E6A71;
-	font-size: .775em;
+	font-size: .875em;
 	line-height:1.1em;
-	margin-top: 4%;
+	margin-top: 3%;
 	
 }
 main blockquote  cite:before {
-	content: "—";
+	content: "— ";
 }
 /* Title: Other elements such as aside, element, font, output, figure, and ect. */
 main aside {
 	background-color: white;
-	font-size:.875em;
+	font-size:.9em;
 	line-height: 1.4em;
-	color:#5e6a71;
 	padding:1.25em;
 	margin:2em;
 	border-style:solid;
-	border-color:#d7dadb;
+	border-color:#eddccc;
 	border-width:0px 0px 0px 4px;
 }
 /* styles applied only to sections */
 main section {
 	}
+/* styles applied to info and spotlight sections */
 main .spotlight {
-	margin-top:-3.5em;
+	width:100%;
+	margin-top:-3em;
 	margin-bottom:4em;
 	padding-top:2em;
 	padding-left:4em;
-	font-size:70%;
+	font-size:85%;
+	border-style:solid;
+	border-color:#cbc4a2;
+	border-width:1px 0px 0px 0px;
 }
 main .spotlight header h4 {
 	padding-bottom:.375em;
@@ -284,11 +303,6 @@ main .spotlight p {
 	padding-top: 0;
 	padding-bottom:0;
 }
-main .spotlight-info {
-	border-style:solid;
-	border-color:#cbc4a2;
-	border-width:1px 0px 0px 0px;
-}
 /* Use label if you need to label a section */
 main .label {
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
@@ -296,6 +310,7 @@ main .label {
 	text-transform: lowercase;
 	display: inline;
 	padding: .2em .6em .3em;
+	margin:0;
 	font-size: 75%;
 	font-weight: 700;
 	line-height: 1;
@@ -348,8 +363,8 @@ main .size-lt-medium .badge {
 	font-size: 80%;
 }
 /* Styles applied to footers and rule lines */
-main > address {
-	color:#5e6a71;
+address {
+	color:#666666;
 	width:40%;
 	font-size:.875em;
 	line-height: 1.4em;
@@ -357,24 +372,24 @@ main > address {
 	margin-bottom: 2em;
 	padding-top:1em;
 	padding-bottom:1em;
-	border-top:solid 1px #efefef;
+	border-top:solid 1px #d7dadb;
 }
 /* Page footer element styles */
 main footer {
 	padding-top:2em;
 	padding-bottom:2em;
-	color:#8d959a;
+	color:#5e6a71;
 	font-family: Palatino, "Palatino Linotype", Baskerville, "Century Schoolbook L", "Times New Roman", serif;
-	font-size: .875em;
+	font-size: .9em;
+	line-height: 1.8em;
 }
 main footer a {
-	color: #4F868E;
 	text-decoration: underline;
 }
 main hr {
 	height: 1px;
 	border:0;
-	background-color:#8D959A;
+	background-color:#666666;
 	line-height: 20px;
 	margin-top:4em;
 	margin-bottom:4em;
@@ -383,12 +398,12 @@ main hr:before {
 	content: '';
 	display: block;
 	height:1px;
-	background-color:#8D959A;
+	background-color:#666666;
 }
 main hr:after {
 	font-family: "SSPika";
     content: '\E202';
-    color:#8D959A;
+    color:#666666;
     display:block;
     text-align:center;
     background-color:#f9f9f9;
@@ -408,7 +423,7 @@ Description: Create structure elements for the template such as supplimentary co
 */
 /* Create the Featured content frame */
 main #featureFrame {
-	font-size: 90%;
+	font-size: 85%;
 	width: inherit;
 	padding-top:4%;
 	padding-bottom:4%;
@@ -417,16 +432,21 @@ main #featureFrame {
 	border-width:1px 1px 8px 0px;*/
 		}
 main #featureFrame article {
-	margin:4px;
+	margin-right:4px;
+	margin-bottom:4px;
 	padding:20px;
 	border-style:solid;
 	border-color:#d7dadb;
-	border-width:8px 1px 3px 1px;
+	border-width:1px 1px 1px 1px;
 	}
 
 main #featureFrame article h4 {
-	font-size:1.8em;
+	font-size:1.9em;
 	text-align: center;
+}
+main #featureFrame article ul, ol {
+	font-size: 1em;
+	margin-top:-.5em;
 }
 /* Create fixed sidebar */
 main #fixedSide {

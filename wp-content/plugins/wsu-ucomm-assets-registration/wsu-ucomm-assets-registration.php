@@ -262,13 +262,13 @@ class WSU_UComm_Assets_Registration {
 			<label for="email_address">Email Address:</label><br>
 			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
 
-			<label for="area">Area Number:</label><br>
+			<label for="area">WSU Area Number:</label><br>
 			<input type="text" name="area" id="area" value="" style="width:100%;" />			
 
 			<label for="deparatment">College/Department:</label><br>
 			<input type="text" name="department" id="department" value="" style="width:100%;" />
 
-			<label for="job_description">Job Description:</label><br>
+			<label for="job_description">Job Title/Description:</label><br>
 			<input type="text" name="job_description" id="job-description" value="" style="width:100%;" />			
 
 			<ol>
@@ -363,7 +363,7 @@ class WSU_UComm_Assets_Registration {
 		}
 
 		if ( empty( $_POST['area'] ) ) {
-			echo json_encode( array( 'error' => 'Please enter area number.' ) );
+			echo json_encode( array( 'error' => 'Please enter WSU area number.' ) );
 			die();
 		} else {
 			$area = sanitize_text_field( $_POST['area'] );

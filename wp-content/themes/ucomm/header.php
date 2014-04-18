@@ -53,4 +53,4 @@
 <div id="jacket" class="palette">
 <!-- Accent banner to stretch across the page -->
 <div class="acBanner"></div>
-<div id="binder" class="<?php echo $grid_style; echo $large_format; ?>">
+<div id="binder" class="<?php echo esc_attr( $grid_style ); echo esc_attr( $large_format ); ?>">

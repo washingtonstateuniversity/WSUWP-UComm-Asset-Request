@@ -48,8 +48,6 @@ class WSU_UComm_Assets_Registration {
 	 */
 	var $asset_types = array(
 		'office_support_qty'      => array( 'qty' => 0, 'name' => 'Office Support Package' ),
-		'stone_sans_nocharge_qty' => array( 'qty' => 0, 'name' => 'Stone Sans II (no charge)' ),
-		'stone_sans_charge_qty'   => array( 'qty' => 0, 'name' => 'Stone Sans II ($30)' ),
 		'full_stone_nocharge_qty' => array( 'qty' => 0, 'name' => 'Full Stone Font Family (no charge)' ),
 		'full_stone_charge_qty'   => array( 'qty' => 0, 'name' => 'Full Stone Font Family ($60)' ),
 	);
@@ -262,9 +260,6 @@ class WSU_UComm_Assets_Registration {
 			<label for="email_address">Email Address:</label><br>
 			<input type="text" name="email_address" id="email-address" value="" style="width:100%;" />
 
-			<label for="area">WSU Area Number:</label><br>
-			<input type="text" name="area" id="area" value="" style="width:100%;" />			
-
 			<label for="deparatment">College/Department:</label><br>
 			<input type="text" name="department" id="department" value="" style="width:100%;" />
 
@@ -276,23 +271,14 @@ class WSU_UComm_Assets_Registration {
 					<p><strong>Office Support Package.</strong> Includes the basic Stone Sans and Stone Serif font families, which are necessary for creating office communications/memorandum for both internal and external audiences in compliance with University brand standards.</p>
 					<input type="text" name="office_support_qty" id="office-support-qty" size="2" value="0" />
 					<label for="office_support_qty">Office Support Package (no charge)</label>
-				</li>
+                    </li>
 				<li>
-					<p><strong>Stone Sans II Font Family.</strong> Includes regular Stone Sans plus Stone Sans Condensed. Users who already have regular Stone Sans and Stone Serif installed on their machines may download this package to add Stone Sans Condensed to their font library. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
-					<input type="text" name="stone_sans_nocharge_qty" id="stone-sans-nocharge-qty" size="2" value="0" />
-					<label for="stone_sans_nocharge_qty">Stone Sans II (no charge to University design staff)*</label>
-					<br />
-					<input type="text" name="stone_sans_charge_qty" id="stone-sans-charge-qty" size="2" value="0" />
-					<label for="stone_sans_charge_qty">Stone Sans II ($30 for non-design staff)</label>
-					<p>*If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or if you are requesting the package on behalf of such an individual or individuals, please provide a brief justification in support of your request in the field below.</p>
-				</li>
-				<li>
-					<p><strong>Full Stone Font Family.</strong> Includes Stone Sans II (which includes Stone Sans Condensed) and Stone Serif families. This package is for new users who do not currently have the regular Stone Sans and Stone Serif fonts installed on their machines. This package is only used by those involved with creating visual designs in support of the University brand as part of their prescribed work activities.</p>
+					<p><strong>Stone Sans II and Stone Serif Families.</strong> Includes Stone Sans II (which includes Stone Sans Condensed) and Stone Serif families. This package is for new users who do not currently have the regular Stone Sans and Stone Serif fonts installed on their machines. This package is only used by graphic designers creating branding university communications.</p>
 					<input type="text" name="full_stone_nocharge_qty" id="full-stone-nocharge-qty" size="2" value="0" />
-					<label for="full_stone_nocharge_qty">Full Stone Font Family (no charge to University design staff)**</label>
+					<label for="full_stone_nocharge_qty">Stone Sans II and Stone Serif Families (no charge to University design staff)**</label>
 					<br />
 					<input type="text" name="full_stone_charge_qty" id="full-stone-charge-qty" size="2" value="0" />
-					<label for="full_stone_charge_qty">Full Stone Font Family ($60 for non-design staff)**</label>
+					<label for="full_stone_charge_qty">Stone Sans II and Stone Serif Families ($60 for non-design staff)**</label>
 					<p>**If you are requesting this package at no charge and your current position description does not explicitly include visual design responsibilities, or are requesting the package on behalf of such an individual or individuals, please provide brief justification in support of your request in the field below.</p>
 				</li>
 			</ol>
@@ -362,13 +348,6 @@ class WSU_UComm_Assets_Registration {
 			$post['post_title'] = sanitize_text_field( 'Request from ' . $first_name . ' ' . $last_name . ' (' . $email . ')' );
 		}
 
-		if ( empty( $_POST['area'] ) ) {
-			echo json_encode( array( 'error' => 'Please enter WSU area number.' ) );
-			die();
-		} else {
-			$area = sanitize_text_field( $_POST['area'] );
-		}
-
 		if ( empty( $_POST['department'] ) ) {
 			echo json_encode( array( 'error' => 'Please enter department name.' ) );
 			die();
@@ -400,7 +379,6 @@ class WSU_UComm_Assets_Registration {
 		update_post_meta( $post_id, '_ucomm_request_first_name', $first_name );
 		update_post_meta( $post_id, '_ucomm_request_last_name',  $last_name );
 		update_post_meta( $post_id, '_ucomm_request_email', $email );
-		update_post_meta( $post_id, '_ucomm_request_area', $area );
 		update_post_meta( $post_id, '_ucomm_request_department', $department );
 		update_post_meta( $post_id, '_ucomm_request_job_description', $job_description );
 		update_post_meta( $post_id, $this->requested_asset_types_meta_key, $this->asset_types );
@@ -510,7 +488,6 @@ class WSU_UComm_Assets_Registration {
 		$first_name  = get_post_meta( $post->ID, '_ucomm_request_first_name', true );
 		$last_name   = get_post_meta( $post->ID, '_ucomm_request_last_name',  true );
 		$email       = get_post_meta( $post->ID, '_ucomm_request_email',      true );
-		$area        = get_post_meta( $post->ID, '_ucomm_request_area',       true );
 		$department  = get_post_meta( $post->ID, '_ucomm_request_department', true );
 		$job_desc    = get_post_meta( $post->ID, '_ucomm_request_job_description', true );
 
@@ -527,7 +504,6 @@ class WSU_UComm_Assets_Registration {
 		<ul>
 			<li>Name: <?php echo esc_html( $first_name ); ?> <?php echo esc_html( $last_name ); ?></li>
 			<li>Email: <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></li>
-			<li>Area:       <?php echo esc_html( $area ); ?></li>
 			<li>Department: <?php echo esc_html( $department ); ?></li>
 			<li>Job Description: <?php echo esc_html( $job_desc ); ?></li>
 		</ul>

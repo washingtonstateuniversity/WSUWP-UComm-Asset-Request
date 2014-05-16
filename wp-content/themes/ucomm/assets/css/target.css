@@ -3,173 +3,314 @@
  Author:         WSU University Communications
  Author URI:     http://ucomm.wsu.edu
  Version:        0.0.1
-*/
+ */
 
 /**
  - Custom Targeting styles for ucomm.wsu.edu/wsu-brand/
  **/
 
-/* Located in custom field */
-.brandSide {
-	position:absolute;
-	width:100%;
-	height:650px;
-	margin-left:200px;
-	margin-top:120px;
-	margin-bottom:0;
-	background-image: url('http://brand.wsu.edu/wp-content/themes/brand/images/pages/home/confetti.jpg');
-	background-repeat: no-repeat;
-	background-position: -400px 0;
-	cursor: pointer;
-	padding: 0;
-	-webkit-transition: all 500ms ease .1s;
-    -moz-transition: all 500ms ease .1s;
-    -o-transition: all 500ms ease .1s;
-    transition: all 500ms ease .1s;
-}
-.brandSide:hover {
-	margin-left:0px;
-	}
-.brandSide .brandfill {
-	position:absolute;
-	display:block;
-	width:100%;
-	height:330px;
-	padding-top:320px;
-	padding-left:12px;
-	letter-spacing: 1px;
-	margin:0;
-	color:white;
-	font-size: 1.2em;
-	background: rgba(0,0,0,0.55);
+ /* Located in custom field */
+ .brandSide {
+ 	position:absolute;
+ 	width:100%;
+ 	height:650px;
+ 	margin-left:200px;
+ 	margin-top:120px;
+ 	margin-bottom:0;
+ 	background-image: url('http://brand.wsu.edu/wp-content/themes/brand/images/pages/home/confetti.jpg');
+ 	background-repeat: no-repeat;
+ 	background-position: -400px 0;
+ 	cursor: pointer;
+ 	padding: 0;
+ 	-webkit-transition: all 500ms ease .1s;
+ 	-moz-transition: all 500ms ease .1s;
+ 	-o-transition: all 500ms ease .1s;
+ 	transition: all 500ms ease .1s;
+ }
+ .brandSide:hover {
+ 	margin-left:0px;
+ }
+ .brandSide .brandfill {
+ 	position:absolute;
+ 	display:block;
+ 	width:100%;
+ 	height:330px;
+ 	padding-top:320px;
+ 	padding-left:12px;
+ 	letter-spacing: 1px;
+ 	margin:0;
+ 	color:white;
+ 	font-size: 1.2em;
+ 	background: rgba(0,0,0,0.55);
 
-}
-.brandSide .brandfill:hover {
-	color: #A6CACE;
-}
-.size-lt-large .brandSide {
-	position:relative;
-	margin-left:150px;
-}
-.size-lt-large .brandSide:hover {
-	margin-left:0px;
-}
-.size-lt-medium .brandSide {
-	position:relative;
-	height:200px;
-	margin:0px;
-	background-position:center right;
-}
-.size-lt-medium .brandSide .brandfill {
-	position:relative;
-	height:100px;
-	width:700px;
-	padding-top:100px;
-	padding-left:10px;
-	margin:0;
-}
-/* Adjust the blockquote on the What We Do */
-.page-id-282 .hwwAtt {
-	display: block;
-	text-align: center;
-	width:100%;
-	font-size: 2em;
-	line-height: 1.2em;
-	color:#981e32;
-	margin-left:auto;
-	margin-right: auto;
-	margin-bottom:2em;
-	}
-/* Photos and Videos */
-.page-id-354 .photography {
-	height:28em;
-	width:100%;
-	background-image: url("/wp-content/themes/ucomm/assets/images/pages/campusview.jpg");
-	background-size: 100% auto;
-	background-position:0% 25%;
-	background-repeat: no-repeat;
-	margin-bottom:3em;
-}
-.page-id-354 .video {
-	margin-bottom:3em;
-}
-.page-id-354 h2 {
-	font-size: 1.8em;
-	text-align: center;
-}
-.page-id-354 .halves .column {
-	margin-bottom:4em;
-}
+ }
+ .brandSide .brandfill:hover {
+ 	color: #A6CACE;
+ }
+ .size-lt-large .brandSide {
+ 	position:relative;
+ 	margin-left:150px;
+ }
+ .size-lt-large .brandSide:hover {
+ 	margin-left:0px;
+ }
+ .size-lt-medium .brandSide {
+ 	position:relative;
+ 	height:200px;
+ 	margin:0px;
+ 	background-position:center right;
+ }
+ .size-lt-medium .brandSide .brandfill {
+ 	position:relative;
+ 	height:100px;
+ 	width:700px;
+ 	padding-top:100px;
+ 	padding-left:10px;
+ 	margin:0;
+ }
+ /* Photos and Videos */
+ .page-id-354 .photography {
+ 	height:28em;
+ 	width:100%;
+ 	background-image: url("/wp-content/themes/ucomm/assets/images/pages/campusview.jpg");
+ 	background-size: 100% auto;
+ 	background-position:0% 25%;
+ 	background-repeat: no-repeat;
+ 	margin-bottom:3em;
+ 	margin-top:3em;
+ }
+ .page-id-354 .video {
+ 	margin:2em;
+ }
+ .page-id-354 h2 {
+ 	font-size: 1.8em;
+ 	text-align: center;
+ }
+ .page-id-354 hr {
+ 	margin-left:2em;
+ 	margin-right:2em;
+ }
 /** 
-HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand 
+HOMEPAGE / Marketing experts helping you unleash the power of the wsu brand background-image:url('../images/elements/bg.png');
 **/
-.page-id-474 .article-header {
-	display:block;
-	width:100%;
-	text-align:center;
-	padding-bottom:5em;
-	margin-bottom:1.1em;
-	margin-top:5em;
-	border-bottom: none;
-	text-transform: none;
+@media (min-width:991px) {
+	.page-id-474 .sky .column {
+		width:991px ! important;
+	}
+	.page-id-474 .call {
+		margin-top: 60px;
+		margin-bottom:90px;
+	}
+	.page-id-474 #tabsnav li {
+		display:inline-block;
+		width:45%;
+	}
+	.page-id-474 #tabsnav li:last-child {
+		border-width:0 0 0 1px;
+	}
+	.page-id-474 #tabsnav li .ss-icon {
+		padding-top:10px !important;
+		padding-bottom:0;
+		display: block;
+	}
 }
-.page-id-474 .article-header .article-title {
-	font-size:2.7em;
+@media (min-width: 791px) and (max-width:990px)  {
+	.page-id-474 .sky h1 {
+		font-size: 4em !important;
+		line-height: 1.3em;
+		padding-left:178px;
+	}
+	.page-id-474 .lead {
+		font-size: 1.8em !important;
+		text-align: center;
+	}
+	.page-id-474 .call {
+		margin-top: 60px;
+		margin-bottom:90px;
+	}
+	.page-id-474 .fixed {
+		margin-left:0 !important;
+	}
+	.page-id-474 #tabsnav li {
+		width:90%;
+	}
+	.page-id-474 #tabsnav li:last-child {
+		border-width:1px 0 0 0;
+	}
+	.page-id-474 #tabsnav li .ss-icon {
+		padding-top:10px !important;
+	}
+}
+@media (max-width:791px)  {
+	.page-id-474 .article-header {
+		padding:0 0 40px 0!important;
+	}
+	.page-id-474 .page-id-474 .sky h1 {
+		font-size: 2.4em !important;
+		line-height: 1.3em;
+	}
+	.page-id-474 .lead {
+		font-size: 1.4em !important;
+	}
+	.page-id-474 .call {
+		width:100% !important;
+		margin-top: 20px;
+		margin-bottom:20px;
+	}
+	.page-id-474 .call a {
+		border:none !important;
+	}
+	.page-id-474 .fixed {
+		position: relative !important; 
+	}
+	.page-id-474 #tabsnav li {
+		width:90%;
+	}
+	.page-id-474 #tabsnav li:last-child {
+		border-width:1px 0 0 0;
+	}
+	.page-id-474 #tabsnav li .ss-icon {
+		padding-top:10px !important;
+	}
+}
+.page-id-474 .sky .column {
+	text-align: center;
+}
+.page-id-474 .article-header {
+	height:100%;
+	padding-top:1em;
+	padding-left:1em;
+	padding-right:1em;
+	padding-bottom:3em;
+	margin-bottom:0;
+	border:none;
+}
+.page-id-474 .sky h1 {
+	font-size: 5em;
 	line-height: 1.3em;
-	font-weight: lighter;
-	margin-left:auto;
-	margin-right:auto;
+	font-style: normal;
+	text-transform: none;
+	color:white;
+	font-family: 'OpenSans-Condensed';
+	letter-spacing: -1px;
 }
 .page-id-474 .lead {
+	padding-top:1.3em;
+	padding-left:1.3em;
+	padding-right:1.3em;
+	margin-top:25px;
+	margin-bottom:0;
+	font-size: 2em;
+	display: inline-block;
+	clear: both;
+}
+.page-id-474  .sky {
+	background: rgb(221,190,161);
+	background: -moz-linear-gradient(45deg,  rgba(221,190,161,1) 0%, rgba(215,178,88,1) 100%);
+	background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(221,190,161,1)), color-stop(100%,rgba(215,178,88,1)));
+	background: -webkit-linear-gradient(45deg,  rgba(221,190,161,1) 0%,rgba(215,178,88,1) 100%);
+	background: -o-linear-gradient(45deg,  rgba(221,190,161,1) 0%,rgba(215,178,88,1) 100%);
+	background: -ms-linear-gradient(45deg,  rgba(221,190,161,1) 0%,rgba(215,178,88,1) 100%);
+	background: linear-gradient(45deg,  rgba(221,190,161,1) 0%,rgba(215,178,88,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ddbea1', endColorstr='#d7b258',GradientType=1 );
+	border-style: solid;
+	border-width: 0 0 25px 0;
+	border-color: rgba(237, 220, 204,0.3);
+	overflow: hidden;
+	padding: 0;
+}
+.page-id-474 .metro {
+	background-color:#F4F5F5;
+}
+.page-id-474 .metro ul {
+	margin:5px auto auto 5px;
+	padding:0 !important;
+}
+.page-id-474 .metro ul li {
+	display:inline-block;
+	padding:0;
+	margin:0;
+	line-height: 0;
+}
+.page-id-474 .call {
+	width: 50%;
+	height: 100%;
 	margin-left:auto;
 	margin-right:auto;
-	width:95%;
-	font-size: 1.7em;
-	line-height: 1.46em;
-	text-align: center;
-	font-family: 'open sans', lucida sans, sans serif;
-	color:#666666;
-	border-style:solid;
-	border-color:#d7dadb;
-	border-width:0px 0px 1px 0px;
-	padding-bottom: 2em;
-}
-.page-id-474 .homeFeatureHeader {
-	text-transform: lowercase;
-	text-align: center;
-	font-size: 2.2em;
-	line-height: 1.2em;
-	color:#383D42;
-	margin:8% 0% 4% 0%;
-}
-main #featureFrame .featureBlock {
-	display:inline-block;
-	width:45%;
-	height:300px;
-	background-color: green;
-	border-style:solid;
-	border-color:#d7dadb;
-	border-width:1px 1px 1px 1px;
-}
-.page-id-474 #featureFrame {
-	text-align: center;
-}
-/* Production + Distribution */
-.page-id-474 .homeFeatureSubMenu {
-	margin-top:4%;
-	text-align: center;
-	}
-.page-id-474 .homeFeatureSubMenu ul li {
 	font-size: 1.4em;
+}
+.page-id-474 .call a {
+	text-align: center;
+	text-transform: uppercase;
+	padding-top:20px;
+	padding-bottom:20px;
+	display:block;
+	width:100%;
+	height:100%;
+	border-style:double;
+	border-width: 4px 4px 4px 4px;
+	border-color:#4f868e;
+	text-shadow:0px 1px 1px #fff;
+}
+.page-id-474 .fixed {
+	color:#4f868e;
+	font-size: 1.2em;
+	width:488px;
+	position: fixed; 
+	top: 0; 
+	height: 20px; 
+	z-index: 1;
+	padding-top:0px;
+	margin-top:0;
+	margin-bottom:0;
+	margin-right:0;
+	margin-left:495px;
+}
+.page-id-474 .hmsectional {
+	border-width:2px 0 0 0;
+	border-color:#d7dadb;
+	border-style: solid;
+}
+.page-id-474 .hmsectional ul li:before, .metro ul li:before {
+	content:none;
+}
+.page-id-474 #tabsnav li {
 	display:inline-block;
-	padding:14px;
-	}
-.page-id-474 .homeFeatureSubMenu ul li:before {
-	content: none;
+	text-align: center;
+	font-size: 1.4em;
 }
-/* Targeting smaller screens 
-.page-id-474 .size-lt-medium {
+.page-id-474 #tabsnav li:last-child {
+	border-color:#d7dadb;
+	border-style: solid;
 }
-.page-id-474 .size-lt-medium #featureFrame {
+.page-id-474 #tabsnav li .ss-icon {
+	padding-top:10px !important;
+	padding-bottom:0;
+	margin-bottom:-20px;
+	display: block;
+	font-size: 2em;
+}
+.page-id-474 #tabsnav li a {
+	display: block;
+	width:100%;
+	height:100%;
+	padding:.7em;
+	text-transform: uppercase;
+	background-color:transparent;
+}
+.page-id-474 .ui-tabs-panel {
+	margin-top:-4em;
+}
+.page-id-474 .tabsectional {
+	background: rgb(215,218,219);
+	background: -moz-linear-gradient(top,  rgba(215,218,219,1) 0%, rgba(239,240,241,1) 21%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(215,218,219,1)), color-stop(21%,rgba(239,240,241,1)));
+	background: -webkit-linear-gradient(top,  rgba(215,218,219,1) 0%,rgba(239,240,241,1) 21%);
+	background: -o-linear-gradient(top,  rgba(215,218,219,1) 0%,rgba(239,240,241,1) 21%);
+	background: -ms-linear-gradient(top,  rgba(215,218,219,1) 0%,rgba(239,240,241,1) 21%);
+	background: linear-gradient(to bottom,  rgba(215,218,219,1) 0%,rgba(239,240,241,1) 21%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7dadb', endColorstr='#eff0f1',GradientType=0 );
+}
+.page-id-474 .stgmkt {
 
-} */
+}

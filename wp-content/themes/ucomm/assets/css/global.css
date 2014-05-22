@@ -96,8 +96,8 @@ Description: Styling of University Communications typography for p, h1, h2, h3, 
 	display:block;
 	vertical-align: text-bottom;
 	height:40px;
-	margin-top:3.5em;
-	margin-bottom:4em;
+	padding-top:3.5em;
+	margin-bottom:3em;
 	border-style:solid;
 	border-color:#464e54;
 	border-width:0px 0px 1px 0px;
@@ -129,8 +129,9 @@ main h2 {
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
 main h3 {
-	margin-top: 1em;
-	margin-bottom:1em;
+	margin-top:.5em;
+	margin-bottom:.5em;
+	font-size:1.6em;
 }
 /* Adjusting the margin on the h2 to pull the h3 further */
 main h4 {
@@ -198,6 +199,7 @@ a[href$=".pdf"]:after {
 main ul, main ol {
 	line-height: 1.4em;
 	margin-bottom:2em;
+	margin-left:4em;
 }
 main ul li ul {
 	padding-left:1.4em;
@@ -227,12 +229,10 @@ main h3 + ul {
 }
 main p + ul {
 	margin-top:-1.2em;
-	margin-left:4em;
 	width:70%;
 }
 main p + ol {
 	margin-top:-1em;
-	margin-left:4em;
 	width:70%;
 }
 main ul li {
@@ -257,7 +257,9 @@ main ol li {
 	padding:.125em;
 	margin-bottom:5px;
 }
-/* Styling of linked elements */
+/* 
+	Styling of linked elements 
+*/
 main a {
 	background-color:#d3e1e3;
 	color: #4F868E;
@@ -276,12 +278,11 @@ Description: Styling of block quotes & citations
 */
 blockquote {
 	letter-spacing: 0;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:4em;
-	margin-bottom:4em;
-	padding-left:3em;
-	padding-right:3em;
+	display:block;
+	position:relative;
+	font-size: 1.2em;
+	line-height: 1.5em;
+	letter-spacing: -1px;
 }
 blockquote:before {
 	font-size: 1.6em;
@@ -299,9 +300,6 @@ blockquote:before {
 blockquote p {
 	color:#464e54;
 	display: inline;
-	font-size: 1.4em;
-	line-height: 1.5em;
-	letter-spacing: -1px;
 }
 blockquote cite {
 	font-style: italic;
@@ -310,8 +308,24 @@ blockquote cite {
 	font-size: .775em;
 	line-height:1.1em;
 }
-main blockquote  cite:before {
+blockquote  cite:before {
 	content: "— ";
+}
+.bqsmall {
+	width:25%;
+	font-size:94%;
+	padding:1em;
+}
+.bqsmall cite {
+	font-size:1em;
+	padding-top:.5em;
+}
+.bqmd {
+	width:45%;
+}
+.padleft {
+	padding-left:1em;
+	padding-right:0;
 }
 main sup {
 	font-size: 95%;
@@ -324,7 +338,7 @@ main aside {
 	border-style:solid;
 	border-color:#ddbea1;
 	border-width:2px 2px 2px 2px;
-	text-shadow:0px 1px 1px #fff;
+	text-shadow:0px 1px 1px #f5f5f5;
 	font-size: 1.1em;
 	font-weight: bold;
 	line-height: 1.5em;
@@ -333,8 +347,19 @@ main aside {
 main aside ul {
 	margin-bottom:0;
 }
-/* styles applied only to sections */
-main section {
+/* styles applied only to structure and framework */
+.page-template-templatesucblank-php .halves {
+	width:791px;
+}
+.page-template-templatesucblank-php .size-lt-medium .nested {
+	width:100%;
+}
+main .related article {
+	padding-bottom:0;
+}
+main .related + section article {
+	margin-top:-1em;
+	padding-top:0;
 }
 /* styles applied to tables */
 .table {
@@ -493,45 +518,86 @@ Description: Expanding on the Spine template with custom components and sections
 }
 /* Create the Featured content frame */
 .featuredContent {
-	padding-top: 2em;
-	border-top:1px solid #d7dadb;
-	border-bottom:1px solid #d7dadb;
-	display:block;
+	border-width:8px 0 8px 0;
+	border-color:#e5cd93;
+	border-style: solid;
+	padding-bottom:2em;
+	padding-top:2em;
+	background-color:#5e6a71;
 }
-.featuredContent .ui-tabs-panel {
-	width:85%;
-	height:100%;
+.featuredContent #tabs .ui-tabs-panel {
+	/*height:500px;*/
+	margin-top:-2px;
+	width:90%;
+	padding:2em;
 	margin-left:auto;
 	margin-right:auto;
-	padding-bottom:2em;
+	background-color:#f5f5f5; !important;
+	border-top-left-radius: 10px 10px;
+	border-top-right-radius: 10px 10px;
+	border-bottom-left-radius: 10px 10px;
+	border-bottom-right-radius: 10px 10px;
 }
-.featuredContent .ui-tabs-nav {
+.featuredContent #tabs .ui-tabs-nav {
+	padding:0;
+	margin:0;
+}
+.featuredContent #tabs #innertabsnav {
+	/* Over ride global ul */
+	margin-left:auto;
+	margin-right:auto;
+	width:90%;
 	text-align: center;
 }
-#innertabsnav li:before {
+.featuredContent #tabs #innertabsnav li:before {
 	content:none;
 }
-#innertabsnav li {
+.featuredContent #tabs #innertabsnav li {
 	display:inline-block;
-	padding:.5em;
+	/*reset margin */
+	margin:0 !important;
 }
-#innertabsnav li a {
+.featuredContent #tabs #innertabsnav li a {
+	padding:1em;
 	display: block;
-	text-transform: uppercase;
-	background-color:transparent;
+	color:#d3e1e3;
+	background-color:transparent !important;
+}
+.featuredContent #tabs #innertabsnav a .ss-icon, .featuredContent #tabs #innertabsnav a img { 
+	display: block;
+	font-size:2em;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:-24px;
+	padding-bottom:0;
+	padding-top:.4em;
+}
+.featuredContent #tabs #innertabsnav .ui-tabs-active a {
+	color:#464e54 !important;
+	background-color:#f5f5f5 !important;
+	border-top-left-radius: 10px 10px;
+	border-top-right-radius: 10px 10px;
 }
 main #mainAccordion {
 	margin-top:1em;
 	margin-bottom:1em;
 }
 main #mainAccordion .ui-accordion-header {
-	background-color:#d3e1e3;
-	color: #4F868E;
-	border-bottom:1px solid white;
+	border-bottom:1px solid #f5f5f5;
 	cursor: pointer;
 }
-main #mainAccordion .ui-accordion-header:hover {
-	color: #193838;
+main #mainAccordion .ui-accordion-header-active {
+	background-color:#f5f5f5 !important; 
+	-webkit-transition: background-color 1000ms linear;
+    -moz-transition: background-color 1000ms linear;
+    -o-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+    color: #464e54 !important;
+  }
+main #mainAccordion .ui-state-default {
+	background-color:#d3e1e3;
+	color: #4F868E;
 }
 main #mainAccordion h3 {
 	margin:0;
@@ -540,27 +606,43 @@ main #mainAccordion h3 {
 main #mainAccordion .ui-accordion-header-icon {
 	width:25px;
 	height:25px;
+	margin-right:.3em;
 	display: inline-block;
+	font-size: .6em;
 }
 main #mainAccordion .ui-state-active .ui-icon:before {
-	margin-right:.7em;
 	content:'\2B07';
 }
 main #mainAccordion .ui-icon:before {
-	margin-right:.7em;	
-	content:'\27A1';
+		content:'\27A1';
+}
+main #mainAccordion .ui-accordion-header:hover, main #mainAccordion .ui-state-active .ui-icon:before  {
+	color: #193838;
 }
 main #mainAccordion .ui-accordion-content {
+	border-style:solid;
+	border-color:#d7dadb;
+	border-width:1px 0px 0px 0px;
 	padding:1em;
 }
 /*
-	Affixed sidebar
+	Affixed and affixed sidebar
 */
+/* 
+	Add fixme as a class to any item you want the scroll fixed effect on
+.fixme {}
+*/
+.fixed {
+	position: fixed; 
+	top: 0;
+	margin-top:0;
+	z-index: 1;
+}
 #fixedSide {
-	position:fixed;
-	height:100%;
 	margin-top:9em;
-	width:22%;
+}
+#fixedSide .fixed {
+	width:320px;
 }
 #fixedSide h6 {
 	margin-bottom:1em;
@@ -583,12 +665,43 @@ main #mainAccordion .ui-accordion-content {
 	padding-bottom: 0;
 	line-height: 1.3em;
 }
-main .size-lt-large main > #fixedSide {
-	position: relative;
-	margin-top:140px;
+/*
+	Call to actions
+*/
+.call {
+	width: 50%;
+	height: 100%;
+	margin-left:auto;
+	margin-right:auto;
+	font-size: 1.4em;
+}
+.call a {
+	text-align: center;
+	text-transform: uppercase;
+	padding-top:20px;
+	padding-bottom:20px;
+	display:block;
+	width:100%;
+	height:100%;
+	border-style:double;
+	border-width: 4px 4px 4px 4px;
+	border-color:#4f868e;
+	text-shadow:0px 1px 1px #fff;
+}
+.fixed .call {
+	color:#4f868e;
+	font-size: 1.2em;
+	top: 0; 
+	margin-top:0;
+	margin-bottom:0;
+	margin-right:0;
+	margin-left:500px;
+	padding-top:0px;	
+}
+.callbox {
 }
 /* 
-	Backgrounds
+	Backgrounds and supplimentary colors
 */
 .bdbg {
 	background-image:url('../images/elements/bg.png');
@@ -596,6 +709,18 @@ main .size-lt-large main > #fixedSide {
 }
 .addcrimson {
 	color:#981e32;
+}
+.addgray {
+	color:#5e6a71;
+}
+.addyellow {
+	color:#c69214;
+}
+.addorange {
+	color:#b67233;
+}
+.addgreen {
+	color:#8f7e35;
 }
 /*
 Title: Blog Posts styles

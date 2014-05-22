@@ -13,7 +13,7 @@
 		<?php get_template_part('parts/headers'); ?>
 		<section class="row single">
 			<div id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="column one">
+				<div class="column">
 				<article style="margin-bottom:0; padding-bottom:0;"><header class="article-header">
 					<h1 class="article-title"><?php the_title(); ?></h1>
 				</header></article></div>

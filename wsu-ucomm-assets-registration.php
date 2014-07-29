@@ -196,7 +196,7 @@ class WSU_UComm_Assets_Registration {
 					echo '<h3>Available Assets</h3><ul>';
 					foreach( $available_assets as $asset ) {
 						// Has this asset been assigned an asset type?
-						$asset_type = $this->get_assigned_asset_type( $asset->post_title );
+						$asset_type = $this->get_assigned_asset_type( $asset->post_name );
 						if ( $asset_type ) {
 							if ( current_user_can( 'access_' . $asset_type ) ) {
 								$attached_file = explode( '/', get_attached_file( $asset->ID ) );

@@ -196,7 +196,7 @@ class WSU_UComm_Assets_Registration {
 					echo '<h3>Available Assets</h3><ul>';
 					foreach( $available_assets as $asset ) {
 						// Has this asset been assigned an asset type?
-						$asset_type = $this->get_assigned_asset_type( $asset->post_title );
+						$asset_type = $this->get_assigned_asset_type( $asset->post_name );
 						if ( $asset_type ) {
 							if ( current_user_can( 'access_' . $asset_type ) ) {
 								$attached_file = explode( '/', get_attached_file( $asset->ID ) );
@@ -447,7 +447,7 @@ class WSU_UComm_Assets_Registration {
 			<td><select name="font_assigned-<?php echo esc_attr( $font_slug ); ?>" id="font-assigned">
 				<option value="0">---</option>
 				<?php foreach( $attached_files as $file ) : ?>
-				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
+				<option value="<?php echo esc_attr( $file->post_name ); ?>" <?php selected( $font['file'], $file->post_name, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
 				<?php endforeach; ?>
 			</td>
 		</tr>
@@ -625,24 +625,13 @@ class WSU_UComm_Assets_Registration {
 	 */
 	private function prep_mail_filters() {
 		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
-		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 	}
 
 	/**
 	 * Unset filters used to send mail from this plugin.
 	 */
 	private function unprep_mail_filters() {
-		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
-	}
-
-	/**
-	 * Modify the default email address for email sent by WordPress.
-	 *
-	 * @return string The email address to use with the email.
-	 */
-	public function set_mail_from() {
-		return 'wordpress@wsuwp-indie-prod-01.web.wsu.edu';
 	}
 
 	/**

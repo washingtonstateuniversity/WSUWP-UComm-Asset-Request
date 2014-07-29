@@ -1,9 +1,1 @@
-.idea
-*.sublime*
-
-/wordpress
-wp-config.php
-wp-content/themes/spine
-wp-content/uploads
-wp-content/plugins/wsuwp-sso-authentication
-wp-content/plugins/wsuwp-plugin-custom-css
+.DS_Store

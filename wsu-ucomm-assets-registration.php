@@ -447,7 +447,7 @@ class WSU_UComm_Assets_Registration {
 			<td><select name="font_assigned-<?php echo esc_attr( $font_slug ); ?>" id="font-assigned">
 				<option value="0">---</option>
 				<?php foreach( $attached_files as $file ) : ?>
-				<option value="<?php echo esc_attr( $file->post_title ); ?>" <?php selected( $font['file'], $file->post_title, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
+				<option value="<?php echo esc_attr( $file->post_name ); ?>" <?php selected( $font['file'], $file->post_name, true ); ?>><?php echo esc_html( $file->post_title ); ?></option>
 				<?php endforeach; ?>
 			</td>
 		</tr>

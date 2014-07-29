@@ -1,15 +1,3 @@
-# University Communications at WSU
+# WSUWP UComm Asset Request
 
-A WordPress configuration for ucomm.wsu.edu.
-
-## Setup for WSUWP Indie Development
-
-```
-wsuwp-indie-sites:
-  ucomm.wsu.edu:
-    directory: ucomm.wsu.edu
-    database: ucomm_wsu
-    nginx:
-      server_name: dev.ucomm.wsu.edu
-      config: manual
-```
+A WordPress plugin to provide asset request functionality to ucomm.wsu.edu

@@ -625,24 +625,13 @@ class WSU_UComm_Assets_Registration {
 	 */
 	private function prep_mail_filters() {
 		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
-		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 	}
 
 	/**
 	 * Unset filters used to send mail from this plugin.
 	 */
 	private function unprep_mail_filters() {
-		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
-	}
-
-	/**
-	 * Modify the default email address for email sent by WordPress.
-	 *
-	 * @return string The email address to use with the email.
-	 */
-	public function set_mail_from() {
-		return 'wordpress@wsuwp-indie-prod-01.web.wsu.edu';
 	}
 
 	/**

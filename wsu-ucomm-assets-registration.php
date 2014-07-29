@@ -227,7 +227,7 @@ class WSU_UComm_Assets_Registration {
 					add_existing_user_to_blog( array( 'user_id' => get_current_user_id(), 'role' => 'subscriber' ) );
 					$this->asset_form_output();
 				} else {
-					echo '<p>Please <a href="' . wp_login_url( network_site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
+					echo '<p>Please <a href="' . wp_login_url( site_url( $_SERVER['REQUEST_URI'] ), true ) . '">authenticate with your WSU Network ID</a> to request asset access.</p>';
 				}
 			}
 			?>

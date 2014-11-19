@@ -64,6 +64,7 @@ class WSU_UComm_Assets_Registration {
 		add_action( 'init',                         array( $this, 'register_post_type'   ), 10, 1 );
 		add_action( 'init',                         array( $this, 'temp_redirect'        ),  5, 1 );
 		add_action( 'wp_ajax_submit_asset_request', array( $this, 'submit_asset_request' ), 10, 1 );
+		add_action( 'wp_ajax_nopriv_submit_asset_request', array( $this, 'submist_asset_request' ), 10, 1 );
 		add_action( 'transition_post_status',       array( $this, 'grant_asset_access'   ), 10, 3 );
 		add_action( 'add_meta_boxes',               array( $this, 'add_meta_boxes'       ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_asset_file_types' ), 10, 3 );

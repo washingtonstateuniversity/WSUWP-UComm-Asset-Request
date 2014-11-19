@@ -302,7 +302,10 @@ class WSU_UComm_Assets_Registration {
 	 * as part of the request in the admin.
 	 */
 	public function submit_asset_request() {
-		wp_verify_nonce( 'asset-request' );
+		if ( ! isset( $_POST['_ajax_nonce'] ) || ! wp_verify_nonce( $_POST['_ajax_nonce'], 'asset-request' ) ) {
+			echo json_encode( array( 'error' => 'There was a problem submitting your request.' ) );
+			die();
+		}
 
 		$post = array(
 			'post_status' => 'pending',
